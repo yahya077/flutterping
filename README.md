@@ -32,3 +32,7 @@ The documentation on how to use the package can be found in the [docs.flutterpin
 
 This in an open-source project, and we welcome contributions.
 Alpha version is available for testing. For more information, visit [docs.flutterping.com](https://docs.flutterping.com)
+
+## Adapters
+> !!! Currently in development !!!
+- [Laravel](https://docs.flutterping.com)
