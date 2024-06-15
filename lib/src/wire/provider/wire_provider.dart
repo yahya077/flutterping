@@ -1,0 +1,25 @@
+import '../../../flutter_ping_wire.dart';
+import '../client.dart';
+import '../config.dart';
+import '../event_listeners/action_event_listener.dart';
+import '../event_listeners/state_event_listener.dart';
+import '../stream.dart';
+import '../value.dart';
+
+class WireProvider extends Provider {
+  WireProvider();
+
+  @override
+  void register(Application app) {
+    app.singleton(WireDefinition.containerClient, () => Client(app));
+    app.singleton(WireDefinition.config, () => WireConfig());
+    app.singleton(WireDefinition.eventDispatcher, () => EventDispatcher(app));
+    app.singleton(WireDefinition.containerActionEventListener,
+        () => ActionEventListener(app));
+    app.singleton(WireDefinition.containerStateEventListener,
+        () => StateEventListener(app));
+    app.singleton(WireDefinition.stateManager, () => StateManager(app));
+    app.singleton(WireDefinition.valueManager, () => ValueManager(app));
+    app.singleton(WireDefinition.loaderPreLoader, () => PreLoader(app));
+  }
+}

@@ -1,0 +1,29 @@
+class ElementDefinition {
+  static const container = 'Container';
+  static const row = 'Row';
+  static const column = 'Column';
+  static const text = 'Text';
+  static const scaffold = 'Scaffold';
+  static const dynamicWidget = 'DynamicWidget';
+  static const elevatedButton = 'ElevatedButton';
+  static const bottomNavigationBar = 'BottomNavigationBar';
+  static const iconData = 'IconData';
+  static const sizedBox = 'SizedBox';
+  static const gestureDetector = 'GestureDetector';
+  static const listView = 'ListView';
+  static const reactiveWidget = 'ReactiveWidget';
+  static const form = 'Form';
+  static const textFormField = 'TextFormField';
+  static const circularProgressIndicator = 'CircularProgressIndicator';
+  static const statelessWidget = 'StatelessWidget';
+  static const materialApp = 'MaterialApp';
+  static const materialAppRouter = 'MaterialAppRouter';
+  static const appBar = 'AppBar';
+  static const materialPage = 'MaterialPage';
+  static const alertAction = 'AlertAction';
+  static const navigationAction = 'NavigationAction';
+  static const networkRequestAction = 'NetworkRequestAction';
+  static const eventDispatchAction = 'EventDispatchAction';
+  static const updateReactiveWidgetAction = 'UpdateReactiveWidgetAction';
+  static const validateAndSubmitAction = 'ValidateAndSubmitAction';
+}
