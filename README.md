@@ -35,4 +35,5 @@ Alpha version is available for testing. For more information, visit [docs.flutte
 
 ## Adapters
 > !!! Currently in development !!!
-- [Laravel](https://docs.flutterping.com)
+- [Laravel](https://github.com/yahya077/flutterping-laravel/)
+- GoLang (planned...)
