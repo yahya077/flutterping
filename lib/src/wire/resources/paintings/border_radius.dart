@@ -7,7 +7,7 @@ abstract class AbstractBorderRadiusGeometry {
 }
 
 class BorderRadiusGeometry {
-  static findElement(dynamic json) {
+  static AbstractBorderRadiusGeometry findElement(dynamic json) {
     if (json["type"] == "BorderRadius") {
       return BorderRadius.fromJson(json["data"]);
     }
@@ -31,12 +31,14 @@ class BorderRadius implements AbstractBorderRadiusGeometry {
 
   factory BorderRadius.fromRawJson(String str) => BorderRadius.fromJson(json.decode(str));
 
-  factory BorderRadius.fromJson(Map<String, dynamic> json) => BorderRadius(
-    topLeft: json["topLeft"],
-    topRight: json["topRight"],
-    bottomRight: json["bottomRight"],
-    bottomLeft: json["bottomLeft"],
-  );
+  factory BorderRadius.fromJson(Map<String, dynamic> json) {
+    return BorderRadius(
+      topLeft: json["data"]["topLeft"]?.toDouble(),
+      topRight: json["data"]["topRight"]?.toDouble(),
+      bottomRight: json["data"]["bottomRight"]?.toDouble(),
+      bottomLeft: json["data"]["bottomLeft"]?.toDouble(),
+    );
+  }
 
   @override
   material.BorderRadiusGeometry build() {

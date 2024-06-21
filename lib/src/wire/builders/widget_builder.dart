@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/framework/app.dart';
+import 'package:flutter_ping_wire/src/wire/builders/change_notifier_builder.dart';
+import 'package:flutter_ping_wire/src/wire/resources/paintings/shape_border.dart';
+import 'package:flutter_ping_wire/src/wire/resources/rendering/sliver_grid_delegate.dart';
 
 import '../definitions/wire.dart';
 import '../event_listeners/action_event_listener.dart';
@@ -22,7 +25,13 @@ import 'element_builder.dart';
 import 'preferred_size_widget_builder.dart';
 import 'router_config_builder.dart';
 import '../resources/ui/color.dart';
+import '../resources/ui/clip.dart';
 import '../resources/paintings/decoration.dart';
+import '../resources/paintings/box_fit.dart';
+import '../resources/paintings/alignment.dart';
+import '../resources/paintings/image_repeat.dart';
+import '../resources/paintings/filter_quality.dart';
+import '../resources/core/double.dart';
 import '../resources/rendering/flex.dart';
 import '../resources/paintings/edge_insets.dart';
 import '../resources/paintings/text_style.dart';
@@ -66,3 +75,8 @@ part 'widget_builders/stateless_widget_builder.dart';
 part 'widget_builders/material_app_builder.dart';
 
 part 'widget_builders/material_app_router_builder.dart';
+
+part 'widget_builders/grid_view_builder.dart';
+part 'widget_builders/single_child_scroll_view_builder.dart';
+part 'widget_builders/card_builder.dart';
+part 'widget_builders/image_network_builder.dart';

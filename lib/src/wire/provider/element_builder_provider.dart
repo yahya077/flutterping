@@ -1,5 +1,6 @@
 import 'package:flutter_ping_wire/src/framework/app.dart';
 import 'package:flutter_ping_wire/src/framework/provider.dart';
+import 'package:flutter_ping_wire/src/wire/builders/change_notifier_builder.dart';
 
 import '../builders/page_builder.dart';
 import '../builders/preferred_size_widget_builder.dart';
@@ -26,6 +27,12 @@ class ElementBuilderProvider extends Provider {
     app.singleton(
         ElementDefinition.gestureDetector, () => GestureDetectorBuilder(app));
     app.singleton(ElementDefinition.listView, () => ListViewBuilder(app));
+    app.singleton(ElementDefinition.gridView, () => GridViewBuilder(app));
+    app.singleton(ElementDefinition.card, () => CardBuilder(app));
+    app.singleton(ElementDefinition.singleChildScrollView,
+        () => SingleChildScrollViewBuilder(app));
+    app.singleton(ElementDefinition.imageNetwork,
+        () => ImageNetworkBuilder(app));
     app.singleton(
         ElementDefinition.reactiveWidget, () => ReactiveWidgetBuilder(app));
     app.singleton(ElementDefinition.form, () => FormBuilder(app));
@@ -38,9 +45,16 @@ class ElementBuilderProvider extends Provider {
     app.singleton(ElementDefinition.materialApp, () => MaterialAppBuilder(app));
     app.singleton(ElementDefinition.materialAppRouter,
         () => MaterialAppRouterBuilder(app));
+
+    // page builders
     app.singleton(
         ElementDefinition.materialPage, () => MaterialPageBuilder(app));
+
+    // preferred size widget builders
     app.singleton(ElementDefinition.appBar, () => AppBarBuilder(app));
+
+    // change notifier builders
+    app.singleton(ElementDefinition.scrollController, () => ScrollControllerBuilder(app));
 
     //TODO make element_executor_provider
     app.singleton(

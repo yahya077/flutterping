@@ -11,6 +11,10 @@ class ElementDefinition {
   static const sizedBox = 'SizedBox';
   static const gestureDetector = 'GestureDetector';
   static const listView = 'ListView';
+  static const gridView = 'GridView';
+  static const card = 'Card';
+  static const singleChildScrollView = 'SingleChildScrollView';
+  static const imageNetwork = 'ImageNetwork';
   static const reactiveWidget = 'ReactiveWidget';
   static const form = 'Form';
   static const textFormField = 'TextFormField';
@@ -26,4 +30,5 @@ class ElementDefinition {
   static const eventDispatchAction = 'EventDispatchAction';
   static const updateReactiveWidgetAction = 'UpdateReactiveWidgetAction';
   static const validateAndSubmitAction = 'ValidateAndSubmitAction';
+  static const scrollController = 'ScrollController';
 }

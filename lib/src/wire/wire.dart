@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
+import 'package:flutter_ping_wire/src/wire/change_notifier_state.dart';
 import 'package:flutter_ping_wire/src/wire/models/config.dart' as config_model;
 import 'package:flutter_ping_wire/src/wire/provider/element_builder_provider.dart';
 
@@ -42,6 +43,9 @@ class WireBootstrap {
   }
 
   Future<void> initAsync() async {
+    app.make<StateManager>(WireDefinition.stateManager)
+    .addState(ChangeNotifierState.initial());
+
     final config =
         await app.make<WireConfig>(WireDefinition.config).ensureAllAs();
 

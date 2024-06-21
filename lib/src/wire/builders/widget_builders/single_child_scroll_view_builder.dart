@@ -1,11 +1,12 @@
 part of '../widget_builder.dart';
 
-class ListViewBuilder extends WidgetBuilder {
-  ListViewBuilder(Application application) : super(application);
+class SingleChildScrollViewBuilder extends WidgetBuilder {
+  SingleChildScrollViewBuilder(Application application) : super(application);
 
   @override
   material.Widget build(Element element) {
-    return material.ListView(
+    final Element? childElement = element.data["child"] == null ? null : Element.fromJson(element.data["child"]);
+    return material.SingleChildScrollView(
       controller: element.data["controller"] == null
           ? null
           : application
@@ -15,12 +16,9 @@ class ListViewBuilder extends WidgetBuilder {
           ? material.Axis.vertical
           : BasicType.find(element.data["scrollDirection"]).build(),
       reverse: element.data["reverse"] ?? false,
-      shrinkWrap: element.data["shrinkWrap"] ?? false,
-      children: element.data["items"]
-          .map<material.Widget>((child) => application
-              .make<WidgetBuilder>(child["type"])
-              .build(Element.fromJson(child)))
-          .toList(),
+      child: childElement == null ? null : application
+          .make<WidgetBuilder>(childElement.type)
+          .build(childElement),
     );
   }
 }

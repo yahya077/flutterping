@@ -6,22 +6,22 @@ import 'navigation_state.dart';
 import 'state_manager.dart';
 
 abstract class AbstractRoutingService {
-  void navigateTo(String path, {Map<String, dynamic>? data});
+  void navigateTo(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
 
   void navigateBack();
 
   void navigateToRoot();
 
-  void navigateToNamed(String path, {Map<String, dynamic>? data});
+  void navigateToNamed(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
 
-  void navigateToNamedAndRemoveUntil(String path, {Map<String, dynamic>? data});
+  void navigateToNamedAndRemoveUntil(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
 
-  void navigateAndRemoveUntil(String path, {Map<String, dynamic>? data});
+  void navigateAndRemoveUntil(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
 
   void changeStack(String stackKey, int index, {bool initialLocation = false});
 
   void changeStackAndNavigate(String stackKey, int index, String path,
-      {Map<String, dynamic>? data, bool initialLocation = false});
+      {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data, bool initialLocation = false});
 }
 
 abstract class RoutingService implements AbstractRoutingService {
@@ -70,6 +70,13 @@ abstract class RoutingService implements AbstractRoutingService {
         .make<StateManager>(WireDefinition.stateManager)
         .getState<NavigationState>(WireDefinition.stateNavigationState)
         .getMainNavigatorKey();
+  }
+
+  void setMainNavigatorKey(GlobalKey<NavigatorState> key) {
+    return application
+        .make<StateManager>(WireDefinition.stateManager)
+        .getState<NavigationState>(WireDefinition.stateNavigationState)
+        .setMainNavigatorKey(key);
   }
 
   getStackKey(String stackKey) {

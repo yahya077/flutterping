@@ -2,15 +2,18 @@ class NavigationPath {
   String? path;
   String? stackKey;
   int? index;
+  Map<String, dynamic>? queryParameters;
 
-  NavigationPath({this.path, this.stackKey, this.index});
+  NavigationPath({this.path, this.stackKey, this.index, this.queryParameters});
 
-  factory NavigationPath.fromJson(Map<String, dynamic> json) =>
-      NavigationPath(
-        path: json['path'],
-        stackKey: json['stackKey'],
-        index: json['index'],
-      );
+  factory NavigationPath.fromJson(Map<String, dynamic> json) {
+    return NavigationPath(
+      path: json['path'],
+      stackKey: json['stackKey'],
+      index: json['index'],
+      queryParameters: json['queryParameters'],
+    );
+  }
 }
 
 class ApiPath {

@@ -55,6 +55,14 @@ class NavigationState extends State {
     return navigatorKeys['mainNavigatorKey'];
   }
 
+  void setMainNavigatorKey(material.GlobalKey<material.NavigatorState> key) {
+    Map<String, dynamic> navigatorKeys = get('navigatorKeys', defaultValue: {});
+
+    navigatorKeys['mainNavigatorKey'] = key;
+
+    set('navigatorKeys', navigatorKeys);
+  }
+
   dynamic getStackKey(String stackKey) {
     Map<String, dynamic> stackKeys = get('stackKeys', defaultValue: <String, dynamic>{});
 
