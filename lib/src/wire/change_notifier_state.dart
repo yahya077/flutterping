@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart' as material;
-
 import 'definitions/definition.dart';
 import 'state.dart';
 

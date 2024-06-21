@@ -14,7 +14,7 @@ platforms:
   windows:
 screenshots:
   - description: 'The screenshot illustrates the structure and content of a proper FlutterPing response.'
-    path: docs/screenshots/dummy_response.png
+    path: doc/screenshots/dummy_response.png
 
 environment:
   sdk: '>=3.1.0 <4.0.0'

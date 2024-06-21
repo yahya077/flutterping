@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
-import 'package:flutter_ping_wire/src/framework/app.dart';
-
-import '../models/element.dart';
-import 'element_builder.dart';
-import 'widget_builder.dart';
 
 class ChangeNotifierBuilder extends ElementBuilder<material.ScrollController> {
   ChangeNotifierBuilder(Application application) : super(application);

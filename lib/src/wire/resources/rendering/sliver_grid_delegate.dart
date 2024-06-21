@@ -40,6 +40,7 @@ class SliverGridDelegateWithFixedCrossAxisCount extends SliverGridDelegate {
     );
   }
 
+  @override
   material.SliverGridDelegateWithFixedCrossAxisCount build() {
     return material.SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: crossAxisCount,

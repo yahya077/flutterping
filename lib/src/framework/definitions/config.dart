@@ -1,3 +1,3 @@
 class ConfigDefinition {
-  static const String AppConfig = 'app';
+  static const String appConfig = 'app';
 }

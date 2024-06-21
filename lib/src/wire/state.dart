@@ -21,6 +21,7 @@ class State implements AbstractState {
     hydrate({'id': id});
   }
 
+  @override
   void set<T>(String key, T value) {
     _state[key] = value;
   }

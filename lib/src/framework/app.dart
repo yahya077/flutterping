@@ -24,7 +24,7 @@ class Application extends Container {
   }
 
   void registerBaseContainers() async {
-    singleton(ConfigDefinition.AppConfig, () => AppConfig());
+    singleton(ConfigDefinition.appConfig, () => AppConfig());
 
     singleton(ContainerDefinition.AppExceptionHandler,
         () => AppExceptionHandler(this));
