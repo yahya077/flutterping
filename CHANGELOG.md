@@ -2,7 +2,7 @@
 
 * text style bug fixed
 * text widget properties added
-* 
+* bottom app bar added
 
 ## 0.0.2
 
