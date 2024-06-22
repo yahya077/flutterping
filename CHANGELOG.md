@@ -1,3 +1,8 @@
+## 0.0.3
+
+* text style bug fixed
+* 
+
 ## 0.0.2
 
 * builder added for ChangeNotifier classes

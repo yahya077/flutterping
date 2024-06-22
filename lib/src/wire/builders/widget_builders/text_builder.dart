@@ -7,9 +7,9 @@ class TextBuilder extends WidgetBuilder {
   material.Widget build(Element element) {
     return material.Text(
       element.data["text"],
-      style: element.data["style"] == null || element.data["style"]["element"] == null
+      style: element.data["style"] == null || element.data["style"]["data"] == null
           ? null
-          : TextStyle.fromJson(element.data["style"]["element"]).build(),
+          : TextStyle.fromJson(element.data["style"]["data"]).build(),
     );
   }
 }
