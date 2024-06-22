@@ -6,22 +6,22 @@ import 'navigation_state.dart';
 import 'state_manager.dart';
 
 abstract class AbstractRoutingService {
-  void navigateTo(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
+  void navigateTo(String navigatorKey, String path, {Map<String, dynamic>? queryParameters, Map<String, String>? pathParameters, Map<String, dynamic>? data});
 
-  void navigateBack();
+  void navigateBack(String navigatorKey);
 
-  void navigateToRoot();
+  void navigateToRoot(String navigatorKey);
 
-  void navigateToNamed(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
+  void navigateToNamed(String navigatorKey, String path, {Map<String, dynamic>? queryParameters, Map<String, String>? pathParameters, Map<String, dynamic>? data});
 
-  void navigateToNamedAndRemoveUntil(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
+  void navigateToNamedAndRemoveUntil(String navigatorKey, String path, {Map<String, dynamic>? queryParameters, Map<String, String>? pathParameters, Map<String, dynamic>? data});
 
-  void navigateAndRemoveUntil(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
+  void navigateAndRemoveUntil(String navigatorKey, String path, {Map<String, dynamic>? queryParameters, Map<String, String>? pathParameters, Map<String, dynamic>? data});
 
   void changeStack(String stackKey, int index, {bool initialLocation = false});
 
-  void changeStackAndNavigate(String stackKey, int index, String path,
-      {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data, bool initialLocation = false});
+  void changeStackAndNavigate(String navigatorKey, String stackKey, int index, String path,
+      {Map<String, dynamic>? queryParameters, Map<String, String>? pathParameters, Map<String, dynamic>? data, bool initialLocation = false});
 }
 
 abstract class RoutingService implements AbstractRoutingService {

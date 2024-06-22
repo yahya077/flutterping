@@ -23,6 +23,7 @@ class ElementDefinition {
   static const materialApp = 'MaterialApp';
   static const materialAppRouter = 'MaterialAppRouter';
   static const appBar = 'AppBar';
+  static const bottomAppBar = 'BottomAppBar';
   static const materialPage = 'MaterialPage';
   static const alertAction = 'AlertAction';
   static const navigationAction = 'NavigationAction';

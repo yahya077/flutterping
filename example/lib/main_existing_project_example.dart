@@ -41,13 +41,13 @@ class Navigation {
   static late final GoRouter router;
 
   static final GlobalKey<NavigatorState> parentNavigatorKey =
-      GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> homeTabNavigatorKey =
-      GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> searchTabNavigatorKey =
-      GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> settingsTabNavigatorKey =
-      GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState>();
 
   static late StatefulShellBranch lazyBranch;
 
@@ -70,7 +70,7 @@ class Navigation {
   static lazyInstance() async {
     lazyBranch = await flutter_ping.Application.getInstance()
         .make<flutter_ping.PreLoader>(
-            flutter_ping.WireDefinition.loaderPreLoader)
+        flutter_ping.WireDefinition.loaderPreLoader)
         .load<StatefulShellBranch>("forExistingProject");
 
     return _instance;
@@ -111,11 +111,9 @@ class Navigation {
           ),
           lazyBranch,
         ],
-        pageBuilder: (
-          BuildContext context,
-          GoRouterState state,
-          StatefulNavigationShell navigationShell,
-        ) {
+        pageBuilder: (BuildContext context,
+            GoRouterState state,
+            StatefulNavigationShell navigationShell,) {
           return getPage(
             child: BottomNavigationPage(
               child: navigationShell,

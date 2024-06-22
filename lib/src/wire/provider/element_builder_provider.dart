@@ -31,8 +31,8 @@ class ElementBuilderProvider extends Provider {
     app.singleton(ElementDefinition.card, () => CardBuilder(app));
     app.singleton(ElementDefinition.singleChildScrollView,
         () => SingleChildScrollViewBuilder(app));
-    app.singleton(ElementDefinition.imageNetwork,
-        () => ImageNetworkBuilder(app));
+    app.singleton(
+        ElementDefinition.imageNetwork, () => ImageNetworkBuilder(app));
     app.singleton(
         ElementDefinition.reactiveWidget, () => ReactiveWidgetBuilder(app));
     app.singleton(ElementDefinition.form, () => FormBuilder(app));
@@ -45,6 +45,8 @@ class ElementBuilderProvider extends Provider {
     app.singleton(ElementDefinition.materialApp, () => MaterialAppBuilder(app));
     app.singleton(ElementDefinition.materialAppRouter,
         () => MaterialAppRouterBuilder(app));
+    app.singleton(
+        ElementDefinition.bottomAppBar, () => BottomAppBarBuilder(app));
 
     // page builders
     app.singleton(
@@ -54,7 +56,8 @@ class ElementBuilderProvider extends Provider {
     app.singleton(ElementDefinition.appBar, () => AppBarBuilder(app));
 
     // change notifier builders
-    app.singleton(ElementDefinition.scrollController, () => ScrollControllerBuilder(app));
+    app.singleton(
+        ElementDefinition.scrollController, () => ScrollControllerBuilder(app));
 
     //TODO make element_executor_provider
     app.singleton(

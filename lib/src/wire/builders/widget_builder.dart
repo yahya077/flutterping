@@ -9,6 +9,7 @@ import '../event_listeners/action_event_listener.dart';
 import '../event_listeners/state_event_listener.dart';
 import '../executors/action_executor.dart';
 import '../form_state.dart';
+import '../resources/paintings/padding.dart';
 import '../resources/widgets/form_widget.dart';
 import '../resources/widgets/stateless_widget.dart';
 import '../resources/widgets/text_input.dart';
@@ -86,3 +87,4 @@ part 'widget_builders/single_child_scroll_view_builder.dart';
 part 'widget_builders/card_builder.dart';
 
 part 'widget_builders/image_network_builder.dart';
+part 'widget_builders/bottom_app_bar.dart';

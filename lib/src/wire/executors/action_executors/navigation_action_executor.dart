@@ -5,6 +5,7 @@ class NavigationActionExecutor extends ActionExecutor {
 
   @override
   Future<void> execute(material.BuildContext context, Element element) async {
+    //TODO implement strategies for NavigationPath
     final path = NavigationPath.fromJson(element.data["path"]["data"]);
     if (path.stackKey != null &&
         path.index != null &&
@@ -12,7 +13,10 @@ class NavigationActionExecutor extends ActionExecutor {
         path.path != null) {
       application
           .make<RoutingService>(WireDefinition.routingService)
-          .changeStackAndNavigate(path.stackKey!, path.index!, path.path!, queryParameters: path.queryParameters);
+          .changeStackAndNavigate(
+              path.navigatorKey!, path.stackKey!, path.index!, path.path!,
+              queryParameters: path.queryParameters,
+              pathParameters: path.pathParameters);
     } else if (path.stackKey != null && path.index != null) {
       application
           .make<RoutingService>(WireDefinition.routingService)
@@ -20,7 +24,9 @@ class NavigationActionExecutor extends ActionExecutor {
     } else {
       application
           .make<RoutingService>(WireDefinition.routingService)
-          .navigateToNamed(path.path!, queryParameters: path.queryParameters);
+          .navigateToNamed(path.navigatorKey!, path.path!,
+              queryParameters: path.queryParameters,
+              pathParameters: path.pathParameters);
     }
   }
 }
