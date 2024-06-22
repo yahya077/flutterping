@@ -12,6 +12,7 @@ export 'builders/widget_builder.dart';
 export 'builders/element_builder.dart';
 export 'builders/page_builder.dart';
 export 'builders/router_config_builder.dart';
+export 'builders/change_notifier_builder.dart';
 export 'provider/wire_provider.dart';
 export 'models/element.dart';
 export 'models/router_config_data.dart';
@@ -19,6 +20,7 @@ export 'state.dart';
 export 'state_manager.dart';
 export 'navigation_state.dart';
 export 'routing_service.dart';
+export 'resources/animation/animation.dart';
 
 class WireBootstrap {
   Application app;

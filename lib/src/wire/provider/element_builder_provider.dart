@@ -47,6 +47,8 @@ class ElementBuilderProvider extends Provider {
         () => MaterialAppRouterBuilder(app));
     app.singleton(
         ElementDefinition.bottomAppBar, () => BottomAppBarBuilder(app));
+    app.singleton(
+        ElementDefinition.intrinsicHeight, () => IntrinsicHeightBuilder(app));
 
     // page builders
     app.singleton(

@@ -88,3 +88,4 @@ part 'widget_builders/card_builder.dart';
 
 part 'widget_builders/image_network_builder.dart';
 part 'widget_builders/bottom_app_bar.dart';
+part 'widget_builders/intrinsic_height_builder.dart';

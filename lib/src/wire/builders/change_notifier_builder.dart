@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 
-class ChangeNotifierBuilder extends ElementBuilder<material.ScrollController> {
+class ChangeNotifierBuilder extends ElementBuilder<material.ChangeNotifier> {
   ChangeNotifierBuilder(Application application) : super(application);
 
   @override
-  material.ScrollController build(Element element) {
+  material.ChangeNotifier build(Element element) {
     return application
         .make<ChangeNotifierBuilder>(element.type)
         .build(Element.fromJson(element.data));

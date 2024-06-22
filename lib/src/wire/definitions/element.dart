@@ -32,4 +32,5 @@ class ElementDefinition {
   static const updateReactiveWidgetAction = 'UpdateReactiveWidgetAction';
   static const validateAndSubmitAction = 'ValidateAndSubmitAction';
   static const scrollController = 'ScrollController';
+  static const intrinsicHeight = 'IntrinsicHeight';
 }
