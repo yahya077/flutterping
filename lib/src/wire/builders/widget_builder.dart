@@ -26,7 +26,10 @@ import 'preferred_size_widget_builder.dart';
 import 'router_config_builder.dart';
 import '../resources/ui/color.dart';
 import '../resources/ui/clip.dart';
+import '../resources/ui/text_align.dart';
+import '../resources/ui/text_direction.dart';
 import '../resources/paintings/decoration.dart';
+import '../resources/paintings/text_painter.dart';
 import '../resources/paintings/box_fit.dart';
 import '../resources/paintings/alignment.dart';
 import '../resources/paintings/image_repeat.dart';
@@ -77,6 +80,9 @@ part 'widget_builders/material_app_builder.dart';
 part 'widget_builders/material_app_router_builder.dart';
 
 part 'widget_builders/grid_view_builder.dart';
+
 part 'widget_builders/single_child_scroll_view_builder.dart';
+
 part 'widget_builders/card_builder.dart';
+
 part 'widget_builders/image_network_builder.dart';

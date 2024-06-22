@@ -1,6 +1,7 @@
 ## 0.0.3
 
 * text style bug fixed
+* text widget properties added
 * 
 
 ## 0.0.2
