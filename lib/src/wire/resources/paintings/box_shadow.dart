@@ -15,15 +15,21 @@ abstract class AbstractBoxShadow implements AbstractShadow {
 
 class BoxShadow implements AbstractBoxShadow {
   AbstractColor? color;
+  double? blurRadius;
+  double? spreadRadius;
 
   BoxShadow({
     this.color,
+    this.blurRadius,
+    this.spreadRadius,
   });
 
   factory BoxShadow.fromRawJson(String str) => BoxShadow.fromJson(json.decode(str));
 
   factory BoxShadow.fromJson(Map<String, dynamic> json) => BoxShadow(
     color: json["color"] == null ? null : Color.findColor(json["color"]),
+    blurRadius: json["blurRadius"]?.toDouble(),
+    spreadRadius: json["spreadRadius"]?.toDouble(),
   );
 
   static AbstractBoxShadow findElement(dynamic json) {
@@ -38,6 +44,8 @@ class BoxShadow implements AbstractBoxShadow {
   material.BoxShadow build() {
     return material.BoxShadow(
       color: color?.build() ?? material.Colors.black,
+      blurRadius: blurRadius ?? 0.0,
+      spreadRadius: spreadRadius ?? 0.0,
     );
   }
 }
