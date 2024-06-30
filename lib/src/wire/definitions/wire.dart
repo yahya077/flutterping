@@ -10,6 +10,7 @@ class WireDefinition {
   static const String eventDispatcher = 'EventDispatcher';
   static const String routingService = 'RoutingService';
   static const String stateNavigationState = 'NavigationState';
-  static const String stateChangeNotifierState = 'ChangeNotifierState';
+  static const String stateCallableRegistryState = 'CallableRegistryState';
+  static const String stateScopeState = 'ScopeState';
   static const String loaderPreLoader = 'PreLoader';
 }

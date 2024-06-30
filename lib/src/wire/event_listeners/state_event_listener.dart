@@ -17,7 +17,7 @@ class StateEventListener {
   StreamSubscription listen(material.BuildContext context,
       ReactiveWidgetStateSchema reactiveWidgetState, String stateId) {
     return application
-        .make<Dispatcher>(ContainerDefinition.Events)
+        .make<Dispatcher>(ContainerDefinition.events)
         .on("${stateId}_${EventDefinition.stateEventName}")
         .listen((eventPayload) {
       final State state = reactiveWidgetState.getState(eventPayload.payload);
@@ -30,7 +30,7 @@ class StateEventListener {
 
   void dispose(String key) {
     application
-        .make<Dispatcher>(ContainerDefinition.Events)
+        .make<Dispatcher>(ContainerDefinition.events)
         .dispose("${key}_${EventDefinition.stateEventName}");
   }
 }

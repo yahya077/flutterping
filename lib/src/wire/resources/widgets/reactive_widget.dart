@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart' as material;
+import 'package:flutter_ping_wire/src/wire/value_provider.dart';
 import '../../models/element.dart';
 import '../../stream.dart';
-import 'reactive_widget_manager.dart';
 
 class State {
   String name;
@@ -53,7 +53,7 @@ class ReactiveWidgetStateSchema {
 class ReactiveMaterialWidget extends material.StatefulWidget {
   final String stateId;
   final ReactiveWidgetStateSchema state;
-  final ReactiveWidgetNotifier widgetNotifier;
+  final ValueNotifier<material.Widget> widgetNotifier;
   final EventListener actionEventListener;
   final EventListener stateEventListener;
   final DisposeListener disposeListeners;
@@ -102,7 +102,7 @@ class ReactiveWidgetState extends material.State<ReactiveMaterialWidget>
   @override
   material.Widget build(material.BuildContext context) {
     super.build(context);
-    return widget.widgetNotifier.widget;
+    return widget.widgetNotifier.value ?? material.Container();
   }
 
   @override

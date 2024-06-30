@@ -26,20 +26,20 @@ class Application extends Container {
   void registerBaseContainers() async {
     singleton(ConfigDefinition.appConfig, () => AppConfig());
 
-    singleton(ContainerDefinition.AppExceptionHandler,
+    singleton(ContainerDefinition.appExceptionHandler,
         () => AppExceptionHandler(this));
 
-    singleton(ContainerDefinition.Events, () => Dispatcher());
+    singleton(ContainerDefinition.events, () => Dispatcher());
 
     final logManager = LogManager({
-      LogDefinition.ChannelFramework: FrameworkLogAdapter(),
+      LogDefinition.channelFramework: FrameworkLogAdapter(),
     });
 
-    singleton(ContainerDefinition.Logger, () => logManager);
+    singleton(ContainerDefinition.logger, () => logManager);
   }
 
   void dispatch(String event) {
-    make<Dispatcher>(ContainerDefinition.Events).dispatch(event);
+    make<Dispatcher>(ContainerDefinition.events).dispatch(event);
   }
 
   register(Function implementation) {

@@ -17,9 +17,7 @@ class BottomNavigationBarBuilder extends WidgetBuilder {
             label: x["data"]["label"]))),
         currentIndex: application.make<ValueManager>(WireDefinition.valueManager).getValue<int>(
             Value.fromJson(element.data["currentIndex"]["data"])),
-        elevation: element.data["elevation"] == null
-            ? null
-            : element.data["elevation"].toDouble(),
+        elevation: element.data["elevation"]?.toDouble(),
         iconSize: element.data["iconSize"] == null
             ? 24.0
             : element.data["iconSize"].toDouble(),
@@ -34,8 +32,8 @@ class BottomNavigationBarBuilder extends WidgetBuilder {
         unselectedFontSize: element.data["unselectedFontSize"] == null ? 12.0 : element.data["unselectedFontSize"].toDouble(),
         selectedLabelStyle: element.data["selectedLabelStyle"] == null ? null : TextStyle.fromJson(element.data["selectedLabelStyle"]).build(),
         unselectedLabelStyle: element.data["unselectedLabelStyle"] == null ? null : TextStyle.fromJson(element.data["unselectedLabelStyle"]).build(),
-        showSelectedLabels: element.data["showSelectedLabels"] == null ? null : element.data["showSelectedLabels"],
-        showUnselectedLabels: element.data["showUnselectedLabels"] == null ? null : element.data["showUnselectedLabels"],
+        showSelectedLabels: element.data["showSelectedLabels"],
+        showUnselectedLabels: element.data["showUnselectedLabels"],
         onTap: (index) {
           application
               .make<EventDispatcher>(WireDefinition.eventDispatcher)

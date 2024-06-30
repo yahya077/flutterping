@@ -79,5 +79,8 @@ class ElementBuilderProvider extends Provider {
 
     app.singleton(ElementDefinition.validateAndSubmitAction,
         () => ValidateAndSubmitActionExecutor(app));
+
+    app.singleton(ElementDefinition.functionCallAction,
+        () => FunctionCallActionExecutor(app));
   }
 }

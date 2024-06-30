@@ -1,12 +1,13 @@
 import 'definitions/definition.dart';
 import 'state.dart';
 
-class ChangeNotifierState extends State {
-  ChangeNotifierState({required Map<String, dynamic> state}) : super(state: state);
+class CallableRegistryState extends State {
+  CallableRegistryState({required Map<String, dynamic> state})
+      : super(state: state);
 
-  ChangeNotifierState.initial() : super(state: {}) {
+  CallableRegistryState.initial() : super(state: {}) {
     hydrate({
-      'id': WireDefinition.stateChangeNotifierState,
+      'id': WireDefinition.stateCallableRegistryState,
     });
   }
 }

@@ -40,15 +40,11 @@ class AppBarBuilder extends PreferredSizeWidgetBuilder {
               application
                   .make<WidgetBuilder>(element.type)
                   .build(Element.fromJson(x)))),
-      elevation: element.data["elevation"] == null
-          ? null
-          : element.data["elevation"].toDouble(),
+      elevation: element.data["elevation"]?.toDouble(),
       backgroundColor: element.data["backgroundColor"] == null
           ? null
           : Color.findColor(element.data["backgroundColor"]).build(),
-      centerTitle: element.data["centerTitle"] == null
-          ? false
-          : element.data["centerTitle"],
+      centerTitle: element.data["centerTitle"] ?? false,
     );
   }
 }

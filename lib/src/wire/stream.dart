@@ -5,9 +5,12 @@ import 'package:flutter_ping_wire/src/framework/app.dart';
 import 'package:flutter_ping_wire/src/framework/definitions/containers.dart';
 import 'package:flutter_ping_wire/src/framework/dispatcher.dart';
 
+import 'definitions/definition.dart';
 import 'models/event.dart';
+import 'state_manager.dart';
 
-typedef EventListener = StreamSubscription Function(material.BuildContext context);
+typedef EventListener = StreamSubscription Function(
+    material.BuildContext context);
 
 typedef DisposeListener = void Function();
 
@@ -16,8 +19,16 @@ class EventDispatcher {
 
   EventDispatcher(this.application);
 
-  dispatch(Event event) {
-    application.make<Dispatcher>(ContainerDefinition.Events).dispatch(
+  scopedEventDispatch(Event event) {}
+
+  dispatch(Event event, {Map<String, dynamic> scopeContext = const {}}) {
+    if (event.scope != null) {
+      application
+          .make<StateManager>(WireDefinition.stateManager)
+          .bindScope(event.scope!.id, scopeContext);
+    }
+
+    application.make<Dispatcher>(ContainerDefinition.events).dispatch(
         "${event.stateId}_${event.name}",
         EventPayload(
           payload: event.payload,

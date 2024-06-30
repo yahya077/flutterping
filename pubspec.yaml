@@ -1,10 +1,10 @@
 name: flutter_ping_wire
 description: "With FlutterPing, you can serve different parts of your application via various APIs, enabling you to craft sophisticated micro mobile apps."
-version: 0.0.2
+version: 0.0.3
 homepage: "https://docs.flutterping.com"
 repository: "https://github.com/yahya077/flutterping"
 issue_tracker: "https://roadmap.flutterping.com/projects/bugs"
-documentation: "https://docs.flutterping.comhttps://docs.flutterping.com/~gitbook/image?url=https%3A%2F%2F3888274040-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FI4f3MyLzhKEtLWOvUP4E%252Fuploads%252Fsa0yCQnlfITgfiDHeTxJ%252FScreenshot%25202024-06-22%2520at%252000.50.54.png%3Falt%3Dmedia%26token%3De037aa97-6579-4555-a3fa-bb6d3de3147b&width=768&dpr=4&quality=100&sign=b0cb12a60d4e343ac76004d2bc6f0b316e0bd61af1889c387cc3b1d8cda4a569"
+documentation: "https://docs.flutterping.com"
 platforms:
   android:
   ios:

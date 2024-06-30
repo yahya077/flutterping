@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart' as material;
-import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:flutter_ping_wire/src/wire/change_notifier_state.dart';
 import 'package:flutter_ping_wire/src/wire/models/config.dart' as config_model;
 import 'package:flutter_ping_wire/src/wire/provider/element_builder_provider.dart';
 
+import 'package:flutter_ping_wire/src/wire/value_provider.dart';
+
+import '../framework/app.dart';
 import 'client.dart';
 import 'config.dart';
-import 'resources/widgets/reactive_widget_manager.dart';
+import 'definitions/definition.dart';
+import 'loader/loader.dart';
+import 'provider/wire_provider.dart';
+import 'state_manager.dart';
 
 export 'builders/widget_builder.dart';
 export 'builders/element_builder.dart';
@@ -15,12 +20,18 @@ export 'builders/router_config_builder.dart';
 export 'builders/change_notifier_builder.dart';
 export 'provider/wire_provider.dart';
 export 'models/element.dart';
+export 'models/event.dart';
 export 'models/router_config_data.dart';
 export 'state.dart';
 export 'state_manager.dart';
 export 'navigation_state.dart';
 export 'routing_service.dart';
 export 'resources/animation/animation.dart';
+export 'resources/widgets/stateless_widget.dart';
+export 'callable_registry.dart';
+export 'stream.dart';
+export 'value.dart';
+export 'value_provider.dart';
 
 class WireBootstrap {
   Application app;
@@ -45,8 +56,9 @@ class WireBootstrap {
   }
 
   Future<void> initAsync() async {
-    app.make<StateManager>(WireDefinition.stateManager)
-    .addState(ChangeNotifierState.initial());
+    app
+        .make<StateManager>(WireDefinition.stateManager)
+        .addState(CallableRegistryState.initial());
 
     final config =
         await app.make<WireConfig>(WireDefinition.config).ensureAllAs();
@@ -73,8 +85,8 @@ class WireBootstrap {
   }
 
   wrap(material.Widget widget) {
-    return ReactiveWidgetProvider(
-      manager: ReactiveWidgetNotifierManager(),
+    return ValueProvider(
+      manager: ValueNotifierManager(),
       child: widget,
     );
   }

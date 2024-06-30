@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_ping_wire/src/wire/models/scope.dart';
+
 abstract class AbstractEvent {
   setStateId(String stateId);
 
@@ -17,16 +19,19 @@ class EventPayload {
     this.stateId,
   });
 }
+
 //TODO use element
 class Event implements AbstractEvent {
   String? name;
   String stateId;
   dynamic payload;
+  Scope? scope;
 
   Event({
     this.name,
     required this.stateId,
     this.payload,
+    this.scope,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
@@ -34,6 +39,7 @@ class Event implements AbstractEvent {
       name: json["name"],
       stateId: json["stateId"],
       payload: json["payload"],
+      scope: json["scope"] != null ? Scope.fromJson(json["scope"]) : null,
     );
   }
 

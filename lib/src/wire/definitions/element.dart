@@ -31,6 +31,7 @@ class ElementDefinition {
   static const eventDispatchAction = 'EventDispatchAction';
   static const updateReactiveWidgetAction = 'UpdateReactiveWidgetAction';
   static const validateAndSubmitAction = 'ValidateAndSubmitAction';
+  static const functionCallAction = 'FunctionCallAction';
   static const scrollController = 'ScrollController';
   static const intrinsicHeight = 'IntrinsicHeight';
 }

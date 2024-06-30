@@ -1,3 +1,3 @@
 class LogDefinition {
-  static const String ChannelFramework = 'app';
+  static const String channelFramework = 'app';
 }

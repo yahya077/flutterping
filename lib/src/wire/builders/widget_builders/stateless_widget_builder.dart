@@ -14,8 +14,9 @@ class StatelessWidgetBuilder extends WidgetBuilder {
               .make<StateManager>(WireDefinition.stateManager)
               .addState(base_state.State(state: {
                 "id": stateId,
-                "widgetNotifier": ReactiveWidgetProvider.of(context)
-                    .createReactiveWidgetNotifier(stateId),
+                //TODO : implement this
+                /*"widgetNotifier": ReactiveWidgetProvider.of(context)
+                    .createReactiveWidgetNotifier(stateId),*/
                 "ctx": context,
               }));
         }

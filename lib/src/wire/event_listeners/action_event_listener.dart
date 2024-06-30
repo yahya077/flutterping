@@ -18,7 +18,7 @@ class ActionEventListener {
     dispose(stateId);
 
     return application
-        .make<Dispatcher>(ContainerDefinition.Events)
+        .make<Dispatcher>(ContainerDefinition.events)
         .on("${stateId}_${EventDefinition.actionEventName}")
         .listen((eventPayload) {
       final actionEl = Element.fromJson(eventPayload.payload);
@@ -30,7 +30,7 @@ class ActionEventListener {
 
   void dispose(String key) {
     application
-        .make<Dispatcher>(ContainerDefinition.Events)
+        .make<Dispatcher>(ContainerDefinition.events)
         .dispose("${key}_${EventDefinition.actionEventName}");
   }
 }

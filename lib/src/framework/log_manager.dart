@@ -7,7 +7,7 @@ abstract class LogAdapter {
 class FrameworkLogAdapter implements LogAdapter {
   @override
   void log(LogLevel level, String message) {
-    print('[$level] $message');
+
   }
 }
 

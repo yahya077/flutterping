@@ -1,5 +1,5 @@
 class ContainerDefinition {
-  static const String AppExceptionHandler = 'AppExceptionHandler';
-  static const String Events = 'Events';
-  static const String Logger = 'Logger';
+  static const String appExceptionHandler = 'AppExceptionHandler';
+  static const String events = 'Events';
+  static const String logger = 'Logger';
 }

@@ -81,7 +81,7 @@ class Client {
     try {
       return await request();
     } catch (e) {
-      container.make<AppExceptionHandler>(ContainerDefinition.AppExceptionHandler).report(e);
+      container.make<AppExceptionHandler>(ContainerDefinition.appExceptionHandler).report(e);
 
       return http.Response('Failed to execute request', 500);
     }

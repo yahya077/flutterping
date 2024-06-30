@@ -6,6 +6,10 @@
 * new builder for ChangeNotifier
 * IntrinsicHeight added
 * Curves added
+* new value notifier added
+* carousel_slider adapter example added
+* dots_indicator adapter example added
+* callable_registry added
 
 ## 0.0.2
 

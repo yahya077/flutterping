@@ -1,4 +1,5 @@
 import 'package:flutter_ping_wire/src/framework/app.dart';
+import 'package:flutter_ping_wire/src/wire/scope_state.dart';
 
 import 'app_state.dart';
 import 'state.dart';
@@ -15,6 +16,19 @@ class StateManager {
 
   T getState<T>(String stateId) {
     return _appState.getState(stateId) as T;
+  }
+
+  bindScope(String scopeKey, Map<String, dynamic> scopeContext) {
+    _appState.addState(
+        ScopeState(state: {"id": "scoped_state_$scopeKey", ...scopeContext}));
+  }
+
+  ScopeState getScope(String scopeKey) {
+    return _appState.getState<ScopeState>("scoped_state_$scopeKey");
+  }
+
+  disposeScope(String scopeKey) {
+    _appState.removeState("scoped_state_$scopeKey");
   }
 
   void set<T>(String stateId, String key, T value) {
@@ -63,7 +77,6 @@ class StateManager {
 
       return value;
     }
-
   }
 
   AbstractState addState(AbstractState state) {

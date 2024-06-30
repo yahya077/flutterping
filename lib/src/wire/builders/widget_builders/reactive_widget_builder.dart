@@ -10,8 +10,9 @@ class ReactiveWidgetBuilder extends WidgetBuilder {
     final parentState =
         stateManager.getState<base_state.State>(element.data["parentStateId"]);
     final widgetNotifier =
-        ReactiveWidgetProvider.of(parentState.get<material.BuildContext>('ctx'))
-            .createReactiveWidgetNotifier(element.data["stateId"]);
+        ValueProvider.of(parentState.get<material.BuildContext>('ctx'))
+            .registerValueNotifier<material.Widget>(element.data["stateId"],
+                defaultValue: material.Container());
 
     stateManager
         .addState(base_state.State.withId(element.data["stateId"]))
@@ -30,7 +31,8 @@ class ReactiveWidgetBuilder extends WidgetBuilder {
       },
       stateEventListener: (context) {
         return application
-            .make<StateEventListener>(WireDefinition.containerStateEventListener)
+            .make<StateEventListener>(
+                WireDefinition.containerStateEventListener)
             .listen(context, stateSchema, element.data["stateId"]);
       },
       disposeListeners: () {
@@ -40,7 +42,8 @@ class ReactiveWidgetBuilder extends WidgetBuilder {
             .dispose(element.data["stateId"]);
 
         application
-            .make<StateEventListener>(WireDefinition.containerStateEventListener)
+            .make<StateEventListener>(
+                WireDefinition.containerStateEventListener)
             .dispose(element.data["stateId"]);
       },
       emitInitialState: (context) {

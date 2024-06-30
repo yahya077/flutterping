@@ -3,6 +3,7 @@ import 'package:flutter_ping_wire/src/framework/app.dart';
 import 'package:flutter_ping_wire/src/wire/builders/change_notifier_builder.dart';
 import 'package:flutter_ping_wire/src/wire/resources/paintings/shape_border.dart';
 import 'package:flutter_ping_wire/src/wire/resources/rendering/sliver_grid_delegate.dart';
+import 'package:flutter_ping_wire/src/wire/value_provider.dart';
 
 import '../definitions/wire.dart';
 import '../event_listeners/action_event_listener.dart';
@@ -18,7 +19,6 @@ import '../models/element.dart';
 import '../models/event.dart';
 import '../resources/rendering/basic_types.dart';
 import '../resources/widgets/reactive_widget.dart';
-import '../resources/widgets/reactive_widget_manager.dart';
 import '../state_manager.dart';
 import '../stream.dart';
 import '../value.dart';
@@ -87,5 +87,7 @@ part 'widget_builders/single_child_scroll_view_builder.dart';
 part 'widget_builders/card_builder.dart';
 
 part 'widget_builders/image_network_builder.dart';
+
 part 'widget_builders/bottom_app_bar.dart';
+
 part 'widget_builders/intrinsic_height_builder.dart';
