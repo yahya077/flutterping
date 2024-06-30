@@ -48,11 +48,13 @@ class ReactiveWidgetStateSchema {
   State getState(String state) {
     return states.firstWhere((element) => element.name == state);
   }
+
+  State get initialState {
+    return getState(initialStateName);
+  }
 }
 
 class ReactiveMaterialWidget extends material.StatefulWidget {
-  final String stateId;
-  final ReactiveWidgetStateSchema state;
   final ValueNotifier<material.Widget> widgetNotifier;
   final EventListener actionEventListener;
   final EventListener stateEventListener;
@@ -61,8 +63,6 @@ class ReactiveMaterialWidget extends material.StatefulWidget {
 
   const ReactiveMaterialWidget({
     super.key,
-    required this.stateId,
-    required this.state,
     required this.widgetNotifier,
     required this.actionEventListener,
     required this.stateEventListener,

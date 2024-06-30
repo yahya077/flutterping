@@ -5,7 +5,7 @@ class ValueNotifierManager extends material.ChangeNotifier {
 
   ValueNotifier<T> registerValueNotifier<T>(String id, {T? defaultValue}) {
     if (_values.containsKey(id)) {
-      throw Exception("ValueNotifier with id $id already exists");
+      return _values[id]! as ValueNotifier<T>;
     }
 
     final valueNotifier = ValueNotifier<T>(defaultValue);

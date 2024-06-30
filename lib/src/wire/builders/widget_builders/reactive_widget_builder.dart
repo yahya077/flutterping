@@ -5,57 +5,46 @@ class ReactiveWidgetBuilder extends WidgetBuilder {
 
   @override
   material.Widget build(Element element) {
-    final stateManager =
-        application.make<StateManager>(WireDefinition.stateManager);
-    final parentState =
-        stateManager.getState<base_state.State>(element.data["parentStateId"]);
-    final widgetNotifier =
-        ValueProvider.of(parentState.get<material.BuildContext>('ctx'))
-            .registerValueNotifier<material.Widget>(element.data["stateId"],
-                defaultValue: material.Container());
-
-    stateManager
-        .addState(base_state.State.withId(element.data["stateId"]))
-        .set("widgetNotifier", widgetNotifier);
     final stateSchema =
         ReactiveWidgetStateSchema.fromJson(element.data["state"]);
-    return ReactiveMaterialWidget(
-      stateId: element.data["stateId"],
-      state: ReactiveWidgetStateSchema.fromJson(element.data["state"]),
-      widgetNotifier: widgetNotifier,
-      actionEventListener: (context) {
-        return application
-            .make<ActionEventListener>(
-                WireDefinition.containerActionEventListener)
-            .listen(element.data["stateId"], context);
-      },
-      stateEventListener: (context) {
-        return application
-            .make<StateEventListener>(
-                WireDefinition.containerStateEventListener)
-            .listen(context, stateSchema, element.data["stateId"]);
-      },
-      disposeListeners: () {
-        application
-            .make<ActionEventListener>(
-                WireDefinition.containerActionEventListener)
-            .dispose(element.data["stateId"]);
 
-        application
-            .make<StateEventListener>(
-                WireDefinition.containerStateEventListener)
-            .dispose(element.data["stateId"]);
-      },
-      emitInitialState: (context) {
-        final state = ReactiveWidgetStateSchema.fromJson(element.data["state"])
-            .getState(ReactiveWidgetStateSchema.fromJson(element.data["state"])
-                .initialStateName);
-        for (var action in state.actions) {
+    return StatelessWidget(builder: (context) {
+      final widgetNotifier = ValueProvider.of(context)
+          .registerValueNotifier<material.Widget>(element.data["stateId"],
+              defaultValue: material.Container());
+      return ReactiveMaterialWidget(
+        widgetNotifier: widgetNotifier,
+        actionEventListener: (context) {
+          return application
+              .make<ActionEventListener>(
+                  WireDefinition.containerActionEventListener)
+              .listen(element.data["stateId"], context);
+        },
+        stateEventListener: (context) {
+          return application
+              .make<StateEventListener>(
+                  WireDefinition.containerStateEventListener)
+              .listen(context, stateSchema, element.data["stateId"]);
+        },
+        disposeListeners: () {
           application
-              .make<ActionExecutor>(action.type)
-              .execute(context, action);
-        }
-      },
-    );
+              .make<ActionEventListener>(
+                  WireDefinition.containerActionEventListener)
+              .dispose(element.data["stateId"]);
+
+          application
+              .make<StateEventListener>(
+                  WireDefinition.containerStateEventListener)
+              .dispose(element.data["stateId"]);
+        },
+        emitInitialState: (context) {
+          for (var action in stateSchema.initialState.actions) {
+            application
+                .make<ActionExecutor>(action.type)
+                .execute(context, action);
+          }
+        },
+      );
+    });
   }
 }

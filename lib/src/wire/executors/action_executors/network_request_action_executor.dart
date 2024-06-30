@@ -6,7 +6,7 @@ class NetworkRequestActionExecutor extends ActionExecutor {
   @override
   Future<void> execute(material.BuildContext context, Element element) async {
     final path = ApiPath.fromJson(element.data["path"]["data"]);
-    //TODO rewrite client implementation
+
     final response = await application
         .make<Client>(element.data["client"])
         .request(path.path,

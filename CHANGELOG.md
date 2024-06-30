@@ -1,3 +1,8 @@
+## 0.0.4
+
+* reactive widget ctx dependency removed
+* 
+
 ## 0.0.3
 
 * text style bug fixed
