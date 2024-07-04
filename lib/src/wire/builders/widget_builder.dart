@@ -11,10 +11,10 @@ import '../event_listeners/state_event_listener.dart';
 import '../executors/action_executor.dart';
 import '../form_state.dart';
 import '../resources/paintings/padding.dart';
+import '../resources/ui/floating_action_button_location.dart';
 import '../resources/widgets/form_widget.dart';
 import '../resources/widgets/stateless_widget.dart';
 import '../resources/widgets/text_input.dart';
-import '../state.dart' as base_state;
 import '../models/element.dart';
 import '../models/event.dart';
 import '../resources/rendering/basic_types.dart';
@@ -91,3 +91,5 @@ part 'widget_builders/image_network_builder.dart';
 part 'widget_builders/bottom_app_bar.dart';
 
 part 'widget_builders/intrinsic_height_builder.dart';
+part 'widget_builders/floating_action_button.dart';
+part 'widget_builders/image_asset_builder.dart';

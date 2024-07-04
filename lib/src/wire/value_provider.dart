@@ -20,6 +20,11 @@ class ValueNotifierManager extends material.ChangeNotifier {
   }
 
   //TODO: add dispose value notifier
+
+  void disposeValueNotifier(String id) {
+    _values.remove(id);
+  }
+
   List<String> get keys => _values.keys.toList();
 }
 
@@ -84,7 +89,7 @@ abstract class NeedsValueNotifierState<T extends material.StatefulWidget>
 
   void _disposeNotifiers() {
     for (var notifier in notifiers) {
-      notifier.dispose();
+      notifier.removeListener(_updateState);
     }
   }
 

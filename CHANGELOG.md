@@ -1,7 +1,10 @@
 ## 0.0.4
 
 * reactive widget ctx dependency removed
-* 
+* scaffold extended
+* floating action button added
+* image asset widget added
+* value notifier bug fixed
 
 ## 0.0.3
 

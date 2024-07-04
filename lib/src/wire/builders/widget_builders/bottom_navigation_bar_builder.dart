@@ -23,11 +23,11 @@ class BottomNavigationBarBuilder extends WidgetBuilder {
             : element.data["iconSize"].toDouble(),
         selectedItemColor: element.data["selectedItemColor"] == null
             ? null
-            : Color.fromJson(element.data["selectedItemColor"]).build(),
+            : Color.findColor(element.data["selectedItemColor"]).build(),
         unselectedItemColor: element.data["unselectedItemColor"] == null
             ? null
-            : Color.fromJson(element.data["unselectedItemColor"]).build(),
-        backgroundColor: element.data["backgroundColor"] == null ? null : Color.fromJson(element.data["backgroundColor"]).build(),
+            : Color.findColor(element.data["unselectedItemColor"]).build(),
+        backgroundColor: element.data["backgroundColor"] == null ? null : Color.findColor(element.data["backgroundColor"]).build(),
         selectedFontSize: element.data["selectedFontSize"] == null ? 14.0 : element.data["selectedFontSize"].toDouble(),
         unselectedFontSize: element.data["unselectedFontSize"] == null ? 12.0 : element.data["unselectedFontSize"].toDouble(),
         selectedLabelStyle: element.data["selectedLabelStyle"] == null ? null : TextStyle.fromJson(element.data["selectedLabelStyle"]).build(),

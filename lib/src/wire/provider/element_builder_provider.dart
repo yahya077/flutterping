@@ -49,6 +49,10 @@ class ElementBuilderProvider extends Provider {
         ElementDefinition.bottomAppBar, () => BottomAppBarBuilder(app));
     app.singleton(
         ElementDefinition.intrinsicHeight, () => IntrinsicHeightBuilder(app));
+    app.singleton(
+        ElementDefinition.floatingActionButton, () => FloatingActionButtonBuilder(app));
+    app.singleton(
+        ElementDefinition.imageAsset, () => ImageAssetBuilder(app));
 
     // page builders
     app.singleton(

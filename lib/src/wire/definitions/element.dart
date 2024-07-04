@@ -34,4 +34,6 @@ class ElementDefinition {
   static const functionCallAction = 'FunctionCallAction';
   static const scrollController = 'ScrollController';
   static const intrinsicHeight = 'IntrinsicHeight';
+  static const floatingActionButton = 'FloatingActionButton';
+  static const imageAsset = 'ImageAsset';
 }

@@ -11,7 +11,7 @@ class BottomAppBarBuilder extends WidgetBuilder {
           : Padding.fromJson(element.data["padding"]).build(),
       surfaceTintColor: element.data["surfaceTintColor"] == null
           ? null
-          : Color.fromJson(element.data["surfaceTintColor"]).build(),
+          : Color.findColor(element.data["surfaceTintColor"]).build(),
       height: element.data["height"] == null
           ? null
           : double.parse(element.data["height"].toString()),
@@ -20,7 +20,7 @@ class BottomAppBarBuilder extends WidgetBuilder {
           : double.parse(element.data["notchMargin"].toString()),
       shadowColor: element.data["shadowColor"] == null
           ? null
-          : Color.fromJson(element.data["shadowColor"]).build(),
+          : Color.findColor(element.data["shadowColor"]).build(),
       elevation: element.data["elevation"] == null
           ? 8.0
           : double.parse(element.data["elevation"].toString()),
