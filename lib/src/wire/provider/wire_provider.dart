@@ -8,7 +8,6 @@ import '../event_listeners/state_event_listener.dart';
 import '../loader/loader.dart';
 import '../state_manager.dart';
 import '../stream.dart';
-import '../value.dart';
 
 class WireProvider extends Provider {
   WireProvider();
@@ -23,7 +22,6 @@ class WireProvider extends Provider {
     app.singleton(WireDefinition.containerStateEventListener,
         () => StateEventListener(app));
     app.singleton(WireDefinition.stateManager, () => StateManager(app));
-    app.singleton(WireDefinition.valueManager, () => ValueManager(app));
     app.singleton(WireDefinition.loaderPreLoader, () => PreLoader(app));
   }
 }

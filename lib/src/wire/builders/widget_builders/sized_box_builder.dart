@@ -4,7 +4,7 @@ class SizedBoxBuilder extends WidgetBuilder {
   SizedBoxBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.SizedBox(
       width: json.data["width"] == null
           ? null
@@ -15,8 +15,8 @@ class SizedBoxBuilder extends WidgetBuilder {
       child: json.data["child"] == null
           ? null
           : application
-          .make<WidgetBuilder>(json.data["child"]["type"])
-          .build(Json.fromJson(json.data["child"])),
+              .make<WidgetBuilder>(json.data["child"]["type"])
+              .build(Json.fromJson(json.data["child"]), context),
     );
   }
 }

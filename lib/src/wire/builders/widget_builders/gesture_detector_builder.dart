@@ -4,7 +4,7 @@ class GestureDetectorBuilder extends WidgetBuilder {
   GestureDetectorBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.GestureDetector(
       onTap: json.data["onTap"] == null
           ? null
@@ -13,7 +13,7 @@ class GestureDetectorBuilder extends WidgetBuilder {
               .dispatch(Event.fromJson(json.data["onTap"]["data"])),
       child: application
           .make<WidgetBuilder>(json.data["child"]["type"])
-          .build(Json.fromJson(json.data["child"])),
+          .build(Json.fromJson(json.data["child"]), context),
     );
   }
 }

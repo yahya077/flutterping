@@ -4,12 +4,12 @@ class CarouselSliderBuilder extends WidgetBuilder {
   CarouselSliderBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     final options = json.data["options"];
     final carouselControllerEl = Json.fromJson(json.data["controller"]);
     final carouselController = application
         .make<CarouselControllerBuilder>(carouselControllerEl.type)
-        .build(carouselControllerEl);
+        .build(carouselControllerEl, context);
     application.make<StateManager>(WireDefinition.stateManager).set(
         WireDefinition.stateCallableRegistryState,
         carouselControllerEl.data["id"],
@@ -27,7 +27,7 @@ class CarouselSliderBuilder extends WidgetBuilder {
                 final itemEl = Json.fromJson(item);
                 return application
                     .make<WidgetBuilder>(itemEl.type)
-                    .build(itemEl);
+                    .build(itemEl, context);
               })),
         options: carousel_slider.CarouselOptions(
           onPageChanged: (index, reason) {

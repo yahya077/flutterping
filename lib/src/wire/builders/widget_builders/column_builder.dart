@@ -4,7 +4,7 @@ class ColumnBuilder extends WidgetBuilder {
   ColumnBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.Column(
       mainAxisAlignment: json.data["mainAxisAlignment"] == null
           ? material.MainAxisAlignment.start
@@ -15,7 +15,7 @@ class ColumnBuilder extends WidgetBuilder {
       children: json.data["children"]
           .map<material.Widget>((child) => application
               .make<WidgetBuilder>(child["type"])
-              .build(Json.fromJson(child)))
+              .build(Json.fromJson(child), context))
           .toList(),
     );
   }

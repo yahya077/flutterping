@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/wire/change_notifier_state.dart';
+import 'package:flutter_ping_wire/src/wire/local_state.dart';
 import 'package:flutter_ping_wire/src/wire/models/config.dart' as config_model;
 import 'package:flutter_ping_wire/src/wire/provider/json_builder_provider.dart';
 
@@ -30,7 +31,6 @@ export 'resources/animation/animation.dart';
 export 'resources/widgets/stateless_widget.dart';
 export 'callable_registry.dart';
 export 'stream.dart';
-export 'value.dart';
 export 'value_provider.dart';
 export 'resources/ui/color.dart';
 
@@ -60,6 +60,9 @@ class WireBootstrap {
     app
         .make<StateManager>(WireDefinition.stateManager)
         .addState(CallableRegistryState.initial());
+    app
+        .make<StateManager>(WireDefinition.stateManager)
+        .addState(LocalState.initial());
 
     final config =
         await app.make<WireConfig>(WireDefinition.config).ensureAllAs();

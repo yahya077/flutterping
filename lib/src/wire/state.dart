@@ -2,18 +2,26 @@ import 'dart:convert';
 
 abstract class AbstractState {
   String getId();
+
   void set<T>(String key, T value);
+
+  void setAll(Map<String, dynamic> other);
+
   T get<T>(String key, {T? defaultValue});
+
   void dispose();
+
   void hydrate(Map<String, dynamic> state);
+
   Map<String, dynamic> dehydrate();
+
   Object? dehydrateAsJson();
 }
 
 class State implements AbstractState {
   final Map<String, dynamic> _state = {};
 
-  State({required Map<String, dynamic> state}){
+  State({required Map<String, dynamic> state}) {
     hydrate(state);
   }
 
@@ -24,6 +32,11 @@ class State implements AbstractState {
   @override
   void set<T>(String key, T value) {
     _state[key] = value;
+  }
+
+  @override
+  void setAll(Map<String, dynamic> other) {
+    _state.addAll(other);
   }
 
   bool has(String key) {
@@ -79,8 +92,8 @@ class State implements AbstractState {
   }
 
   factory State.fromJson(Map<String, dynamic> json) => State(
-    state: json,
-  );
+        state: json,
+      );
 
   @override
   String getId() {

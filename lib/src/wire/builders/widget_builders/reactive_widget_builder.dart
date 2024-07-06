@@ -4,9 +4,8 @@ class ReactiveWidgetBuilder extends WidgetBuilder {
   ReactiveWidgetBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
-    final stateSchema =
-        ReactiveWidgetStateSchema.fromJson(json.data["state"]);
+  material.Widget build(Json json, material.BuildContext? context) {
+    final stateSchema = ReactiveWidgetStateSchema.fromJson(json.data["state"]);
 
     return StatelessWidget(builder: (context) {
       final widgetNotifier = ValueProvider.of(context)

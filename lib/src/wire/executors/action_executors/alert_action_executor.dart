@@ -9,7 +9,7 @@ class AlertActionExecutor extends ActionExecutor {
       behavior: material.SnackBarBehavior.floating,
       content: application
           .make<WidgetBuilder>(json.data["content"]["type"])
-          .build(Json.fromJson(json.data["content"])),
+          .build(Json.fromJson(json.data["content"]), context),
       backgroundColor: json.data["color"] == null
           ? null
           : Color.findColor(json.data["color"]).build(),

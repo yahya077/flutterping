@@ -4,7 +4,7 @@ class IconDataBuilder extends WidgetBuilder {
   IconDataBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     //TODO separate this into a new class
     return material.Icon(material.IconData(
       json.data['codePoint'],

@@ -23,6 +23,6 @@ class PreLoader extends Loader {
 
     final element = Json.fromRawJson(response.body);
 
-    return application.make<JsonBuilder>(element.type).build(element);
+    return application.make<JsonBuilder>(element.type).build(element, null);
   }
 }

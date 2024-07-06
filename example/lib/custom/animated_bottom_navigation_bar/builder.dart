@@ -4,7 +4,7 @@ class AnimatedBottomNavigationBarBuilder extends WidgetBuilder {
   AnimatedBottomNavigationBarBuilder(super.application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return StatelessWidget(builder: (context) {
       final activeIndexNotifier = ValueProvider.of(context)
           .registerValueNotifier<int>("active_index_notifier", defaultValue: 0);

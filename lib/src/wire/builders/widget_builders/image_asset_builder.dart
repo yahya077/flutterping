@@ -4,7 +4,7 @@ class ImageAssetBuilder extends WidgetBuilder {
   ImageAssetBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.Image.asset(
       json.data["name"],
       width: DoubleFactory.fromDynamic(json.data["width"]),
@@ -23,8 +23,10 @@ class ImageAssetBuilder extends WidgetBuilder {
       filterQuality: json.data["filterQuality"] == null
           ? material.FilterQuality.low
           : FilterQuality.fromJson(json.data["filterQuality"]).build(),
-      errorBuilder: null, //TODO errorBuilder
-      frameBuilder: null, //TODO frameBuilder
+      errorBuilder: null,
+      //TODO errorBuilder
+      frameBuilder: null,
+      //TODO frameBuilder
       cacheWidth: json.data["cacheWidth"],
       cacheHeight: json.data["cacheHeight"],
       color: json.data["color"] == null

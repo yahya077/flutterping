@@ -4,6 +4,7 @@ import 'package:flutter_ping_wire/src/wire/builders/change_notifier_builder.dart
 
 import '../builders/page_builder.dart';
 import '../builders/preferred_size_widget_builder.dart';
+import '../builders/value_builder.dart';
 import '../builders/widget_builder.dart';
 import '../definitions/json.dart';
 import '../executors/action_executor.dart';
@@ -17,8 +18,6 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.text, () => TextBuilder(app));
     app.singleton(JsonDefinition.scaffold, () => ScaffoldBuilder(app));
     app.singleton(
-        JsonDefinition.dynamicWidget, () => DynamicWidgetBuilder(app));
-    app.singleton(
         JsonDefinition.elevatedButton, () => ElevatedButtonBuilder(app));
     app.singleton(JsonDefinition.bottomNavigationBar,
         () => BottomNavigationBarBuilder(app));
@@ -31,8 +30,7 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.card, () => CardBuilder(app));
     app.singleton(JsonDefinition.singleChildScrollView,
         () => SingleChildScrollViewBuilder(app));
-    app.singleton(
-        JsonDefinition.imageNetwork, () => ImageNetworkBuilder(app));
+    app.singleton(JsonDefinition.imageNetwork, () => ImageNetworkBuilder(app));
     app.singleton(
         JsonDefinition.reactiveWidget, () => ReactiveWidgetBuilder(app));
     app.singleton(JsonDefinition.form, () => FormBuilder(app));
@@ -43,20 +41,17 @@ class JsonBuilderProvider extends Provider {
     app.singleton(
         JsonDefinition.statelessWidget, () => StatelessWidgetBuilder(app));
     app.singleton(JsonDefinition.materialApp, () => MaterialAppBuilder(app));
-    app.singleton(JsonDefinition.materialAppRouter,
-        () => MaterialAppRouterBuilder(app));
     app.singleton(
-        JsonDefinition.bottomAppBar, () => BottomAppBarBuilder(app));
+        JsonDefinition.materialAppRouter, () => MaterialAppRouterBuilder(app));
+    app.singleton(JsonDefinition.bottomAppBar, () => BottomAppBarBuilder(app));
     app.singleton(
         JsonDefinition.intrinsicHeight, () => IntrinsicHeightBuilder(app));
-    app.singleton(
-        JsonDefinition.floatingActionButton, () => FloatingActionButtonBuilder(app));
-    app.singleton(
-        JsonDefinition.imageAsset, () => ImageAssetBuilder(app));
+    app.singleton(JsonDefinition.floatingActionButton,
+        () => FloatingActionButtonBuilder(app));
+    app.singleton(JsonDefinition.imageAsset, () => ImageAssetBuilder(app));
 
     // page builders
-    app.singleton(
-        JsonDefinition.materialPage, () => MaterialPageBuilder(app));
+    app.singleton(JsonDefinition.materialPage, () => MaterialPageBuilder(app));
 
     // preferred size widget builders
     app.singleton(JsonDefinition.appBar, () => AppBarBuilder(app));
@@ -66,11 +61,19 @@ class JsonBuilderProvider extends Provider {
         JsonDefinition.scrollController, () => ScrollControllerBuilder(app));
 
     //TODO make element_executor_provider
-    app.singleton(
-        JsonDefinition.alertAction, () => AlertActionExecutor(app));
+    app.singleton(JsonDefinition.alertAction, () => AlertActionExecutor(app));
 
-    app.singleton(JsonDefinition.navigationAction,
-        () => NavigationActionExecutor(app));
+    // dynamic value builders
+
+    app.singleton(
+        JsonDefinition.scopeValueBuilder, () => ScopeValueBuilder(app));
+    app.singleton(
+        JsonDefinition.stateValueBuilder, () => StateValueBuilder(app));
+    app.singleton(
+        JsonDefinition.notifierValueBuilder, () => NotifierValueBuilder(app));
+
+    app.singleton(
+        JsonDefinition.navigationAction, () => NavigationActionExecutor(app));
 
     app.singleton(JsonDefinition.networkRequestAction,
         () => NetworkRequestActionExecutor(app));

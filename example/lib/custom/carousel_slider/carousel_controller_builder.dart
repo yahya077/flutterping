@@ -4,7 +4,7 @@ class CarouselControllerBuilder extends JsonBuilder<CarouselController> {
   CarouselControllerBuilder(Application application) : super(application);
 
   @override
-  CarouselController build(Json json) {
+  CarouselController build(Json json, material.BuildContext? context) {
     final id = json.data["id"];
 
     return application

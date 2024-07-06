@@ -4,7 +4,7 @@ class TextBuilder extends WidgetBuilder {
   TextBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.Text(
       json.data["text"],
       style: json.data["style"] == null

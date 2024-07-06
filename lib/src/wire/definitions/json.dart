@@ -36,4 +36,7 @@ class JsonDefinition {
   static const intrinsicHeight = 'IntrinsicHeight';
   static const floatingActionButton = 'FloatingActionButton';
   static const imageAsset = 'ImageAsset';
+  static const scopeValueBuilder = 'ScopeValue';
+  static const stateValueBuilder = 'StateValue';
+  static const notifierValueBuilder = 'NotifierValue';
 }

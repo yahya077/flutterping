@@ -4,7 +4,7 @@ class FloatingActionButtonBuilder extends WidgetBuilder {
   FloatingActionButtonBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.FloatingActionButton(
       disabledElevation: json.data["disabledElevation"] == null
           ? 6.0
@@ -42,7 +42,7 @@ class FloatingActionButtonBuilder extends WidgetBuilder {
       },
       child: application
           .make<WidgetBuilder>(json.data["child"]["type"])
-          .build(Json.fromJson(json.data["child"])),
+          .build(Json.fromJson(json.data["child"]), context),
     );
   }
 }

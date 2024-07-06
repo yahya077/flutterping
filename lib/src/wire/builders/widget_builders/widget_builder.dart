@@ -4,9 +4,9 @@ class WidgetBuilder extends JsonBuilder<material.Widget> {
   WidgetBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return application
         .make<WidgetBuilder>(json.type)
-        .build(Json.fromJson(json.data));
+        .build(Json.fromJson(json.data), context);
   }
 }

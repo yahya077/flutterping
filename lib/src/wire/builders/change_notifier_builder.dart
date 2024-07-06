@@ -5,10 +5,10 @@ class ChangeNotifierBuilder extends JsonBuilder<material.ChangeNotifier> {
   ChangeNotifierBuilder(Application application) : super(application);
 
   @override
-  material.ChangeNotifier build(Json json) {
+  material.ChangeNotifier build(Json json, material.BuildContext? context) {
     return application
         .make<ChangeNotifierBuilder>(json.type)
-        .build(Json.fromJson(json.data));
+        .build(Json.fromJson(json.data), context);
   }
 }
 
@@ -16,7 +16,7 @@ class ScrollControllerBuilder extends ChangeNotifierBuilder {
   ScrollControllerBuilder(Application application) : super(application);
 
   @override
-  material.ScrollController build(Json json) {
+  material.ScrollController build(Json json, material.BuildContext? context) {
     final id = json.data["id"];
 
     return application

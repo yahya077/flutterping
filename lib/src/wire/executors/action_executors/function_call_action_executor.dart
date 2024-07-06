@@ -7,8 +7,8 @@ class FunctionCallActionExecutor extends ActionExecutor {
   Future<void> execute(material.BuildContext context, Json json) async {
     final callableRegistry = application
         .make<StateManager>(WireDefinition.stateManager)
-        .get<CallableRegistry>(WireDefinition.stateCallableRegistryState,
-            json.data["notifierId"]);
+        .get<CallableRegistry>(
+            WireDefinition.stateCallableRegistryState, json.data["notifierId"]);
 
     Map<String, dynamic>? arguments = json.data["arguments"];
 
@@ -17,8 +17,8 @@ class FunctionCallActionExecutor extends ActionExecutor {
         return MapEntry(
             key,
             application
-                .make<ValueManager>(WireDefinition.valueManager)
-                .getValue(Value.fromJson(value["data"])));
+                .make<JsonBuilder>(value["type"])
+                .build(Json.fromJson(value), context));
       });
     }
 

@@ -4,7 +4,7 @@ class ImageNetworkBuilder extends WidgetBuilder {
   ImageNetworkBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.Image.network(
       json.data["url"],
       width: DoubleFactory.fromDynamic(json.data["width"]),

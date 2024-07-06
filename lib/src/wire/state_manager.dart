@@ -35,6 +35,10 @@ class StateManager {
     _appState.getState(stateId).set(key, value);
   }
 
+  void setAll(String stateId, Map<String, dynamic> other) {
+    _appState.getState(stateId).setAll(other);
+  }
+
   void remove(String stateId) {
     _appState.removeState(stateId);
   }

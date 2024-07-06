@@ -4,7 +4,7 @@ class CardBuilder extends WidgetBuilder {
   CardBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.Card(
       color: json.data["color"] == null
           ? null
@@ -18,7 +18,9 @@ class CardBuilder extends WidgetBuilder {
       surfaceTintColor: json.data["surfaceTintColor"] == null
           ? null
           : Color.findColor(json.data["surfaceTintColor"]).build(),
-      clipBehavior: json.data["clipBehavior"] != null ? Clip.fromJson(json.data["clipBehavior"]).build() : null,
+      clipBehavior: json.data["clipBehavior"] != null
+          ? Clip.fromJson(json.data["clipBehavior"]).build()
+          : null,
       semanticContainer: json.data["semanticContainer"] ?? false,
       borderOnForeground: json.data["borderOnForeground"] ?? true,
       margin: json.data["margin"] == null
@@ -29,8 +31,9 @@ class CardBuilder extends WidgetBuilder {
           : ShapeBorderFactory.findJson(json.data["shape"]).build(),
       child: json.data["child"] == null
           ? null
-          : application.make<WidgetBuilder>(json.data["child"]["type"])
-          .build(Json.fromJson(json.data["child"])),
+          : application
+              .make<WidgetBuilder>(json.data["child"]["type"])
+              .build(Json.fromJson(json.data["child"]), context),
     );
   }
 }

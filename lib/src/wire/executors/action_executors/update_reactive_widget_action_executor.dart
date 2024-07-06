@@ -10,6 +10,6 @@ class UpdateReactiveWidgetActionExecutor extends ActionExecutor {
     final widgetEl = Json.fromJson(json.data["widget"]);
 
     manager.getValueNotifier(json.data["reactiveWidgetId"])?.updateValue(
-        application.make<WidgetBuilder>(widgetEl.type).build(widgetEl));
+        application.make<WidgetBuilder>(widgetEl.type).build(widgetEl, context));
   }
 }

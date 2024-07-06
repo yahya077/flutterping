@@ -4,8 +4,9 @@ class ContainerBuilder extends WidgetBuilder {
   ContainerBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
-    final Json? childJson = json.data["child"] == null ? null : Json.fromJson(json.data["child"]);
+  material.Widget build(Json json, material.BuildContext? context) {
+    final Json? childJson =
+        json.data["child"] == null ? null : Json.fromJson(json.data["child"]);
     return material.Container(
       color: json.data["color"] == null
           ? null
@@ -22,16 +23,18 @@ class ContainerBuilder extends WidgetBuilder {
       width: json.data["width"] == null
           ? null
           : json.data["width"] == null
-          ? null
-          : double.parse(json.data["width"].toString()),
+              ? null
+              : double.parse(json.data["width"].toString()),
       height: json.data["height"] == null
           ? null
           : json.data["height"] == null
+              ? null
+              : double.parse(json.data["height"].toString()),
+      child: childJson == null
           ? null
-          : double.parse(json.data["height"].toString()),
-      child: childJson == null ? null : application
-          .make<WidgetBuilder>(childJson.type)
-          .build(childJson),
+          : application
+              .make<WidgetBuilder>(childJson.type)
+              .build(childJson, context),
     );
   }
 }

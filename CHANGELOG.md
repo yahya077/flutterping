@@ -4,7 +4,7 @@
 * navigateBack action added
 * animated_bottom_navigation_bar adapter added for example
 * element naming convention changed to json
-* 
+* value strategy changed
 
 ## 0.0.4
 

@@ -4,7 +4,7 @@ class StatelessWidgetBuilder extends WidgetBuilder {
   StatelessWidgetBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return StatelessWidget(
       builder: (context) {
         application
@@ -13,7 +13,7 @@ class StatelessWidgetBuilder extends WidgetBuilder {
             .listen(json.data["stateId"], context);
         return application
             .make<WidgetBuilder>(json.data["child"]["type"])
-            .build(Json.fromJson(json.data["child"]));
+            .build(Json.fromJson(json.data["child"]), context);
       },
     );
   }

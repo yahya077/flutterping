@@ -4,7 +4,7 @@ class BottomAppBarBuilder extends WidgetBuilder {
   BottomAppBarBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return material.BottomAppBar(
       padding: json.data["padding"] == null
           ? null
@@ -31,7 +31,7 @@ class BottomAppBarBuilder extends WidgetBuilder {
           ? null
           : application
           .make<WidgetBuilder>(json.data["child"]["type"])
-          .build(Json.fromJson(json.data["child"])),
+          .build(Json.fromJson(json.data["child"]), context),
     );
   }
 }

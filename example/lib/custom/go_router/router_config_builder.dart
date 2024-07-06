@@ -8,7 +8,8 @@ class GoRouteRouterConfigBuilder extends RouterConfigBuilder {
   GoRouteRouterConfigBuilder(Application application) : super(application);
 
   @override
-  material.RouterConfig<Object> build(Json json) {
+  material.RouterConfig<Object> build(
+      Json json, material.BuildContext? context) {
     RouterConfigData data = RouterConfigData.fromJson(json.data);
 
     application
@@ -24,7 +25,7 @@ class GoRouteRouterConfigBuilder extends RouterConfigBuilder {
           .getMainNavigatorKey(),
       routes: data.routes.map((route) {
         final el = Json.fromJson(route);
-        return application.make<RouteBaseBuilder>(el.type).build(el);
+        return application.make<RouteBaseBuilder>(el.type).build(el, context);
       }).toList(),
     );
   }

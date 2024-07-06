@@ -4,7 +4,7 @@ class DotsIndicatorBuilder extends WidgetBuilder {
   DotsIndicatorBuilder(super.application);
 
   @override
-  material.Widget build(Json json) {
+  material.Widget build(Json json, material.BuildContext? context) {
     return StatelessWidget(builder: (context) {
       return DotsIndicator(
           dotsCount: json.data["dotsCount"],
