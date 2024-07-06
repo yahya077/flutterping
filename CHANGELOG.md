@@ -2,6 +2,7 @@
 
 * EventDispatchAction bug fixed
 * navigateBack action added
+* animated_bottom_navigation_bar adapter added for example
 
 ## 0.0.4
 
