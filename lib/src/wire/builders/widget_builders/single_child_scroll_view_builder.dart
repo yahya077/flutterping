@@ -4,21 +4,21 @@ class SingleChildScrollViewBuilder extends WidgetBuilder {
   SingleChildScrollViewBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
-    final Element? childElement = element.data["child"] == null ? null : Element.fromJson(element.data["child"]);
+  material.Widget build(Json json) {
+    final Json? childJson = json.data["child"] == null ? null : Json.fromJson(json.data["child"]);
     return material.SingleChildScrollView(
-      controller: element.data["controller"] == null
+      controller: json.data["controller"] == null
           ? null
           : application
-              .make<ScrollControllerBuilder>(element.data["controller"]["type"])
-              .build(Element.fromJson(element.data["controller"])),
-      scrollDirection: element.data["scrollDirection"] == null
+              .make<ScrollControllerBuilder>(json.data["controller"]["type"])
+              .build(Json.fromJson(json.data["controller"])),
+      scrollDirection: json.data["scrollDirection"] == null
           ? material.Axis.vertical
-          : BasicType.find(element.data["scrollDirection"]).build(),
-      reverse: element.data["reverse"] ?? false,
-      child: childElement == null ? null : application
-          .make<WidgetBuilder>(childElement.type)
-          .build(childElement),
+          : BasicType.find(json.data["scrollDirection"]).build(),
+      reverse: json.data["reverse"] ?? false,
+      child: childJson == null ? null : application
+          .make<WidgetBuilder>(childJson.type)
+          .build(childJson),
     );
   }
 }

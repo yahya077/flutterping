@@ -5,7 +5,7 @@ class CircularProgressIndicatorBuilder extends WidgetBuilder {
       : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return const material.CircularProgressIndicator();
   }
 }

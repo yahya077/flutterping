@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/wire/change_notifier_state.dart';
 import 'package:flutter_ping_wire/src/wire/models/config.dart' as config_model;
-import 'package:flutter_ping_wire/src/wire/provider/element_builder_provider.dart';
+import 'package:flutter_ping_wire/src/wire/provider/json_builder_provider.dart';
 
 import 'package:flutter_ping_wire/src/wire/value_provider.dart';
 
@@ -14,12 +14,12 @@ import 'provider/wire_provider.dart';
 import 'state_manager.dart';
 
 export 'builders/widget_builder.dart';
-export 'builders/element_builder.dart';
+export 'builders/json_builder.dart';
 export 'builders/page_builder.dart';
 export 'builders/router_config_builder.dart';
 export 'builders/change_notifier_builder.dart';
 export 'provider/wire_provider.dart';
-export 'models/element.dart';
+export 'models/json.dart';
 export 'models/event.dart';
 export 'models/router_config_data.dart';
 export 'state.dart';
@@ -32,6 +32,7 @@ export 'callable_registry.dart';
 export 'stream.dart';
 export 'value.dart';
 export 'value_provider.dart';
+export 'resources/ui/color.dart';
 
 class WireBootstrap {
   Application app;
@@ -47,7 +48,7 @@ class WireBootstrap {
 
   WireBootstrap boot() {
     app.register(() => WireProvider());
-    app.register(() => ElementBuilderProvider());
+    app.register(() => JsonBuilderProvider());
     registarables.forEach((key, value) {
       app.register(value);
     });

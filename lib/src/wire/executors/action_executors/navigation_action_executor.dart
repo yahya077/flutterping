@@ -4,9 +4,9 @@ class NavigationActionExecutor extends ActionExecutor {
   NavigationActionExecutor(Application application) : super(application);
 
   @override
-  Future<void> execute(material.BuildContext context, Element element) async {
+  Future<void> execute(material.BuildContext context, Json json) async {
     //TODO implement strategies for NavigationPath
-    final path = NavigationPath.fromJson(element.data["path"]["data"]);
+    final path = NavigationPath.fromJson(json.data["path"]["data"]);
     if (path.stackKey != null &&
         path.index != null &&
         path.path != "" &&

@@ -4,22 +4,22 @@ class NetworkRequestActionExecutor extends ActionExecutor {
   NetworkRequestActionExecutor(Application application) : super(application);
 
   @override
-  Future<void> execute(material.BuildContext context, Element element) async {
-    final path = ApiPath.fromJson(element.data["path"]["data"]);
+  Future<void> execute(material.BuildContext context, Json json) async {
+    final path = ApiPath.fromJson(json.data["path"]["data"]);
 
     final response = await application
-        .make<Client>(element.data["client"])
+        .make<Client>(json.data["client"])
         .request(path.path,
-            body: jsonEncode(element.data["body"] ?? {}),
-            method: element.data["method"] ?? "GET",
-            headers: element.data["headers"] != null
-                ? Map<String, String>.from(element.data["headers"])
+            body: jsonEncode(json.data["body"] ?? {}),
+            method: json.data["method"] ?? "GET",
+            headers: json.data["headers"] != null
+                ? Map<String, String>.from(json.data["headers"])
                 : {});
 
     //TODO handle server errors
-    final responseElement = Element.fromRawJson(response.body);
+    final responseJson = Json.fromRawJson(response.body);
 
-    final event = Event.fromJson(responseElement.data);
+    final event = Event.fromJson(responseJson.data);
 
     application
         .make<EventDispatcher>(WireDefinition.eventDispatcher)

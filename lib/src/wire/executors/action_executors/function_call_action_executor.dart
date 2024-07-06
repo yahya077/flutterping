@@ -4,13 +4,13 @@ class FunctionCallActionExecutor extends ActionExecutor {
   FunctionCallActionExecutor(Application application) : super(application);
 
   @override
-  Future<void> execute(material.BuildContext context, Element element) async {
+  Future<void> execute(material.BuildContext context, Json json) async {
     final callableRegistry = application
         .make<StateManager>(WireDefinition.stateManager)
         .get<CallableRegistry>(WireDefinition.stateCallableRegistryState,
-            element.data["notifierId"]);
+            json.data["notifierId"]);
 
-    Map<String, dynamic>? arguments = element.data["arguments"];
+    Map<String, dynamic>? arguments = json.data["arguments"];
 
     if (arguments != null) {
       arguments = arguments.map((key, value) {
@@ -24,8 +24,8 @@ class FunctionCallActionExecutor extends ActionExecutor {
 
     application
         .make<StateManager>(WireDefinition.stateManager)
-        .disposeScope(element.data["scopeId"]);
+        .disposeScope(json.data["scopeId"]);
 
-    callableRegistry.call(element.data["method"], arguments);
+    callableRegistry.call(json.data["method"], arguments);
   }
 }

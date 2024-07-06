@@ -2,12 +2,12 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:go_router/go_router.dart' as go_router;
 
-class RouteBaseBuilder extends ElementBuilder<go_router.RouteBase> {
+class RouteBaseBuilder extends JsonBuilder<go_router.RouteBase> {
   RouteBaseBuilder(Application application) : super(application);
 
   @override
-  go_router.RouteBase build(Element element) {
-    return application.make<RouteBaseBuilder>(element.type).build(element);
+  go_router.RouteBase build(Json json) {
+    return application.make<RouteBaseBuilder>(json.type).build(json);
   }
 }
 
@@ -15,14 +15,14 @@ class GoRouteBuilder extends RouteBaseBuilder {
   GoRouteBuilder(Application application) : super(application);
 
   @override
-  go_router.RouteBase build(Element element) {
+  go_router.RouteBase build(Json json) {
     return go_router.GoRoute(
-        name: element.data["name"],
-        path: element.data["path"],
+        name: json.data["name"],
+        path: json.data["path"],
         pageBuilder: (context, state) {
           final pageState = State(state: {
-            "id": element.data["stateId"],
-            "stateId": element.data["stateId"],
+            "id": json.data["stateId"],
+            "stateId": json.data["stateId"],
             "uri": state.uri,
             "extra": state.extra,
             "ctx": context,
@@ -32,11 +32,11 @@ class GoRouteBuilder extends RouteBaseBuilder {
               .make<StateManager>(WireDefinition.stateManager)
               .addState(pageState);
 
-          final pageEl = Element.fromJson(element.data["page"]);
+          final pageEl = Json.fromJson(json.data["page"]);
           return application.make<PageBuilder>(pageEl.type).build(pageEl);
         },
-        routes: element.data["routes"]?.map<go_router.RouteBase>((route) {
-              final routeEl = Element.fromJson(route);
+        routes: json.data["routes"]?.map<go_router.RouteBase>((route) {
+              final routeEl = Json.fromJson(route);
               return application
                   .make<RouteBaseBuilder>(routeEl.type)
                   .build(routeEl);
@@ -50,15 +50,15 @@ class StatefulShellRouteWithIndexedStackBuilder extends RouteBaseBuilder {
       : super(application);
 
   @override
-  go_router.RouteBase build(Element element) {
+  go_router.RouteBase build(Json json) {
     final navigationState = application
         .make<StateManager>(WireDefinition.stateManager)
         .getState<NavigationState>(WireDefinition.stateNavigationState);
 
     return go_router.StatefulShellRoute.indexedStack(
-        branches: element.data["branches"]
-            .map<go_router.StatefulShellBranch>((branch) {
-              final branchEl = Element.fromJson(branch);
+        branches:
+            json.data["branches"].map<go_router.StatefulShellBranch>((branch) {
+          final branchEl = Json.fromJson(branch);
           return application
               .make<StatefulShellBranchBuilder>(branchEl.type)
               .build(branchEl);
@@ -68,16 +68,15 @@ class StatefulShellRouteWithIndexedStackBuilder extends RouteBaseBuilder {
           go_router.GoRouterState state,
           go_router.StatefulNavigationShell navigationShell,
         ) {
-          navigationState.addStackKey(
-              element.data["stackKey"], navigationShell);
+          navigationState.addStackKey(json.data["stackKey"], navigationShell);
 
           final pageState = State(state: {
-            "id": element.data["stateId"],
-            "stateId": element.data["stateId"],
+            "id": json.data["stateId"],
+            "stateId": json.data["stateId"],
             "uri": state.uri,
             "extra": state.extra,
             "currentStackIndex": navigationShell.currentIndex,
-            "currentStackKey": element.data["stackKey"],
+            "currentStackKey": json.data["stackKey"],
             "ctx": context,
             "stackBody": navigationShell,
           });
@@ -86,7 +85,7 @@ class StatefulShellRouteWithIndexedStackBuilder extends RouteBaseBuilder {
               .make<StateManager>(WireDefinition.stateManager)
               .addState(pageState);
 
-          final wrapperPageEl = Element.fromJson(element.data["wrapperPage"]);
+          final wrapperPageEl = Json.fromJson(json.data["wrapperPage"]);
           return application
               .make<PageBuilder>(wrapperPageEl.type)
               .build(wrapperPageEl);
@@ -95,21 +94,21 @@ class StatefulShellRouteWithIndexedStackBuilder extends RouteBaseBuilder {
 }
 
 class StatefulShellBranchBuilder
-    extends ElementBuilder<go_router.StatefulShellBranch> {
+    extends JsonBuilder<go_router.StatefulShellBranch> {
   StatefulShellBranchBuilder(Application application) : super(application);
 
   @override
-  go_router.StatefulShellBranch build(Element element) {
+  go_router.StatefulShellBranch build(Json json) {
     final navigationState = application
         .make<StateManager>(WireDefinition.stateManager)
         .getState<NavigationState>(WireDefinition.stateNavigationState);
     final branchNavigatorKey = material.GlobalKey<material.NavigatorState>();
     navigationState.addNavigatorKey(
-        element.data["navigatorKey"], branchNavigatorKey);
+        json.data["navigatorKey"], branchNavigatorKey);
     return go_router.StatefulShellBranch(
         navigatorKey: branchNavigatorKey,
-        routes: element.data["routes"].map<go_router.RouteBase>((route) {
-          final routeEl = Element.fromJson(route);
+        routes: json.data["routes"].map<go_router.RouteBase>((route) {
+          final routeEl = Json.fromJson(route);
           return application
               .make<RouteBaseBuilder>(routeEl.type)
               .build(routeEl);

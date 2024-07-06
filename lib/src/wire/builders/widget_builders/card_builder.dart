@@ -4,33 +4,33 @@ class CardBuilder extends WidgetBuilder {
   CardBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return material.Card(
-      color: element.data["color"] == null
+      color: json.data["color"] == null
           ? null
-          : Color.findColor(element.data["color"]).build(),
-      elevation: element.data["elevation"] == null
+          : Color.findColor(json.data["color"]).build(),
+      elevation: json.data["elevation"] == null
           ? 1.0
-          : double.parse(element.data["elevation"].toString()),
-      shadowColor: element.data["shadowColor"] == null
+          : double.parse(json.data["elevation"].toString()),
+      shadowColor: json.data["shadowColor"] == null
           ? null
-          : Color.findColor(element.data["shadowColor"]).build(),
-      surfaceTintColor: element.data["surfaceTintColor"] == null
+          : Color.findColor(json.data["shadowColor"]).build(),
+      surfaceTintColor: json.data["surfaceTintColor"] == null
           ? null
-          : Color.findColor(element.data["surfaceTintColor"]).build(),
-      clipBehavior: element.data["clipBehavior"] != null ? Clip.fromJson(element.data["clipBehavior"]).build() : null,
-      semanticContainer: element.data["semanticContainer"] ?? false,
-      borderOnForeground: element.data["borderOnForeground"] ?? true,
-      margin: element.data["margin"] == null
+          : Color.findColor(json.data["surfaceTintColor"]).build(),
+      clipBehavior: json.data["clipBehavior"] != null ? Clip.fromJson(json.data["clipBehavior"]).build() : null,
+      semanticContainer: json.data["semanticContainer"] ?? false,
+      borderOnForeground: json.data["borderOnForeground"] ?? true,
+      margin: json.data["margin"] == null
           ? null
-          : EdgeInsets.findElement(element.data["margin"]).build(),
-      shape: element.data["shape"] == null
+          : EdgeInsets.findJson(json.data["margin"]).build(),
+      shape: json.data["shape"] == null
           ? null
-          : ShapeBorderFactory.findElement(element.data["shape"]).build(),
-      child: element.data["child"] == null
+          : ShapeBorderFactory.findJson(json.data["shape"]).build(),
+      child: json.data["child"] == null
           ? null
-          : application.make<WidgetBuilder>(element.data["child"]["type"])
-          .build(Element.fromJson(element.data["child"])),
+          : application.make<WidgetBuilder>(json.data["child"]["type"])
+          .build(Json.fromJson(json.data["child"])),
     );
   }
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/framework/app.dart';
 
-import '../models/element.dart';
+import '../models/json.dart';
 
-class ElementExecutor {
+class JsonExecutor {
   final Application application;
 
-  ElementExecutor(this.application);
+  JsonExecutor(this.application);
 
-  Future<void> execute(material.BuildContext context, Element element) {
+  Future<void> execute(material.BuildContext context, Json json) {
     throw UnimplementedError();
   }
 }

@@ -8,7 +8,7 @@ abstract class AbstractDecoration implements Painting {
 }
 
 class Decoration {
-  static findElement(dynamic json) {
+  static findJson(dynamic json) {
     if (json["type"] == "BoxDecoration") {
       return json["data"] == null ? null : BoxDecoration.fromJson(json["data"]);
     }

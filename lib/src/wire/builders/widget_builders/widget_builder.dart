@@ -1,12 +1,12 @@
 part of '../widget_builder.dart';
 
-class WidgetBuilder extends ElementBuilder<material.Widget> {
+class WidgetBuilder extends JsonBuilder<material.Widget> {
   WidgetBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return application
-        .make<WidgetBuilder>(element.type)
-        .build(Element.fromJson(element.data));
+        .make<WidgetBuilder>(json.type)
+        .build(Json.fromJson(json.data));
   }
 }

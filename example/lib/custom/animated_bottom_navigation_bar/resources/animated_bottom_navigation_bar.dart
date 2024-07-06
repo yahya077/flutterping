@@ -32,7 +32,7 @@ class _AnimatedBottomNavigationBarState
       gapLocation: animated_bottom_navigation_bar.GapLocation.center,
       notchSmoothness: animated_bottom_navigation_bar.NotchSmoothness.smoothEdge,
       inactiveColor: widget.inactiveColor,
-      activeColor: widget.inactiveColor,
+      activeColor: widget.activeColor,
     );
   }
 }

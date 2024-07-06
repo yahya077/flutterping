@@ -4,31 +4,31 @@ class ScaffoldBuilder extends WidgetBuilder {
   ScaffoldBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return material.Scaffold(
-      appBar: element.data["appBar"] != null
+      appBar: json.data["appBar"] != null
           ? application
-              .make<PreferredSizeWidgetBuilder>(element.data["appBar"]["type"])
-              .build(Element.fromJson(element.data["appBar"]))
+              .make<PreferredSizeWidgetBuilder>(json.data["appBar"]["type"])
+              .build(Json.fromJson(json.data["appBar"]))
           : null,
       body: application
-          .make<WidgetBuilder>(element.data["body"]["type"])
-          .build(Element.fromJson(element.data["body"])),
+          .make<Builder>(json.data["body"]["type"])
+          .build(Json.fromJson(json.data["body"])),
       floatingActionButtonLocation:
-          element.data["floatingActionButtonLocation"] == null
+          json.data["floatingActionButtonLocation"] == null
               ? material.FloatingActionButtonLocation.centerDocked
               : FloatingActionButtonLocation.fromJson(
-                      element.data["floatingActionButtonLocation"])
+                      json.data["floatingActionButtonLocation"])
                   .build(),
-      floatingActionButton: element.data["floatingActionButton"] != null
+      floatingActionButton: json.data["floatingActionButton"] != null
           ? application
-              .make<WidgetBuilder>(element.data["floatingActionButton"]["type"])
-              .build(Element.fromJson(element.data["floatingActionButton"]))
+              .make<WidgetBuilder>(json.data["floatingActionButton"]["type"])
+              .build(Json.fromJson(json.data["floatingActionButton"]))
           : null,
-      bottomNavigationBar: element.data["bottomNavigationBar"] != null
+      bottomNavigationBar: json.data["bottomNavigationBar"] != null
           ? application
-              .make<WidgetBuilder>(element.data["bottomNavigationBar"]["type"])
-              .build(Element.fromJson(element.data["bottomNavigationBar"]))
+              .make<WidgetBuilder>(json.data["bottomNavigationBar"]["type"])
+              .build(Json.fromJson(json.data["bottomNavigationBar"]))
           : null,
     );
   }

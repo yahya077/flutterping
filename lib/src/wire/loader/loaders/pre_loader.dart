@@ -21,8 +21,8 @@ class PreLoader extends Loader {
       throw Exception("Failed to load element: ${response.body}");
     }
 
-    final element = Element.fromRawJson(response.body);
+    final element = Json.fromRawJson(response.body);
 
-    return application.make<ElementBuilder>(element.type).build(element);
+    return application.make<JsonBuilder>(element.type).build(element);
   }
 }

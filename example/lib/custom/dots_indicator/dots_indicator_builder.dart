@@ -4,19 +4,19 @@ class DotsIndicatorBuilder extends WidgetBuilder {
   DotsIndicatorBuilder(super.application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return StatelessWidget(builder: (context) {
       return DotsIndicator(
-          dotsCount: element.data["dotsCount"],
+          dotsCount: json.data["dotsCount"],
           position: ValueProvider.of(context)
               .getValueNotifier<int>("slider_index_notifier")!,
-          reversed: element.data["reversed"] ?? false,
+          reversed: json.data["reversed"] ?? false,
           onTap: (index) {
-            element.data["onTap"] == null
+            json.data["onTap"] == null
                 ? null
                 : application
                     .make<EventDispatcher>(WireDefinition.eventDispatcher)
-                    .dispatch(Event.fromJson(element.data["onTap"]["data"]),
+                    .dispatch(Event.fromJson(json.data["onTap"]["data"]),
                         scopeContext: {
                         "index": index,
                       });

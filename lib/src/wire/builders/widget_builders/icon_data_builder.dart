@@ -4,11 +4,11 @@ class IconDataBuilder extends WidgetBuilder {
   IconDataBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     //TODO separate this into a new class
     return material.Icon(material.IconData(
-      element.data['codePoint'],
-      fontFamily: element.data['fontFamily'] ?? 'MaterialIcons',
+      json.data['codePoint'],
+      fontFamily: json.data['fontFamily'] ?? 'MaterialIcons',
     ));
   }
 }

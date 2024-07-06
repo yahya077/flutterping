@@ -7,7 +7,7 @@ abstract class AbstractBorderRadiusGeometry {
 }
 
 class BorderRadiusGeometry {
-  static AbstractBorderRadiusGeometry findElement(dynamic json) {
+  static AbstractBorderRadiusGeometry findJson(dynamic json) {
     if (json["type"] == "BorderRadius") {
       return BorderRadius.fromJson(json["data"]);
     }

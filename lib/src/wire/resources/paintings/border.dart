@@ -10,7 +10,7 @@ abstract class AbstractBorder implements Painting {
 }
 
 class BoxBorder {
-  static AbstractBorder findElement(dynamic json) {
+  static AbstractBorder findJson(dynamic json) {
     if (json["type"] == "Border") {
       return Border.fromJson(json["data"]);
     }
@@ -35,10 +35,10 @@ class Border extends AbstractBorder {
   factory Border.fromRawJson(String str) => Border.fromJson(json.decode(str));
 
   factory Border.fromJson(Map<String, dynamic> json) => Border(
-    top: json["top"] == null ? null : BorderSide.findElement(json["top"]),
-    right: json["right"] == null ? null : BorderSide.findElement(json["right"]),
-    bottom: json["bottom"] == null ? null : BorderSide.findElement(json["bottom"]),
-    left: json["left"] == null ? null : BorderSide.findElement(json["left"]),
+    top: json["top"] == null ? null : BorderSide.findJson(json["top"]),
+    right: json["right"] == null ? null : BorderSide.findJson(json["right"]),
+    bottom: json["bottom"] == null ? null : BorderSide.findJson(json["bottom"]),
+    left: json["left"] == null ? null : BorderSide.findJson(json["left"]),
   );
 
   @override

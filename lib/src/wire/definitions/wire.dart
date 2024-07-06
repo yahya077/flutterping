@@ -6,7 +6,7 @@ class WireDefinition {
   static const String containerClient = 'Client';
   static const String stateManager = 'StateManager';
   static const String valueManager = 'ValueManager';
-  static const String elementBuilder = 'ElementBuilder';
+  static const String JsonBuilder = 'JsonBuilder';
   static const String eventDispatcher = 'EventDispatcher';
   static const String routingService = 'RoutingService';
   static const String stateNavigationState = 'NavigationState';

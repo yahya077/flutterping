@@ -8,7 +8,7 @@ abstract class AbstractEdgeInsets {
 }
 
 class EdgeInsets {
-  static findElement(dynamic json) {
+  static findJson(dynamic json) {
     switch (json["type"]) {
       case "EdgeInsetsPadding":
         return Padding.fromJson(json["data"]);

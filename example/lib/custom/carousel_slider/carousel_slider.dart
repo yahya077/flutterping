@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart'
-as carousel_controller;
+    as carousel_controller;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:carousel_slider/carousel_slider.dart' as carousel_slider;
 import 'package:flutter/material.dart' as material;

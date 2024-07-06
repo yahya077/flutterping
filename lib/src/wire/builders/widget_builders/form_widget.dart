@@ -3,10 +3,10 @@ class FormBuilder extends WidgetBuilder {
   FormBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     final formStateKey = material.GlobalKey<material.FormState>();
     final formState = FormState.initial(
-        element.data["id"], formStateKey, element.data["parentStateId"]);
+        json.data["id"], formStateKey, json.data["parentStateId"]);
 
     application
         .make<StateManager>(WireDefinition.stateManager)
@@ -14,10 +14,10 @@ class FormBuilder extends WidgetBuilder {
 
     return FormWidget(
       formState: formState,
-      children: element.data["formWidgets"]
+      children: json.data["formWidgets"]
           .map<material.Widget>((widget) => application
               .make<WidgetBuilder>(widget["type"])
-              .build(Element.fromJson(widget)))
+              .build(Json.fromJson(widget)))
           .toList(),
     );
   }

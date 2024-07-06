@@ -7,7 +7,7 @@ import 'package:flutter_ping_wire/src/framework/dispatcher.dart';
 
 import '../definitions/event.dart';
 import '../executors/action_executor.dart';
-import '../models/element.dart';
+import '../models/json.dart';
 
 class ActionEventListener {
   final Application application;
@@ -21,7 +21,7 @@ class ActionEventListener {
         .make<Dispatcher>(ContainerDefinition.events)
         .on("${stateId}_${EventDefinition.actionEventName}")
         .listen((eventPayload) {
-      final actionEl = Element.fromJson(eventPayload.payload);
+      final actionEl = Json.fromJson(eventPayload.payload);
       application
           .make<ActionExecutor>(actionEl.type)
           .execute(context, actionEl);

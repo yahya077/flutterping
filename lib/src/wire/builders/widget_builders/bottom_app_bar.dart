@@ -4,34 +4,34 @@ class BottomAppBarBuilder extends WidgetBuilder {
   BottomAppBarBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return material.BottomAppBar(
-      padding: element.data["padding"] == null
+      padding: json.data["padding"] == null
           ? null
-          : Padding.fromJson(element.data["padding"]).build(),
-      surfaceTintColor: element.data["surfaceTintColor"] == null
+          : Padding.fromJson(json.data["padding"]).build(),
+      surfaceTintColor: json.data["surfaceTintColor"] == null
           ? null
-          : Color.findColor(element.data["surfaceTintColor"]).build(),
-      height: element.data["height"] == null
+          : Color.findColor(json.data["surfaceTintColor"]).build(),
+      height: json.data["height"] == null
           ? null
-          : double.parse(element.data["height"].toString()),
-      notchMargin: element.data["notchMargin"] == null
+          : double.parse(json.data["height"].toString()),
+      notchMargin: json.data["notchMargin"] == null
           ? 4.0
-          : double.parse(element.data["notchMargin"].toString()),
-      shadowColor: element.data["shadowColor"] == null
+          : double.parse(json.data["notchMargin"].toString()),
+      shadowColor: json.data["shadowColor"] == null
           ? null
-          : Color.findColor(element.data["shadowColor"]).build(),
-      elevation: element.data["elevation"] == null
+          : Color.findColor(json.data["shadowColor"]).build(),
+      elevation: json.data["elevation"] == null
           ? 8.0
-          : double.parse(element.data["elevation"].toString()),
-      clipBehavior: element.data["clipBehavior"] == null
+          : double.parse(json.data["elevation"].toString()),
+      clipBehavior: json.data["clipBehavior"] == null
           ? material.Clip.none
-          : Clip.fromJson(element.data["clipBehavior"]).build(),
-      child: element.data["child"] == null
+          : Clip.fromJson(json.data["clipBehavior"]).build(),
+      child: json.data["child"] == null
           ? null
           : application
-          .make<WidgetBuilder>(element.data["child"]["type"])
-          .build(Element.fromJson(element.data["child"])),
+          .make<WidgetBuilder>(json.data["child"]["type"])
+          .build(Json.fromJson(json.data["child"])),
     );
   }
 }

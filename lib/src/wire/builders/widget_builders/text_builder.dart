@@ -4,27 +4,27 @@ class TextBuilder extends WidgetBuilder {
   TextBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return material.Text(
-      element.data["text"],
-      style: element.data["style"] == null
+      json.data["text"],
+      style: json.data["style"] == null
           ? null
-          : TextStyle.fromJson(element.data["style"]).build(),
-      textAlign: element.data["textAlign"] == null
+          : TextStyle.fromJson(json.data["style"]).build(),
+      textAlign: json.data["textAlign"] == null
           ? null
-          : TextAlign.fromJson(element.data["textAlign"]).build(),
-      textDirection: element.data["textDirection"] == null
+          : TextAlign.fromJson(json.data["textAlign"]).build(),
+      textDirection: json.data["textDirection"] == null
           ? null
-          : TextDirection.fromJson(element.data["textDirection"]).build(),
-      softWrap: element.data["softWrap"] ?? false,
-      overflow: element.data["overflow"] == null
+          : TextDirection.fromJson(json.data["textDirection"]).build(),
+      softWrap: json.data["softWrap"] ?? false,
+      overflow: json.data["overflow"] == null
           ? null
-          : TextOverflow.fromJson(element.data["overflow"]).build(),
-      maxLines: element.data["maxLines"],
-      textScaleFactor: element.data["textScaleFactor"]?.toDouble(),
-      textWidthBasis: element.data["textWidthBasis"] == null
+          : TextOverflow.fromJson(json.data["overflow"]).build(),
+      maxLines: json.data["maxLines"],
+      textScaleFactor: json.data["textScaleFactor"]?.toDouble(),
+      textWidthBasis: json.data["textWidthBasis"] == null
           ? null
-          : TextWidthBasis.fromJson(element.data["textWidthBasis"]).build(),
+          : TextWidthBasis.fromJson(json.data["textWidthBasis"]).build(),
     );
   }
 }

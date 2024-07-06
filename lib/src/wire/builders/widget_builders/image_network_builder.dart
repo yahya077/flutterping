@@ -4,33 +4,33 @@ class ImageNetworkBuilder extends WidgetBuilder {
   ImageNetworkBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return material.Image.network(
-      element.data["url"],
-      width: DoubleFactory.fromDynamic(element.data["width"]),
-      height: DoubleFactory.fromDynamic(element.data["height"]),
-      fit: element.data["fit"] == null
+      json.data["url"],
+      width: DoubleFactory.fromDynamic(json.data["width"]),
+      height: DoubleFactory.fromDynamic(json.data["height"]),
+      fit: json.data["fit"] == null
           ? material.BoxFit.contain
-          : BoxFit.fromJson(element.data["fit"]).build(),
-      alignment: element.data["alignment"] == null
+          : BoxFit.fromJson(json.data["fit"]).build(),
+      alignment: json.data["alignment"] == null
           ? material.Alignment.center
-          : Alignment.fromJson(element.data["alignment"]).build(),
-      repeat: element.data["repeat"] == null
+          : Alignment.fromJson(json.data["alignment"]).build(),
+      repeat: json.data["repeat"] == null
           ? material.ImageRepeat.noRepeat
-          : ImageRepeat.fromJson(element.data["repeat"]).build(),
-      semanticLabel: element.data["semanticLabel"],
-      excludeFromSemantics: element.data["excludeFromSemantics"] ?? false,
-      filterQuality: element.data["filterQuality"] == null
+          : ImageRepeat.fromJson(json.data["repeat"]).build(),
+      semanticLabel: json.data["semanticLabel"],
+      excludeFromSemantics: json.data["excludeFromSemantics"] ?? false,
+      filterQuality: json.data["filterQuality"] == null
           ? material.FilterQuality.low
-          : FilterQuality.fromJson(element.data["filterQuality"]).build(),
+          : FilterQuality.fromJson(json.data["filterQuality"]).build(),
       loadingBuilder: null, //TODO loadingBuilder
       errorBuilder: null, //TODO errorBuilder
       frameBuilder: null, //TODO frameBuilder
-      cacheWidth: element.data["cacheWidth"],
-      cacheHeight: element.data["cacheHeight"],
-      color: element.data["color"] == null
+      cacheWidth: json.data["cacheWidth"],
+      cacheHeight: json.data["cacheHeight"],
+      color: json.data["color"] == null
           ? null
-          : Color.findColor(element.data["color"]).build(),
+          : Color.findColor(json.data["color"]).build(),
     );
   }
 }

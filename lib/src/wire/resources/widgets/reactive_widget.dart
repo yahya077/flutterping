@@ -3,12 +3,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/wire/value_provider.dart';
-import '../../models/element.dart';
+import '../../models/json.dart';
 import '../../stream.dart';
 
 class State {
   String name;
-  List<Element> actions;
+  List<Json> actions;
 
   State({
     required this.name,
@@ -21,7 +21,7 @@ class State {
     return State(
       name: json["name"],
       actions:
-          List<Element>.from(json["actions"].map((x) => Element.fromJson(x))),
+          List<Json>.from(json["actions"].map((x) => Json.fromJson(x))),
     );
   }
 }

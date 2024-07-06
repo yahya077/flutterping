@@ -4,9 +4,9 @@ class CarouselSliderBuilder extends WidgetBuilder {
   CarouselSliderBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
-    final options = element.data["options"];
-    final carouselControllerEl = Element.fromJson(element.data["controller"]);
+  material.Widget build(Json json) {
+    final options = json.data["options"];
+    final carouselControllerEl = Json.fromJson(json.data["controller"]);
     final carouselController = application
         .make<CarouselControllerBuilder>(carouselControllerEl.type)
         .build(carouselControllerEl);
@@ -20,11 +20,11 @@ class CarouselSliderBuilder extends WidgetBuilder {
           .registerValueNotifier<int>("slider_index_notifier", defaultValue: 0);
       return carousel_slider.CarouselSlider(
         carouselController: carouselController.instance,
-        items: element.data["items"] == null
+        items: json.data["items"] == null
             ? null
             : List<material.Widget>.from(
-                element.data["items"].map<material.Widget>((item) {
-                final itemEl = Element.fromJson(item);
+                json.data["items"].map<material.Widget>((item) {
+                final itemEl = Json.fromJson(item);
                 return application
                     .make<WidgetBuilder>(itemEl.type)
                     .build(itemEl);

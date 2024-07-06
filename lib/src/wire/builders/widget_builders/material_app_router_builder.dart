@@ -4,13 +4,11 @@ class MaterialAppBuilder extends WidgetBuilder {
   MaterialAppBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
-    final homeEl = Element.fromJson(element.data["home"]);
+  material.Widget build(Json json) {
+    final homeEl = Json.fromJson(json.data["home"]);
     return material.MaterialApp(
-      debugShowCheckedModeBanner: element.data["debugShowCheckedModeBanner"],
-      home: application
-          .make<WidgetBuilder>(homeEl.type)
-          .build(homeEl),
+      debugShowCheckedModeBanner: json.data["debugShowCheckedModeBanner"],
+      home: application.make<WidgetBuilder>(homeEl.type).build(homeEl),
     );
   }
 }

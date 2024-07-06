@@ -30,7 +30,7 @@ class BorderSide implements AbstractBorderSide {
     );
   }
 
-  static BorderSide findElement(Map<String, dynamic> json) {
+  static BorderSide findJson(Map<String, dynamic> json) {
     return BorderSide.fromJson(json["data"]);
   }
 

@@ -7,7 +7,7 @@ abstract class SliverGridDelegate {
 }
 
 class SliverGridDelegateFactory {
-  static SliverGridDelegate findElement(dynamic json) {
+  static SliverGridDelegate findJson(dynamic json) {
     if (json["type"] == "SliverGridDelegateWithFixedCrossAxisCount") {
       return SliverGridDelegateWithFixedCrossAxisCount.fromJson(json["data"]);
     }

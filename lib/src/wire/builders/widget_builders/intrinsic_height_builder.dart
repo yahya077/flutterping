@@ -4,13 +4,13 @@ class IntrinsicHeightBuilder extends WidgetBuilder {
   IntrinsicHeightBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return material.IntrinsicHeight(
-      child: element.data['child'] == null
+      child: json.data['child'] == null
           ? null
           : application
-              .make<WidgetBuilder>(element.data['child']['type'])
-              .build(Element.fromJson(element.data['child'])),
+              .make<WidgetBuilder>(json.data['child']['type'])
+              .build(Json.fromJson(json.data['child'])),
     );
   }
 }

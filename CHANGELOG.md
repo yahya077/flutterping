@@ -3,6 +3,8 @@
 * EventDispatchAction bug fixed
 * navigateBack action added
 * animated_bottom_navigation_bar adapter added for example
+* element naming convention changed to json
+* 
 
 ## 0.0.4
 

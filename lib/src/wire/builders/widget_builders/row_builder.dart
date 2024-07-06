@@ -4,18 +4,18 @@ class RowBuilder extends WidgetBuilder {
   RowBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return material.Row(
-      mainAxisAlignment: element.data["mainAxisAlignment"] == null
+      mainAxisAlignment: json.data["mainAxisAlignment"] == null
           ? material.MainAxisAlignment.start
-          : Flex.findFlex(element.data["mainAxisAlignment"]).build(),
-      crossAxisAlignment: element.data["crossAxisAlignment"] == null
+          : Flex.findFlex(json.data["mainAxisAlignment"]).build(),
+      crossAxisAlignment: json.data["crossAxisAlignment"] == null
           ? material.CrossAxisAlignment.start
-          : Flex.findFlex(element.data["crossAxisAlignment"]).build(),
-      children: element.data["children"]
+          : Flex.findFlex(json.data["crossAxisAlignment"]).build(),
+      children: json.data["children"]
           .map<material.Widget>((child) => application
           .make<WidgetBuilder>(child["type"])
-          .build(Element.fromJson(child)))
+          .build(Json.fromJson(child)))
           .toList(),
     );
   }

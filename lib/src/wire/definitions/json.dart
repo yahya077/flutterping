@@ -1,4 +1,4 @@
-class ElementDefinition {
+class JsonDefinition {
   static const container = 'Container';
   static const row = 'Row';
   static const column = 'Column';

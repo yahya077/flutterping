@@ -4,34 +4,34 @@ class ContainerBuilder extends WidgetBuilder {
   ContainerBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
-    final Element? childElement = element.data["child"] == null ? null : Element.fromJson(element.data["child"]);
+  material.Widget build(Json json) {
+    final Json? childJson = json.data["child"] == null ? null : Json.fromJson(json.data["child"]);
     return material.Container(
-      color: element.data["color"] == null
+      color: json.data["color"] == null
           ? null
-          : Color.findColor(element.data["color"]).build(),
-      decoration: element.data["decoration"] == null
+          : Color.findColor(json.data["color"]).build(),
+      decoration: json.data["decoration"] == null
           ? null
-          : Decoration.findElement(element.data["decoration"]).build(),
-      margin: element.data["margin"] == null
+          : Decoration.findJson(json.data["decoration"]).build(),
+      margin: json.data["margin"] == null
           ? null
-          : EdgeInsets.findElement(element.data["margin"]).build(),
-      padding: element.data["padding"] == null
+          : EdgeInsets.findJson(json.data["margin"]).build(),
+      padding: json.data["padding"] == null
           ? null
-          : EdgeInsets.findElement(element.data["padding"]).build(),
-      width: element.data["width"] == null
+          : EdgeInsets.findJson(json.data["padding"]).build(),
+      width: json.data["width"] == null
           ? null
-          : element.data["width"] == null
+          : json.data["width"] == null
           ? null
-          : double.parse(element.data["width"].toString()),
-      height: element.data["height"] == null
+          : double.parse(json.data["width"].toString()),
+      height: json.data["height"] == null
           ? null
-          : element.data["height"] == null
+          : json.data["height"] == null
           ? null
-          : double.parse(element.data["height"].toString()),
-      child: childElement == null ? null : application
-          .make<WidgetBuilder>(childElement.type)
-          .build(childElement),
+          : double.parse(json.data["height"].toString()),
+      child: childJson == null ? null : application
+          .make<WidgetBuilder>(childJson.type)
+          .build(childJson),
     );
   }
 }

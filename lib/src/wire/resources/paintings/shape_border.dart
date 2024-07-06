@@ -6,7 +6,7 @@ abstract class ShapeBorder {
 }
 
 class ShapeBorderFactory {
-  static ShapeBorder findElement(Map<String, dynamic> json) {
+  static ShapeBorder findJson(Map<String, dynamic> json) {
     if (json["type"] == "RoundedRectangleBorder") {
       return RoundedRectangleBorder.fromJson(json["data"]);
     }
@@ -21,7 +21,7 @@ class RoundedRectangleBorder implements ShapeBorder {
   RoundedRectangleBorder({required this.borderRadius});
 
   factory RoundedRectangleBorder.fromJson(Map<String, dynamic> json) {
-    return RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.findElement(json["borderRadius"]));
+    return RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.findJson(json["borderRadius"]));
   }
 
   @override

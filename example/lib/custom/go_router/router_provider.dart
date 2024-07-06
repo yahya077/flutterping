@@ -18,7 +18,6 @@ class GoRouteRouterProvider extends Provider {
     app.singleton("GoRoute", () => GoRouteBuilder(app));
     app.singleton("StatefulShellRouteWithIndexedStack",
         () => StatefulShellRouteWithIndexedStackBuilder(app));
-    app.singleton(
-        "StatefulShellBranch", () => StatefulShellBranchBuilder(app));
+    app.singleton("StatefulShellBranch", () => StatefulShellBranchBuilder(app));
   }
 }

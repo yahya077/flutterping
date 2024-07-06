@@ -1,11 +1,11 @@
 part of 'carousel_slider.dart';
 
-class CarouselControllerBuilder extends ElementBuilder<CarouselController> {
+class CarouselControllerBuilder extends JsonBuilder<CarouselController> {
   CarouselControllerBuilder(Application application) : super(application);
 
   @override
-  CarouselController build(Element element) {
-    final id = element.data["id"];
+  CarouselController build(Json json) {
+    final id = json.data["id"];
 
     return application
         .make<StateManager>(WireDefinition.stateManager)

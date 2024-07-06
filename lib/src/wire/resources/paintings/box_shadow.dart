@@ -32,7 +32,7 @@ class BoxShadow implements AbstractBoxShadow {
     spreadRadius: json["spreadRadius"]?.toDouble(),
   );
 
-  static AbstractBoxShadow findElement(dynamic json) {
+  static AbstractBoxShadow findJson(dynamic json) {
     if (json["type"] == "BoxShadow") {
       return BoxShadow.fromJson(json["data"]);
     }

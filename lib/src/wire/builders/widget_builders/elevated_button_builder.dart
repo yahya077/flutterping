@@ -4,16 +4,16 @@ class ElevatedButtonBuilder extends WidgetBuilder {
   ElevatedButtonBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     return material.ElevatedButton(
-      onPressed: element.data["onPressed"] == null
+      onPressed: json.data["onPressed"] == null
           ? null
           : () => application
           .make<EventDispatcher>(WireDefinition.eventDispatcher)
-          .dispatch(Event.fromJson(element.data["onPressed"]["data"])),
+          .dispatch(Event.fromJson(json.data["onPressed"]["data"])),
       child: application
-          .make<WidgetBuilder>(element.data["child"]["type"])
-          .build(Element.fromJson(element.data["child"])),
+          .make<WidgetBuilder>(json.data["child"]["type"])
+          .build(Json.fromJson(json.data["child"])),
     );
   }
 }

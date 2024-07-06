@@ -5,11 +5,11 @@ class UpdateReactiveWidgetActionExecutor extends ActionExecutor {
       : super(application);
 
   @override
-  Future<void> execute(material.BuildContext context, Element element) async {
+  Future<void> execute(material.BuildContext context, Json json) async {
     final manager = ValueProvider.of(context);
-    final widgetEl = Element.fromJson(element.data["widget"]);
+    final widgetEl = Json.fromJson(json.data["widget"]);
 
-    manager.getValueNotifier(element.data["reactiveWidgetId"])?.updateValue(
+    manager.getValueNotifier(json.data["reactiveWidgetId"])?.updateValue(
         application.make<WidgetBuilder>(widgetEl.type).build(widgetEl));
   }
 }

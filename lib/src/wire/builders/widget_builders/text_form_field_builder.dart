@@ -4,16 +4,16 @@ class TextFormFieldBuilder extends WidgetBuilder {
   TextFormFieldBuilder(Application application) : super(application);
 
   @override
-  material.Widget build(Element element) {
+  material.Widget build(Json json) {
     final state = application
         .make<StateManager>(WireDefinition.stateManager)
-        .getState<FormState>(element.data["formId"]);
-    final fieldState = TextFormField(element.data["name"]);
+        .getState<FormState>(json.data["formId"]);
+    final fieldState = TextFormField(json.data["name"]);
 
     state.addFormField(fieldState);
 
     return TextInput(
-      name: element.data["name"],
+      name: json.data["name"],
       formState: state,
       formFieldState: fieldState,
     );
