@@ -21,6 +21,10 @@ class NavigationActionExecutor extends ActionExecutor {
       application
           .make<RoutingService>(WireDefinition.routingService)
           .changeStack(path.stackKey!, path.index!);
+    } else if (path.path == "navigateBack" && path.navigatorKey != null) {
+      application
+          .make<RoutingService>(WireDefinition.routingService)
+          .navigateBack(path.navigatorKey!);
     } else {
       application
           .make<RoutingService>(WireDefinition.routingService)

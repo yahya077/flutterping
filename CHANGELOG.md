@@ -1,6 +1,7 @@
 ## 0.0.5
 
 * EventDispatchAction bug fixed
+* navigateBack action added
 
 ## 0.0.4
 
