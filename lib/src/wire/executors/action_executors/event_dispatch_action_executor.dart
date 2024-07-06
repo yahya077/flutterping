@@ -4,7 +4,7 @@ class EventDispatchActionExecutor extends ActionExecutor {
 
   @override
   Future<void> execute(material.BuildContext context, Element element) async {
-    final Event event = Event.fromJson(element.data["event"]["data"]);
+    final Event event = Event.fromJson(element.data);
     application
         .make<EventDispatcher>(WireDefinition.eventDispatcher)
         .dispatch(event);

@@ -1,3 +1,7 @@
+## 0.0.5
+
+* EventDispatchAction bug fixed
+
 ## 0.0.4
 
 * reactive widget ctx dependency removed
