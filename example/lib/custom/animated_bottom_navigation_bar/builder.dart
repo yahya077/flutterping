@@ -11,11 +11,11 @@ class AnimatedBottomNavigationBarBuilder extends WidgetBuilder {
           defaultValue: 0);
       return AnimatedBottomNavigationBar(
         onTap: (index) {
-          element.data["onTap"] == null
+          element.data["onTapEvents"] == null
               ? null
               : application
                   .make<EventDispatcher>(WireDefinition.eventDispatcher)
-                  .dispatch(Event.fromJson(element.data["onTap"]["data"]),
+                  .dispatch(Event.fromJson(element.data["onTapEvents"][index]["data"]),
                       scopeContext: {
                       "index": index,
                     });
