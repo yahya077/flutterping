@@ -1,3 +1,7 @@
+## 0.0.6
+
+* flutter_svg adapter added for example
+
 ## 0.0.5
 
 * EventDispatchAction bug fixed

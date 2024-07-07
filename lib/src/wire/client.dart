@@ -26,7 +26,9 @@ class Client {
   void register() {}
 
   Future<http.Response> request(String url,
-      {String method = "GET", Map<String, String>? headers, dynamic body}) async {
+      {String method = "GET",
+      Map<String, String>? headers,
+      dynamic body}) async {
     return _handleRequest(() async {
       switch (method) {
         case "GET":
@@ -45,7 +47,8 @@ class Client {
 
   Future<http.Response> get(String url, {Map<String, String>? headers}) async {
     return _handleRequest(() async {
-      final response = await _client.get(_resolveUrl(url), headers: _mergeHeaders(headers));
+      final response =
+          await _client.get(_resolveUrl(url), headers: _mergeHeaders(headers));
       return response;
     });
   }
@@ -53,8 +56,8 @@ class Client {
   Future<http.Response> post(String url,
       {Map<String, String>? headers, dynamic body}) async {
     return _handleRequest(() async {
-      final response =
-          await _client.post(_resolveUrl(url), headers: _mergeHeaders(headers), body: body);
+      final response = await _client.post(_resolveUrl(url),
+          headers: _mergeHeaders(headers), body: body);
       return response;
     });
   }
@@ -62,8 +65,8 @@ class Client {
   Future<http.Response> put(String url,
       {Map<String, String>? headers, dynamic body}) async {
     return _handleRequest(() async {
-      final response =
-          await _client.put(_resolveUrl(url), headers: _mergeHeaders(headers), body: body);
+      final response = await _client.put(_resolveUrl(url),
+          headers: _mergeHeaders(headers), body: body);
       return response;
     });
   }
@@ -71,7 +74,8 @@ class Client {
   Future<http.Response> delete(String url,
       {Map<String, String>? headers}) async {
     return _handleRequest(() async {
-      final response = await _client.delete(_resolveUrl(url), headers: _mergeHeaders(headers));
+      final response = await _client.delete(_resolveUrl(url),
+          headers: _mergeHeaders(headers));
       return response;
     });
   }
@@ -81,7 +85,9 @@ class Client {
     try {
       return await request();
     } catch (e) {
-      container.make<AppExceptionHandler>(ContainerDefinition.appExceptionHandler).report(e);
+      container
+          .make<AppExceptionHandler>(ContainerDefinition.appExceptionHandler)
+          .report(e);
 
       return http.Response('Failed to execute request', 500);
     }

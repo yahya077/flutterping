@@ -20,16 +20,8 @@ class ContainerBuilder extends WidgetBuilder {
       padding: json.data["padding"] == null
           ? null
           : EdgeInsets.findJson(json.data["padding"]).build(),
-      width: json.data["width"] == null
-          ? null
-          : json.data["width"] == null
-              ? null
-              : double.parse(json.data["width"].toString()),
-      height: json.data["height"] == null
-          ? null
-          : json.data["height"] == null
-              ? null
-              : double.parse(json.data["height"].toString()),
+      width: DoubleFactory.fromDynamic(json.data["width"]),
+      height: DoubleFactory.fromDynamic(json.data["height"]),
       child: childJson == null
           ? null
           : application

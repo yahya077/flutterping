@@ -33,6 +33,9 @@ export 'callable_registry.dart';
 export 'stream.dart';
 export 'value_provider.dart';
 export 'resources/ui/color.dart';
+export 'resources/core/double.dart';
+export 'resources/paintings/alignment.dart';
+export 'resources/paintings/box_fit.dart';
 
 class WireBootstrap {
   Application app;
