@@ -92,3 +92,4 @@ part 'widget_builders/intrinsic_height_builder.dart';
 part 'widget_builders/floating_action_button.dart';
 
 part 'widget_builders/image_asset_builder.dart';
+part 'widget_builders/expanded_builder.dart';

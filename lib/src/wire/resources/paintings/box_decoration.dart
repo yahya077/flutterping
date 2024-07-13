@@ -25,7 +25,7 @@ class BoxDecoration implements AbstractDecoration {
   factory BoxDecoration.fromJson(Map<String, dynamic> json) => BoxDecoration(
     color: json["color"] == null ? null : Color.findColor(json["color"]),
     border: json["border"] == null ? null : BoxBorder.findJson(json["border"]),
-    borderRadius: json["borderRadius"] == null ? null : BorderRadius.fromJson(json["borderRadius"]),
+    borderRadius: json["borderRadius"] == null ? null : BorderRadiusGeometry.findJson(json["borderRadius"]),
     boxShadow: json["boxShadow"] == null ? null : List<AbstractBoxShadow>.from(json["boxShadow"].map((x) => BoxShadow.findJson(x))),
   );
 

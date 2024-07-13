@@ -33,10 +33,10 @@ class BorderRadius implements AbstractBorderRadiusGeometry {
 
   factory BorderRadius.fromJson(Map<String, dynamic> json) {
     return BorderRadius(
-      topLeft: json["data"]["topLeft"]?.toDouble(),
-      topRight: json["data"]["topRight"]?.toDouble(),
-      bottomRight: json["data"]["bottomRight"]?.toDouble(),
-      bottomLeft: json["data"]["bottomLeft"]?.toDouble(),
+      topLeft: json["topLeft"]?.toDouble(),
+      topRight: json["topRight"]?.toDouble(),
+      bottomRight: json["bottomRight"]?.toDouble(),
+      bottomLeft: json["bottomLeft"]?.toDouble(),
     );
   }
 

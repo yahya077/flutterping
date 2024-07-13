@@ -39,4 +39,5 @@ class JsonDefinition {
   static const scopeValueBuilder = 'ScopeValue';
   static const stateValueBuilder = 'StateValue';
   static const notifierValueBuilder = 'NotifierValue';
+  static const expanded = 'Expanded';
 }

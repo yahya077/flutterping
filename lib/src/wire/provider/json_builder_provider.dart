@@ -49,6 +49,7 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.floatingActionButton,
         () => FloatingActionButtonBuilder(app));
     app.singleton(JsonDefinition.imageAsset, () => ImageAssetBuilder(app));
+    app.singleton(JsonDefinition.expanded, () => ExpandedBuilder(app));
 
     // page builders
     app.singleton(JsonDefinition.materialPage, () => MaterialPageBuilder(app));

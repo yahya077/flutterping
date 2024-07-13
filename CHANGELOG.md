@@ -1,6 +1,8 @@
 ## 0.0.6
 
 * flutter_svg adapter added for example
+* expanded widget added
+* borderRadius bug fixed
 
 ## 0.0.5
 
