@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/framework/app.dart';
 import 'package:flutter_ping_wire/src/wire/builders/change_notifier_builder.dart';
+import 'package:flutter_ping_wire/src/wire/resources/paintings/border_radius.dart';
 import 'package:flutter_ping_wire/src/wire/resources/paintings/shape_border.dart';
 import 'package:flutter_ping_wire/src/wire/resources/rendering/sliver_grid_delegate.dart';
 import 'package:flutter_ping_wire/src/wire/value_provider.dart';
@@ -93,3 +94,6 @@ part 'widget_builders/floating_action_button.dart';
 
 part 'widget_builders/image_asset_builder.dart';
 part 'widget_builders/expanded_builder.dart';
+part 'widget_builders/visibility_builder.dart';
+part 'widget_builders/clip_r_rect_builder.dart';
+part 'widget_builders/padding_builder.dart';

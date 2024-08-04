@@ -22,17 +22,15 @@ class Color implements AbstractColor {
   factory Color.fromRawJson(String str) => Color.fromJson(json.decode(str));
 
   factory Color.fromJson(Map<String, dynamic> json) => Color(
-    red: json["red"] ?? 255,
-    green: json["green"] ?? 255,
-    blue: json["blue"] ?? 255,
-    alpha: json["alpha"] ?? 255,
-  );
+        red: json["red"] ?? 255,
+        green: json["green"] ?? 255,
+        blue: json["blue"] ?? 255,
+        alpha: json["alpha"] ?? 255,
+      );
 
+  //TODO: remove this method
   static AbstractColor findColor(dynamic json) {
-    if (json["type"] == "Color") {
-      return Color.fromJson(json["data"]);
-    }
-    throw Exception("Invalid type");
+    return Color.fromJson(json);
   }
 
   @override

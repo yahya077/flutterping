@@ -1,3 +1,8 @@
+## 0.0.7
+
+* ClipRRect, Padding, Visibility added
+* 
+ 
 ## 0.0.6
 
 * flutter_svg adapter added for example

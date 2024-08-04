@@ -19,8 +19,6 @@ class ValueNotifierManager extends material.ChangeNotifier {
     return _values[id] as ValueNotifier<T>?;
   }
 
-  //TODO: add dispose value notifier
-
   void disposeValueNotifier(String id) {
     _values.remove(id);
   }

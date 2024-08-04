@@ -40,4 +40,7 @@ class JsonDefinition {
   static const stateValueBuilder = 'StateValue';
   static const notifierValueBuilder = 'NotifierValue';
   static const expanded = 'Expanded';
+  static const visibility = 'Visibility';
+  static const clipRRect = 'ClipRRect';
+  static const padding = 'Padding';
 }
