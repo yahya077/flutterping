@@ -92,4 +92,18 @@ abstract class RoutingService implements AbstractRoutingService {
         .getState<NavigationState>(WireDefinition.stateNavigationState)
         .getNavigatorKey(navigatorKey);
   }
+
+  Map<String, String> getPathParameters(String navigatorKey) {
+    return application
+        .make<StateManager>(WireDefinition.stateManager)
+        .getState<NavigationState>(WireDefinition.stateNavigationState)
+        .getPathParameters(navigatorKey);
+  }
+
+  Object? getExtra(String navigatorKey) {
+    return application
+        .make<StateManager>(WireDefinition.stateManager)
+        .getState<NavigationState>(WireDefinition.stateNavigationState)
+        .getExtra(navigatorKey);
+  }
 }

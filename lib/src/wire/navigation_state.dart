@@ -74,4 +74,46 @@ class NavigationState extends State {
 
     return navigatorKeys[navigatorKey];
   }
+
+  Map<String, String> getPathParameters(String navigatorKey) {
+    return get('pathParameters_$navigatorKey', defaultValue: <String, String>{});
+  }
+
+  void setPathParameters(String navigatorKey, Map<String, String> pathParameters) {
+    set('pathParameters_$navigatorKey', pathParameters);
+  }
+
+  Object? getExtra(String navigatorKey) {
+    return get('extra_$navigatorKey');
+  }
+
+  void setExtra(String navigatorKey, Object? extra) {
+    set('extra_$navigatorKey', extra);
+  }
+
+  void disposePathParameters(String navigatorKey) {
+    remove('pathParameters_$navigatorKey');
+  }
+
+  void disposeStackKey(String stackKey) {
+    Map<String, dynamic> stackKeys = get('stackKeys', defaultValue: <String, dynamic>{});
+
+    stackKeys.remove(stackKey);
+
+    set('stackKeys', stackKeys);
+  }
+
+  void disposeNavigatorKey(String navigatorKey) {
+    Map<String, dynamic> navigatorKeys = get('navigatorKeys', defaultValue: {});
+
+    navigatorKeys.remove(navigatorKey);
+
+    set('navigatorKeys', navigatorKeys);
+  }
+
+  void dispose() {
+    remove('navigatorKeys');
+    remove('stackKeys');
+    remove('initialLocation');
+  }
 }

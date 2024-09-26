@@ -1,3 +1,4 @@
+import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:flutter_ping_wire/src/framework/app.dart';
 import 'package:flutter_ping_wire/src/wire/scope_state.dart';
 
