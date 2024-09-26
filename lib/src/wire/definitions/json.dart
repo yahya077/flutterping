@@ -8,6 +8,7 @@ class JsonDefinition {
   static const elevatedButton = 'ElevatedButton';
   static const bottomNavigationBar = 'BottomNavigationBar';
   static const iconData = 'IconData';
+  static const icon = 'Icon';
   static const sizedBox = 'SizedBox';
   static const gestureDetector = 'GestureDetector';
   static const listView = 'ListView';

@@ -21,7 +21,7 @@ class TextBuilder extends WidgetBuilder {
           ? null
           : TextOverflow.fromJson(json.data["overflow"]).build(),
       maxLines: json.data["maxLines"],
-      textScaleFactor: json.data["textScaleFactor"]?.toDouble(),
+      textScaler: json.data["textScaleFactor"]?.toDouble(),
       textWidthBasis: json.data["textWidthBasis"] == null
           ? null
           : TextWidthBasis.fromJson(json.data["textWidthBasis"]).build(),

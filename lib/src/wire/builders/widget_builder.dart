@@ -97,3 +97,4 @@ part 'widget_builders/expanded_builder.dart';
 part 'widget_builders/visibility_builder.dart';
 part 'widget_builders/clip_r_rect_builder.dart';
 part 'widget_builders/padding_builder.dart';
+part 'widget_builders/icon_builder.dart';

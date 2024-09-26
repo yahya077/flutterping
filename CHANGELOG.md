@@ -1,3 +1,8 @@
+## 0.0.8
+
+* IconData updated
+* Icon widget added
+
 ## 0.0.7
 
 * ClipRRect, Padding, Visibility added

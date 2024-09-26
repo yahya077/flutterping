@@ -22,6 +22,7 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.bottomNavigationBar,
         () => BottomNavigationBarBuilder(app));
     app.singleton(JsonDefinition.iconData, () => IconDataBuilder(app));
+    app.singleton(JsonDefinition.icon, () => IconBuilder(app));
     app.singleton(JsonDefinition.sizedBox, () => SizedBoxBuilder(app));
     app.singleton(
         JsonDefinition.gestureDetector, () => GestureDetectorBuilder(app));
