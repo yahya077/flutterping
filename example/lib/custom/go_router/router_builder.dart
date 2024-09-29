@@ -24,6 +24,7 @@ class GoRouteBuilder extends RouteBaseBuilder {
             "id": json.data["stateId"],
             "stateId": json.data["stateId"],
             "uri": state.uri,
+            "pathParameters": state.pathParameters,
             "extra": state.extra,
             "ctx": context,
           });
@@ -77,6 +78,7 @@ class StatefulShellRouteWithIndexedStackBuilder extends RouteBaseBuilder {
             "stateId": json.data["stateId"],
             "uri": state.uri,
             "extra": state.extra,
+            "pathParameters": state.pathParameters,
             "currentStackIndex": navigationShell.currentIndex,
             "currentStackKey": json.data["stackKey"],
             "ctx": context,

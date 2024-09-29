@@ -2,6 +2,7 @@
 
 * IconData updated
 * Icon widget added
+* StringValueBuilder added
 
 ## 0.0.7
 

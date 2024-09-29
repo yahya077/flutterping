@@ -6,7 +6,9 @@ class TextBuilder extends WidgetBuilder {
   @override
   material.Widget build(Json json, material.BuildContext? context) {
     return material.Text(
-      json.data["text"],
+      application
+          .make<StringValueBuilder>(JsonDefinition.stringValueBuilder)
+          .build(json.data["text"], context: context),
       style: json.data["style"] == null
           ? null
           : TextStyle.fromJson(json.data["style"]).build(),

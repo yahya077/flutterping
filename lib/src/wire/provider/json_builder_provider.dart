@@ -1,6 +1,8 @@
 import 'package:flutter_ping_wire/src/framework/app.dart';
 import 'package:flutter_ping_wire/src/framework/provider.dart';
+import 'package:flutter_ping_wire/src/wire/builders/api_path_builder.dart';
 import 'package:flutter_ping_wire/src/wire/builders/change_notifier_builder.dart';
+import 'package:flutter_ping_wire/src/wire/builders/navigation_path_builder.dart';
 
 import '../builders/page_builder.dart';
 import '../builders/preferred_size_widget_builder.dart';
@@ -13,6 +15,9 @@ class JsonBuilderProvider extends Provider {
   @override
   void register(Application app) {
     app.singleton(JsonDefinition.container, () => ContainerBuilder(app));
+    app.singleton(JsonDefinition.stringValueBuilder, () => StringValueBuilder(app));
+    app.singleton(JsonDefinition.apiPathBuilder, () => ApiPathBuilder(app));
+    app.singleton(JsonDefinition.navigationPathBuilder, () => NavigationPathBuilder(app));
     app.singleton(JsonDefinition.row, () => RowBuilder(app));
     app.singleton(JsonDefinition.column, () => ColumnBuilder(app));
     app.singleton(JsonDefinition.text, () => TextBuilder(app));

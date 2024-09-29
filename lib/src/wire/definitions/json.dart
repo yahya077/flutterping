@@ -1,5 +1,8 @@
 class JsonDefinition {
   static const container = 'Container';
+  static const stringValueBuilder = 'StringValueBuilder';
+  static const apiPathBuilder = 'ApiPathBuilder';
+  static const navigationPathBuilder = 'NavigationPathBuilder';
   static const row = 'Row';
   static const column = 'Column';
   static const text = 'Text';
