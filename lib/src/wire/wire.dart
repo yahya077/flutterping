@@ -22,6 +22,7 @@ export 'builders/change_notifier_builder.dart';
 export 'provider/wire_provider.dart';
 export 'models/json.dart';
 export 'models/event.dart';
+export 'models/scope.dart';
 export 'models/router_config_data.dart';
 export 'state.dart';
 export 'state_manager.dart';
@@ -36,6 +37,7 @@ export 'resources/ui/color.dart';
 export 'resources/core/double.dart';
 export 'resources/paintings/alignment.dart';
 export 'resources/paintings/box_fit.dart';
+export 'scope_state.dart';
 
 class WireBootstrap {
   Application app;

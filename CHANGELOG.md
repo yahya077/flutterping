@@ -3,6 +3,7 @@
 * IconData updated
 * Icon widget added
 * StringValueBuilder added
+* Scope feature updated
 
 ## 0.0.7
 

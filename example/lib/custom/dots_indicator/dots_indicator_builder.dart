@@ -16,10 +16,7 @@ class DotsIndicatorBuilder extends WidgetBuilder {
                 ? null
                 : application
                     .make<EventDispatcher>(WireDefinition.eventDispatcher)
-                    .dispatch(Event.fromJson(json.data["onTap"]["data"]),
-                        scopeContext: {
-                        "index": index,
-                      });
+                    .dispatch(Event.fromJson(json.data["onTap"]["data"]));
           });
     });
   }

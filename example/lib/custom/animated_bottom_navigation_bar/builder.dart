@@ -16,10 +16,7 @@ class AnimatedBottomNavigationBarBuilder extends WidgetBuilder {
                 : application
                     .make<EventDispatcher>(WireDefinition.eventDispatcher)
                     .dispatch(
-                        Event.fromJson(json.data["onTapEvents"][index]["data"]),
-                        scopeContext: {
-                        "index": index,
-                      });
+                        Event.fromJson(json.data["onTapEvents"][index]["data"]));
           },
           icons: List<material.IconData>.from(json.data["items"].map((x) {
             final itemElement = Json.fromJson(x);

@@ -21,11 +21,11 @@ class EventDispatcher {
 
   scopedEventDispatch(Event event) {}
 
-  dispatch(Event event, {Map<String, dynamic> scopeContext = const {}}) {
+  dispatch(Event event) {
     if (event.scope != null) {
       application
           .make<StateManager>(WireDefinition.stateManager)
-          .bindScope(event.scope!.id, scopeContext);
+          .bindScope(event.scope!.id, event.scope!.context);
     }
 
     application.make<Dispatcher>(ContainerDefinition.events).dispatch(

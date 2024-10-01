@@ -7,7 +7,7 @@ class Client {
   final Container container;
   final http.Client _client = http.Client();
   Uri? _baseUrl;
-  Map<String, String>? _headers;
+  Map<String, String> _headers = {};
 
   Client(this.container);
 
@@ -17,6 +17,10 @@ class Client {
 
   void setHeaders(Map<String, String> headers) {
     _headers = headers;
+  }
+
+  void addHeader(String key, String value) {
+    _headers[key] = value;
   }
 
   Uri get baseUrl => _baseUrl!;
@@ -29,16 +33,17 @@ class Client {
       {String method = "GET",
       Map<String, String>? headers,
       dynamic body}) async {
+    _headers.addAll(headers ?? {});
     return _handleRequest(() async {
       switch (method) {
         case "GET":
-          return await get(url, headers: headers);
+          return await get(url, headers: _headers);
         case "POST":
-          return await post(url, headers: headers, body: body);
+          return await post(url, headers: _headers, body: body);
         case "PUT":
-          return await put(url, headers: headers, body: body);
+          return await put(url, headers: _headers, body: body);
         case "DELETE":
-          return await delete(url, headers: headers);
+          return await delete(url, headers: _headers);
         default:
           throw Exception("Invalid method $method");
       }

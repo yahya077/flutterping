@@ -43,6 +43,10 @@ class Event implements AbstractEvent {
     );
   }
 
+  setScope(Scope scope) {
+    this.scope = scope;
+  }
+
   factory Event.fromRawJson(String str) => Event.fromJson(json.decode(str));
 
   @override

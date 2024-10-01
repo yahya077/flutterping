@@ -23,12 +23,12 @@ class ScopeValueBuilder<T> extends ValueBuilder<T> {
 
   @override
   T build(Json json, material.BuildContext? context) {
-    String key = json.data["key"] as String;
-    String id = key.split(".").first;
+    List<String> parts = json.data["key"].split(".");
+
     return application
         .make<StateManager>(WireDefinition.stateManager)
-        .getScope(id)
-        .get(json.data["key"]);
+        .getScope(parts[0])
+        .get(parts.sublist(1).join('.'));
   }
 }
 
@@ -72,12 +72,28 @@ class StringValueBuilder {
         String key = parts.sublist(1).join('.');
 
         // Get the corresponding value
-        String replaceValue = application.make(type).build(
+        dynamic replaceValue = application.make(type).build(
             Json.fromJson({
               "type": type,
               "data": {"key": key}
             }),
             context);
+
+        switch (replaceValue) {
+          case int: // If the value is an integer
+            replaceValue = replaceValue.toString();
+            break;
+          case double: // If the value is a double
+            replaceValue = replaceValue.toString();
+            break;
+          case bool: // If the value is a boolean
+            replaceValue = replaceValue.toString();
+            break;
+          case String: // If the value is a string
+            break;
+          default:
+            replaceValue = replaceValue.toString();
+        }
 
         // Replace ${...} with the obtained value in the original string
         value = value.replaceFirst(match.group(0)!, replaceValue);
