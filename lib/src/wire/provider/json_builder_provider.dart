@@ -59,6 +59,7 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.visibility, () => VisibilityBuilder(app));
     app.singleton(JsonDefinition.clipRRect, () => ClipRRectBuilder(app));
     app.singleton(JsonDefinition.padding, () => PaddingBuilder(app));
+    app.singleton(JsonDefinition.radioListTile, () => RadioListTileBuilder(app));
 
     // page builders
     app.singleton(JsonDefinition.materialPage, () => MaterialPageBuilder(app));

@@ -47,4 +47,5 @@ class JsonDefinition {
   static const visibility = 'Visibility';
   static const clipRRect = 'ClipRRect';
   static const padding = 'Padding';
+  static const radioListTile = 'RadioListTile';
 }
