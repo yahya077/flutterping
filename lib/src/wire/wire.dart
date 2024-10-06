@@ -37,6 +37,9 @@ export 'resources/ui/color.dart';
 export 'resources/core/double.dart';
 export 'resources/paintings/alignment.dart';
 export 'resources/paintings/box_fit.dart';
+export 'resources/paintings/text_style.dart';
+export 'resources/paintings/border.dart';
+export 'resources/paintings/border_radius.dart';
 export 'scope_state.dart';
 
 class WireBootstrap {

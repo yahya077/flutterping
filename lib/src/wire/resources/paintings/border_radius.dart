@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart' as material;
 
 abstract class AbstractBorderRadiusGeometry {
-  material.BorderRadiusGeometry build();
+  material.BorderRadius build();
 }
 
 class BorderRadiusGeometry {
@@ -29,7 +29,8 @@ class BorderRadius implements AbstractBorderRadiusGeometry {
     this.bottomLeft,
   });
 
-  factory BorderRadius.fromRawJson(String str) => BorderRadius.fromJson(json.decode(str));
+  factory BorderRadius.fromRawJson(String str) =>
+      BorderRadius.fromJson(json.decode(str));
 
   factory BorderRadius.fromJson(Map<String, dynamic> json) {
     return BorderRadius(
@@ -41,12 +42,20 @@ class BorderRadius implements AbstractBorderRadiusGeometry {
   }
 
   @override
-  material.BorderRadiusGeometry build() {
+  material.BorderRadius build() {
     return material.BorderRadius.only(
-      topLeft: topLeft == null ? material.Radius.zero : material.Radius.circular(topLeft!),
-      topRight: topRight == null ? material.Radius.zero : material.Radius.circular(topRight!),
-      bottomRight: bottomRight == null ? material.Radius.zero : material.Radius.circular(bottomRight!),
-      bottomLeft: bottomLeft == null ? material.Radius.zero : material.Radius.circular(bottomLeft!),
+      topLeft: topLeft == null
+          ? material.Radius.zero
+          : material.Radius.circular(topLeft!),
+      topRight: topRight == null
+          ? material.Radius.zero
+          : material.Radius.circular(topRight!),
+      bottomRight: bottomRight == null
+          ? material.Radius.zero
+          : material.Radius.circular(bottomRight!),
+      bottomLeft: bottomLeft == null
+          ? material.Radius.zero
+          : material.Radius.circular(bottomLeft!),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_ping_wire/src/wire/builders/api_path_builder.dart';
 import 'package:flutter_ping_wire/src/wire/builders/change_notifier_builder.dart';
 import 'package:flutter_ping_wire/src/wire/builders/navigation_path_builder.dart';
 
+import '../builders/input_decoration_builder.dart';
 import '../builders/page_builder.dart';
 import '../builders/preferred_size_widget_builder.dart';
 import '../builders/value_builder.dart';
@@ -60,6 +61,8 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.clipRRect, () => ClipRRectBuilder(app));
     app.singleton(JsonDefinition.padding, () => PaddingBuilder(app));
     app.singleton(JsonDefinition.radioListTile, () => RadioListTileBuilder(app));
+    //paintings builders
+    app.singleton(JsonDefinition.inputDecorationBuilder, () => InputDecorationBuilder(app));
 
     // page builders
     app.singleton(JsonDefinition.materialPage, () => MaterialPageBuilder(app));

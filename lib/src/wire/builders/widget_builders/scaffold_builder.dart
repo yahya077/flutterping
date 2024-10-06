@@ -14,6 +14,9 @@ class ScaffoldBuilder extends WidgetBuilder {
       body: application
           .make<Builder>(json.data["body"]["type"])
           .build(Json.fromJson(json.data["body"]), context),
+      backgroundColor: json.data["backgroundColor"] == null
+          ? null
+          : Color.findColor(json.data["backgroundColor"]).build(),
       floatingActionButtonLocation:
           json.data["floatingActionButtonLocation"] == null
               ? material.FloatingActionButtonLocation.centerDocked

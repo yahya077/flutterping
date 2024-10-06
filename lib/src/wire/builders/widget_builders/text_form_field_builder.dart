@@ -14,8 +14,18 @@ class TextFormFieldBuilder extends WidgetBuilder {
 
     return TextInput(
       name: json.data["name"],
+      decoration: json.data["decoration"] == null
+          ? null
+          : application
+              .make<JsonBuilder<material.InputDecoration>>(
+                  json.data["decoration"]["type"])
+              .build(Json.fromJson(json.data["decoration"]), context),
       formState: state,
       formFieldState: fieldState,
+      maxLength: json.data["maxLength"],
+      maxLines: json.data["maxLines"],
+      obscureText: json.data["obscureText"],
+      minLines: json.data["minLines"],
     );
   }
 }

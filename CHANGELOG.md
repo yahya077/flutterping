@@ -4,6 +4,9 @@
 * Icon widget added
 * StringValueBuilder added
 * Scope feature updated
+* InputDecoration added
+* TextFormField updated
+* 
 
 ## 0.0.7
 

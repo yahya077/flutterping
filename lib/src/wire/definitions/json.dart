@@ -48,4 +48,5 @@ class JsonDefinition {
   static const clipRRect = 'ClipRRect';
   static const padding = 'Padding';
   static const radioListTile = 'RadioListTile';
+  static const inputDecorationBuilder = 'InputDecoration';
 }
