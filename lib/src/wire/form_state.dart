@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' as material;
 
+import 'resources/widgets/form.dart';
 import 'state.dart';
 
 abstract class FormFieldState {
@@ -24,18 +25,16 @@ class FormState extends State {
   FormState({required Map<String, dynamic> state}) : super(state: state);
 
   FormState.initial(
-      String id, material.GlobalKey<material.FormState> formStateKey, String parentStateId)
+      String id, {material.GlobalKey<PingFormState>? formStateKey})
       : super(state: {}) {
     hydrate({
       'id': id,
-      'formStateKey': formStateKey,
-      'formFields': [],
-      'parentStateId': parentStateId,
+      'formStateKey': formStateKey ?? material.GlobalKey<PingFormState>(debugLabel: id),
     });
   }
 
-  material.GlobalKey<material.FormState> get formStateKey =>
-      get<material.GlobalKey<material.FormState>>('formStateKey');
+  material.GlobalKey<PingFormState> get formStateKey =>
+      get<material.GlobalKey<PingFormState>>('formStateKey');
 
   List<FormFieldState> get formFields {
     final formFields = get('formFields');

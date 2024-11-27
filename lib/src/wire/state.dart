@@ -61,6 +61,23 @@ class State implements AbstractState {
     return value;
   }
 
+  void addNestedState(String key, AbstractState state) {
+    final List<String> keys = key.split(".");
+
+    if (keys.length == 1) {
+      set(key, state);
+    } else {
+      final String firstKey = keys.removeAt(0);
+      final AbstractState parent = get(firstKey);
+
+      if (parent is State) {
+        parent.addNestedState(keys.join("."), state);
+      } else {
+        throw Exception("Invalid key $key");
+      }
+    }
+  }
+
   @override
   void hydrate(Map<String, dynamic> state) {
     _state.addAll(state);

@@ -2,11 +2,14 @@
 
 * IconData updated
 * Icon widget added
+* Visibility widget added
+* RadioListTile widget added
 * StringValueBuilder added
 * Scope feature updated
 * InputDecoration added
 * TextFormField updated
-* 
+* Form Functionality extended
+* Listenable value provider added
 
 ## 0.0.7
 

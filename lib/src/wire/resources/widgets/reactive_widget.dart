@@ -20,8 +20,7 @@ class State {
   factory State.fromJson(Map<String, dynamic> json) {
     return State(
       name: json["name"],
-      actions:
-          List<Json>.from(json["actions"].map((x) => Json.fromJson(x))),
+      actions: List<Json>.from(json["actions"].map((x) => Json.fromJson(x))),
     );
   }
 }
@@ -54,8 +53,34 @@ class ReactiveWidgetStateSchema {
   }
 }
 
+class PageNotifier {
+  final String notifierId;
+  final dynamic defaultValue;
+
+  PageNotifier({
+    required this.notifierId,
+    required this.defaultValue,
+  });
+
+  factory PageNotifier.fromJson(Map<String, dynamic> json) {
+    return PageNotifier(
+      notifierId: json["notifierId"],
+      defaultValue: json["defaultValue"],
+    );
+  }
+
+  static List<PageNotifier> listFromJson(List<dynamic> json) {
+    return List<PageNotifier>.from(json.map((x) => PageNotifier.fromJson(x)));
+  }
+
+  static List<PageNotifier> listFromJsonString(String jsonString) {
+    return listFromJson(json.decode(jsonString));
+  }
+}
+
 class ReactiveMaterialWidget extends material.StatefulWidget {
   final ValueNotifier<material.Widget> widgetNotifier;
+  final Map<String, ValueNotifier<dynamic>> pageNotifiers;
   final EventListener actionEventListener;
   final EventListener stateEventListener;
   final DisposeListener disposeListeners;
@@ -68,6 +93,7 @@ class ReactiveMaterialWidget extends material.StatefulWidget {
     required this.stateEventListener,
     required this.disposeListeners,
     required this.emitInitialState,
+    required this.pageNotifiers,
   });
 
   @override
@@ -81,16 +107,23 @@ class ReactiveWidgetState extends material.State<ReactiveMaterialWidget>
 
   StreamSubscription? _actionEventSubscription;
   StreamSubscription? _stateEventSubscription;
+  ValueNotifierManager? _valueNotifierManager;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    _valueNotifierManager = ValueProvider.of(context);
 
     _actionEventSubscription = widget.actionEventListener(context);
 
     _stateEventSubscription = widget.stateEventListener(context);
 
     widget.widgetNotifier.addListener(_updateState);
+
+    widget.pageNotifiers.forEach((key, value) {
+      value.addListener(_updateState);
+    });
 
     widget.emitInitialState(context);
   }
@@ -102,7 +135,7 @@ class ReactiveWidgetState extends material.State<ReactiveMaterialWidget>
   @override
   material.Widget build(material.BuildContext context) {
     super.build(context);
-    return widget.widgetNotifier.value ?? material.Container();
+    return widget.widgetNotifier.value;
   }
 
   @override
@@ -113,6 +146,12 @@ class ReactiveWidgetState extends material.State<ReactiveMaterialWidget>
     widget.disposeListeners();
 
     widget.widgetNotifier.removeListener(_updateState);
+
+    widget.pageNotifiers.forEach((key, value) {
+      value.removeListener(_updateState);
+
+      _valueNotifierManager?.disposeValueNotifier(key);
+    });
 
     super.dispose();
   }

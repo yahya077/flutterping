@@ -16,9 +16,11 @@ class JsonBuilderProvider extends Provider {
   @override
   void register(Application app) {
     app.singleton(JsonDefinition.container, () => ContainerBuilder(app));
-    app.singleton(JsonDefinition.stringValueBuilder, () => StringValueBuilder(app));
+    app.singleton(
+        JsonDefinition.stringValueBuilder, () => StringValueBuilder(app));
     app.singleton(JsonDefinition.apiPathBuilder, () => ApiPathBuilder(app));
-    app.singleton(JsonDefinition.navigationPathBuilder, () => NavigationPathBuilder(app));
+    app.singleton(
+        JsonDefinition.navigationPathBuilder, () => NavigationPathBuilder(app));
     app.singleton(JsonDefinition.row, () => RowBuilder(app));
     app.singleton(JsonDefinition.column, () => ColumnBuilder(app));
     app.singleton(JsonDefinition.text, () => TextBuilder(app));
@@ -60,9 +62,13 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.visibility, () => VisibilityBuilder(app));
     app.singleton(JsonDefinition.clipRRect, () => ClipRRectBuilder(app));
     app.singleton(JsonDefinition.padding, () => PaddingBuilder(app));
-    app.singleton(JsonDefinition.radioListTile, () => RadioListTileBuilder(app));
+    app.singleton(
+        JsonDefinition.radioListTile, () => RadioListTileBuilder(app));
+    app.singleton(
+        JsonDefinition.pingFormField, () => PingFormFieldBuilder(app));
     //paintings builders
-    app.singleton(JsonDefinition.inputDecorationBuilder, () => InputDecorationBuilder(app));
+    app.singleton(JsonDefinition.inputDecorationBuilder,
+        () => InputDecorationBuilder(app));
 
     // page builders
     app.singleton(JsonDefinition.materialPage, () => MaterialPageBuilder(app));
@@ -85,6 +91,12 @@ class JsonBuilderProvider extends Provider {
         JsonDefinition.stateValueBuilder, () => StateValueBuilder(app));
     app.singleton(
         JsonDefinition.notifierValueBuilder, () => NotifierValueBuilder(app));
+    app.singleton(
+        JsonDefinition.dynamicValueBuilder, () => DynamicValueBuilder(app));
+    app.singleton(
+        JsonDefinition.evalValueBuilder, () => EvalValueBuilder(app));
+    app.singleton(
+        JsonDefinition.valueListenableBuilder, () => ValueListenableBuilder(app));
 
     app.singleton(
         JsonDefinition.navigationAction, () => NavigationActionExecutor(app));
@@ -103,5 +115,11 @@ class JsonBuilderProvider extends Provider {
 
     app.singleton(JsonDefinition.functionCallAction,
         () => FunctionCallActionExecutor(app));
+
+    app.singleton(
+        JsonDefinition.updateStateAction, () => UpdateStateActionExecutor(app));
+
+    app.singleton(JsonDefinition.updateNotifierAction,
+        () => UpdateNotifierActionExecutor(app));
   }
 }

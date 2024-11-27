@@ -6,13 +6,26 @@ class ReactiveWidgetBuilder extends WidgetBuilder {
   @override
   material.Widget build(Json json, material.BuildContext? context) {
     final stateSchema = ReactiveWidgetStateSchema.fromJson(json.data["state"]);
+    final pageNotifierList =
+        PageNotifier.listFromJson(json.data["pageNotifiers"] ?? []);
 
     return StatelessWidget(builder: (context) {
       final widgetNotifier = ValueProvider.of(context)
           .registerValueNotifier<material.Widget>(json.data["stateId"],
               defaultValue: material.Container());
+
+      Map<String, ValueNotifier<dynamic>> pageNotifiers = {
+        for (var page in pageNotifierList)
+          page.notifierId: ValueProvider.of(context)
+              .registerValueNotifier<dynamic>(page.notifierId,
+                  defaultValue: application
+                      .make<ValueBuilder>(page.defaultValue["type"])
+                      .build(Json.fromJson(page.defaultValue), context))
+      };
+
       return ReactiveMaterialWidget(
         widgetNotifier: widgetNotifier,
+        pageNotifiers: pageNotifiers,
         actionEventListener: (context) {
           return application
               .make<ActionEventListener>(

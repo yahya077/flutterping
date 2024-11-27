@@ -36,17 +36,23 @@ class JsonDefinition {
   static const updateReactiveWidgetAction = 'UpdateReactiveWidgetAction';
   static const validateAndSubmitAction = 'ValidateAndSubmitAction';
   static const functionCallAction = 'FunctionCallAction';
+  static const updateStateAction = 'UpdateStateAction';
+  static const updateNotifierAction = 'UpdateNotifierAction';
   static const scrollController = 'ScrollController';
   static const intrinsicHeight = 'IntrinsicHeight';
   static const floatingActionButton = 'FloatingActionButton';
   static const imageAsset = 'ImageAsset';
   static const scopeValueBuilder = 'ScopeValue';
   static const stateValueBuilder = 'StateValue';
+  static const dynamicValueBuilder = 'DynamicValue';
+  static const evalValueBuilder = 'EvalValue';
+  static const valueListenableBuilder = 'ValueListenableBuilder';
   static const notifierValueBuilder = 'NotifierValue';
   static const expanded = 'Expanded';
   static const visibility = 'Visibility';
   static const clipRRect = 'ClipRRect';
   static const padding = 'Padding';
   static const radioListTile = 'RadioListTile';
+  static const pingFormField = 'PingFormField';
   static const inputDecorationBuilder = 'InputDecoration';
 }

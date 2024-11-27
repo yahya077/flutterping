@@ -5,21 +5,18 @@ class FormBuilder extends WidgetBuilder {
 
   @override
   material.Widget build(Json json, material.BuildContext? context) {
-    final formStateKey = material.GlobalKey<material.FormState>();
-    final formState = FormState.initial(
-        json.data["id"], formStateKey, json.data["parentStateId"]);
-
-    application
+    final formStateKey = json.data["key"];
+    final state = application
         .make<StateManager>(WireDefinition.stateManager)
-        .addState(formState);
+        .addNestedState(formStateKey, FormState.initial(formStateKey));
 
-    return FormWidget(
-      formState: formState,
-      children: json.data["formWidgets"]
-          .map<material.Widget>((widget) => application
-              .make<WidgetBuilder>(widget["type"])
-              .build(Json.fromJson(widget), context))
-          .toList(),
+    return PingForm(
+      key: state.get<material.GlobalKey<PingFormState>>('formStateKey'),
+      child: json.data["child"] != null
+          ? application
+              .make<Builder>(json.data["child"]["type"])
+              .build(Json.fromJson(json.data["child"]), context)
+          : material.Container(),
     );
   }
 }

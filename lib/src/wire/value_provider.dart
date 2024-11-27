@@ -26,18 +26,11 @@ class ValueNotifierManager extends material.ChangeNotifier {
   List<String> get keys => _values.keys.toList();
 }
 
-class ValueNotifier<T> extends material.ChangeNotifier {
-  T? _value;
-
-  T? get value => _value;
-
-  ValueNotifier(T? value) {
-    _value = value;
-  }
+class ValueNotifier<T> extends material.ValueNotifier<T> {
+  ValueNotifier(T? value) : super(value as T);
 
   void updateValue(T value) {
-    _value = value;
-    notifyListeners();
+    this.value = value; // `value` is a setter in Flutter's `ValueNotifier`
   }
 }
 

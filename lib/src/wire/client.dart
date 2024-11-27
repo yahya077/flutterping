@@ -108,14 +108,14 @@ class Client {
 
   //merge headers
   Map<String, String> _mergeHeaders(Map<String, String>? headers) {
-    if (_headers == null) {
+    if (_headers.isEmpty) {
       return headers ?? {};
     }
 
     if (headers == null) {
-      return _headers!;
+      return _headers;
     }
 
-    return {..._headers!, ...headers};
+    return {..._headers, ...headers};
   }
 }

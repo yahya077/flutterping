@@ -1,18 +1,31 @@
 part of '../action_executor.dart';
 
 class ValidateAndSubmitActionExecutor extends ActionExecutor {
-  ValidateAndSubmitActionExecutor(Application application)
-      : super(application);
+  ValidateAndSubmitActionExecutor(Application application) : super(application);
 
   @override
   Future<void> execute(material.BuildContext context, Json json) async {
-    final state = application
+    final formState = application
         .make<StateManager>(WireDefinition.stateManager)
-        .getState<FormState>(json.data["formStateId"]!);
+        .dynamicGet<material.GlobalKey<PingFormState>>(
+            json.data["formStateId"] + ".formStateKey")
+        .currentState!;
+
+    formState.save();
+
+    if (!formState.validate()) {
+      //TODO: implement not valid
+    }
 
     final submitAction = Json.fromJson(json.data["submitAction"]);
 
-    submitAction.data["body"] = state.getValues();
+    //TODO: implement
+    submitAction.data["body"] = {
+      "type": "DynamicValue",
+      "data": {
+        "value": formState.values,
+      },
+    };
 
     await application
         .make<NetworkRequestActionExecutor>(submitAction.type)

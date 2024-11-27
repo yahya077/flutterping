@@ -103,3 +103,95 @@ class StringValueBuilder {
     return value;
   }
 }
+
+class DynamicValueBuilder extends ValueBuilder<dynamic> {
+  DynamicValueBuilder(Application application) : super(application);
+
+  @override
+  dynamic build(Json json, material.BuildContext? context) {
+    return json.data["value"];
+  }
+}
+
+class EvalValueBuilder extends ValueBuilder<dynamic> {
+  EvalValueBuilder(Application application) : super(application);
+
+  @override
+  dynamic build(Json json, material.BuildContext? context) {
+    String expressionStr = json.data["key"];
+    expressionStr = _replacePlaceholders(expressionStr, context);
+
+    final bool result = _evaluateExpression(expressionStr);
+    return result;
+  }
+
+  String _replacePlaceholders(
+      String expression, material.BuildContext? context) {
+    RegExp exp = RegExp(r'\$\{(.*?)\}');
+    Iterable<RegExpMatch> matches = exp.allMatches(expression);
+
+    for (var match in matches) {
+      String matchStr = match.group(1)!;
+      List<String> parts = matchStr.split('.');
+
+      if (parts.length >= 2) {
+        String type = parts[0];
+        String key = parts.sublist(1).join('.');
+
+        dynamic replaceValue = application.make(type).build(
+            Json.fromJson({
+              "type": type,
+              "data": {"key": key}
+            }),
+            context);
+
+        switch (replaceValue.runtimeType) {
+          case const (ValueNotifier<dynamic>):
+            replaceValue = replaceValue.value.toString();
+            break;
+          default:
+            replaceValue = replaceValue.toString();
+        }
+
+        expression = expression.replaceFirst(match.group(0)!, replaceValue);
+      }
+    }
+
+    return expression;
+  }
+
+  //TODO complete math expression evaluation
+  dynamic _evaluateExpression(String expression) {
+    List<String> parts = expression.split(' ');
+    if (parts[0].startsWith("!")) {
+      String innerExpression = expression.substring(1);
+      dynamic result = num.tryParse(innerExpression) ?? innerExpression;
+      return !(innerExpression == "true" || result == 1);
+    }
+
+    if (parts.length != 3) {
+      throw Exception("Invalid expression format");
+    }
+
+    dynamic leftOperand = num.tryParse(parts[0]) ?? parts[0];
+    String operator = parts[1];
+    dynamic rightOperand = num.tryParse(parts[2]) ?? parts[2];
+
+    switch (operator) {
+      case '>':
+        return leftOperand > rightOperand;
+      case '<':
+        return leftOperand < rightOperand;
+      case '==':
+        return leftOperand == rightOperand;
+      case '!=':
+        return leftOperand != rightOperand;
+      case '>=':
+        return leftOperand >= rightOperand;
+      case '<=':
+        return leftOperand <= rightOperand;
+      default:
+        throw Exception("Unsupported operator $operator");
+    }
+  }
+}

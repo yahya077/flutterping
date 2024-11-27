@@ -9,10 +9,22 @@ class NetworkRequestActionExecutor extends ActionExecutor {
         .make<ApiPathBuilder>(JsonDefinition.apiPathBuilder)
         .build(Json.fromJson(json.data["path"]), context);
 
+    Object? body;
+
+    if (json.data["body"] != null) {
+      body = application
+          .make<Builder>(json.data["body"]["type"])
+          .build(Json.fromJson(json.data["body"]), context);
+
+      if (body is State) {
+        body = body.dehydrate();
+      }
+    }
+
     final response = await application
         .make<Client>(json.data["client"])
         .request(path.path,
-            body: jsonEncode(json.data["body"] ?? {}),
+            body: jsonEncode(body ?? {}),
             method: json.data["method"] ?? "GET",
             headers: json.data["headers"] != null
                 ? Map<String, String>.from(json.data["headers"])

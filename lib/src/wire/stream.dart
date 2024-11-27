@@ -19,7 +19,14 @@ class EventDispatcher {
 
   EventDispatcher(this.application);
 
-  scopedEventDispatch(Event event) {}
+  //TODO merge event.scope.context with arguments
+  scopedEventDispatch(Event event,Map<String, dynamic> arguments) {
+    if (event.scope != null) {
+      event.scope!.context.addAll(arguments);
+    }
+
+    dispatch(event);
+  }
 
   dispatch(Event event) {
     if (event.scope != null) {

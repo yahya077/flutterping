@@ -57,3 +57,37 @@ class ScrollController extends CallableRegistry<material.ScrollController> {
     };
   }
 }
+
+class TextEditingControllerBuilder extends ChangeNotifierBuilder {
+  TextEditingControllerBuilder(Application application) : super(application);
+
+  @override
+  material.TextEditingController build(Json json, material.BuildContext? context) {
+    final id = json.data["id"];
+
+    return application
+        .make<StateManager>(WireDefinition.stateManager)
+        .get<TextEditingController>(WireDefinition.stateCallableRegistryState, id,
+            defaultValue: TextEditingController(material.TextEditingController()))
+        .instance;
+  }
+}
+
+class TextEditingController extends CallableRegistry<material.TextEditingController> {
+  static const String methodClear = "clear";
+  static const String methodDispose = "dispose";
+
+  TextEditingController(super.controller);
+
+  @override
+  initCallables() {
+    callables = {
+      methodClear: (_) {
+        instance.clear();
+      },
+      methodDispose: (_) {
+        instance.dispose();
+      }
+    };
+  }
+}

@@ -7,30 +7,39 @@ class RadioListTileBuilder extends WidgetBuilder {
   material.Widget build(Json json, material.BuildContext? context) {
     return StatelessWidget(
       builder: (context) {
-        final selectedValueNotifier = ValueProvider.of(context)
-            .registerValueNotifier<int>("selected_value_notifier",
-                defaultValue: 0);
         final title = Json.fromJson(json.data["title"]);
-        final subTitle = json.data["sub_title"] != null ? Json.fromJson(json.data["sub_title"]) : null;
-        final secondary = json.data["secondary"] != null ? Json.fromJson(json.data["secondary"]) : null;
-        return RadioListTile<int>(
+        final subTitle = json.data["subTitle"] != null
+            ? Json.fromJson(json.data["subTitle"])
+            : null;
+        final secondary = json.data["secondary"] != null
+            ? Json.fromJson(json.data["secondary"])
+            : null;
+        return material.RadioListTile(
           title:
               application.make<WidgetBuilder>(title.type).build(title, context),
-          subtitle: subTitle != null ? application
-              .make<WidgetBuilder>(subTitle.type)
-              .build(subTitle, context) : null,
-          secondary: secondary != null ? application
-              .make<WidgetBuilder>(secondary.type)
-              .build(secondary, context) : null,
-          selectedValue: selectedValueNotifier,
+          subtitle: subTitle != null
+              ? application
+                  .make<WidgetBuilder>(subTitle.type)
+                  .build(subTitle, context)
+              : null,
+          secondary: secondary != null
+              ? application
+                  .make<WidgetBuilder>(secondary.type)
+                  .build(secondary, context)
+              : null,
+          groupValue: application
+              .make<ValueBuilder>(json.data["groupValue"]["type"])
+              .build(Json.fromJson(json.data["groupValue"]), context),
           value: json.data["value"],
-          onChanged: (int? value) {
-            selectedValueNotifier.updateValue(value!);
+          onChanged: (value) {
             json.data["onChanged"] == null
                 ? null
                 : application
                     .make<EventDispatcher>(WireDefinition.eventDispatcher)
-                    .dispatch(Event.fromJson(json.data["onChanged"]["data"]));
+                    .scopedEventDispatch(
+                        Event.fromJson(json.data["onChanged"]["data"]), {
+                    "value": value,
+                  });
           },
           isThreeLine: json.data["isThreeLine"] ?? false,
           dense: json.data["dense"] ?? false,

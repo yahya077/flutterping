@@ -36,6 +36,35 @@ class StateManager {
     _appState.getState(stateId).set(key, value);
   }
 
+  void setByKey<T>(String stateKey, T value) {
+    final List<String> keys = stateKey.split(".");
+
+    if (keys.length == 1) {
+      _appState.getState(keys[0]).set(keys[0], value);
+    } else {
+      State state = _appState.getState(keys[0]);
+      dynamic current = state;
+
+      for (int i = 1; i < keys.length - 1; i++) {
+        if (current is Map<String, dynamic>) {
+          current = current[keys[i]];
+        } else if (current is State) {
+          current = current.get<dynamic>(keys[i]);
+        } else {
+          throw Exception("Invalid key ${keys[i]}");
+        }
+      }
+
+      if (current is Map<String, dynamic>) {
+        current[keys.last] = value;
+      } else if (current is State) {
+        current.set(keys.last, value);
+      } else {
+        throw Exception("Invalid key ${keys.last}");
+      }
+    }
+  }
+
   void setAll(String stateId, Map<String, dynamic> other) {
     _appState.getState(stateId).setAll(other);
   }
@@ -60,7 +89,7 @@ class StateManager {
     _appState.getState(stateId).dispose();
   }
 
-  dynamic dynamicGet(String key) {
+  T dynamicGet<T>(String key, {T? defaultValue}) {
     final List<String> keys = key.split(".");
 
     if (keys.length == 1) {
@@ -74,18 +103,24 @@ class StateManager {
         if (value is Map<String, dynamic>) {
           value = value[key];
         } else if (value is State) {
-          value = value.get<dynamic>(key);
+          value = value.get<dynamic>(key, defaultValue: defaultValue);
         } else {
           throw Exception("Invalid key $key");
         }
       }
 
-      return value;
+      return value as T;
     }
   }
 
   AbstractState addState(AbstractState state) {
     _appState.addState(state);
+
+    return state;
+  }
+
+  AbstractState addNestedState(String key, AbstractState state) {
+    _appState.addNestedState(key, state);
 
     return state;
   }
