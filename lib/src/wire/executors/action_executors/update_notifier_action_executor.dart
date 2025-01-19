@@ -9,5 +9,11 @@ class UpdateNotifierActionExecutor extends ActionExecutor {
     manager.getValueNotifier(json.data["notifierId"])?.updateValue(application
         .make<JsonBuilder>(json.data["value"]["type"])
         .build(Json.fromJson(json.data["value"]), context));
+
+    if (json.data["thenAction"] != null) {
+      await application
+          .make<ActionExecutor>(json.data["thenAction"]["type"])
+          .execute(context, Json.fromJson(json.data["thenAction"]));
+    }
   }
 }

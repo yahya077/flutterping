@@ -14,5 +14,9 @@ class AlertActionExecutor extends ActionExecutor {
           ? null
           : Color.findColor(json.data["color"]).build(),
     ));
+
+    if (json.data["thenAction"] != null) {
+      await application.make<ActionExecutor>(json.data["thenAction"]["type"]).execute(context, Json.fromJson(json.data["thenAction"]));
+    }
   }
 }

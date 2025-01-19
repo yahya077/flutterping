@@ -5,6 +5,7 @@ import '../../../flutter_ping_wire.dart';
 class InputDecorationBuilder extends JsonBuilder<material.InputDecoration> {
   InputDecorationBuilder(Application application) : super(application);
 
+  @override
   material.InputDecoration build(Json json, material.BuildContext? context) {
     return material.InputDecoration(
       icon: json.data["icon"] == null

@@ -33,6 +33,11 @@ class TextFormFieldBuilder extends WidgetBuilder {
           : application
               .make<Builder>(json.data["decoration"]["type"])
               .build(Json.fromJson(json.data["decoration"]), context),
+      validator: json.data["validator"] == null
+          ? null
+          : application
+              .make<Builder>(json.data["validator"]["type"])
+              .build(Json.fromJson(json.data["validator"]), context),
       maxLength: json.data["maxLength"],
       maxLines: json.data["maxLines"],
       obscureText: json.data["obscureText"] ?? false,

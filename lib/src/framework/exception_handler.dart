@@ -9,7 +9,7 @@ class ExceptionHandler {
 
   void register() {}
 
-  void report(e) {
+  void report(e, stackTrace) {
     throw e;
   }
 }

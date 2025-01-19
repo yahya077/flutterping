@@ -4,6 +4,7 @@ class PingForm extends material.Form {
   const PingForm({
     material.Key? key,
     required material.Widget child,
+    required material.AutovalidateMode autovalidateMode,
   }) : super(key: key, child: child);
 
   @override
@@ -35,6 +36,15 @@ class PingFormState extends material.FormState {
     }
 
     return isValid;
+  }
+
+  setFieldError(String field, String errorMessage) {
+    for (var registeredField in registeredFields) {
+      if (registeredField.widget.name == field) {
+        registeredField.setError(errorMessage);
+        break;
+      }
+    }
   }
 
   final List<PingFormFieldState> registeredFields = [];
@@ -107,5 +117,59 @@ class PingFormFieldState extends material.FormFieldState<dynamic> {
   void didChange(dynamic value) {
     super.didChange(value);
     _formState?.updateValue(widget.name, value);
+
+    final error = widget.validator?.call(value);
+    setError(error);
+  }
+
+  @override
+  void reset() {
+    super.reset();
+    _error = null;
+  }
+
+  @override
+  void didUpdateWidget(PingFormField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _formState?.updateValue(widget.name, value);
+  }
+
+  @override
+  void setValue(dynamic value) {
+    super.setValue(value);
+    _formState?.updateValue(widget.name, value);
+  }
+
+  @override
+  void save() {
+    super.save();
+    _formState?.updateValue(widget.name, value);
+  }
+
+}
+
+class AutovalidateMode {
+  String value;
+  static const String always = "always";
+  static const String onUserInteraction = "onUserInteraction";
+  static const String disabled = "disabled";
+
+  AutovalidateMode(this.value);
+
+  factory AutovalidateMode.fromJson(Map<String, dynamic> json) {
+    return AutovalidateMode(json["value"]);
+  }
+
+  material.AutovalidateMode build() {
+    switch (value) {
+      case always:
+        return material.AutovalidateMode.always;
+      case onUserInteraction:
+        return material.AutovalidateMode.onUserInteraction;
+      case disabled:
+        return material.AutovalidateMode.disabled;
+      default:
+        return material.AutovalidateMode.disabled;
+    }
   }
 }

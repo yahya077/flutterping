@@ -15,22 +15,55 @@ class NetworkRequestActionExecutor extends ActionExecutor {
       body = application
           .make<Builder>(json.data["body"]["type"])
           .build(Json.fromJson(json.data["body"]), context);
-
-      if (body is State) {
-        body = body.dehydrate();
-      }
     }
 
+    if (body is Map) {
+      body = body.map((key, value) {
+        if (value is State) {
+          return MapEntry(key, value.dehydrate());
+        }
+        return MapEntry(key, value);
+      });
+      body = jsonEncode(body);
+    } else if (body is State) {
+      body = body.dehydrate();
+      body = jsonEncode(body);
+    } else if (body is List) {
+      body = body.map((e) {
+        if (e is State) {
+          return e.dehydrate();
+        }
+        return e;
+      }).toList();
+      body = jsonEncode(body);
+    } else if (body is Object) {
+      body = jsonEncode(body);
+    }
     final response = await application
         .make<Client>(json.data["client"])
         .request(path.path,
-            body: jsonEncode(body ?? {}),
+            body: body ?? {},
             method: json.data["method"] ?? "GET",
             headers: json.data["headers"] != null
                 ? Map<String, String>.from(json.data["headers"])
                 : {});
 
-    //TODO handle server errors
+    Map<String, dynamic> onStatusCodeActions = json.data["onStatusCodeActions"] ?? {};
+
+    if (onStatusCodeActions.containsKey(response.statusCode.toString())) {
+      application
+          .make<ActionExecutor>(onStatusCodeActions[response.statusCode.toString()]["type"])
+          .execute(context, Json.fromJson(onStatusCodeActions[response.statusCode.toString()]));
+    } else if (json.data["thenAction"] != null) {
+      application
+          .make<ActionExecutor>(json.data["thenAction"]["type"])
+          .execute(context, Json.fromJson(json.data["thenAction"]));
+    }
+
+    if (response.body == "" || response.body.isEmpty || response.body == "{}") {
+      return;
+    }
+
     final responseJson = Json.fromRawJson(response.body);
 
     final event = Event.fromJson(responseJson.data);

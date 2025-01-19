@@ -21,7 +21,6 @@ class PreferredSizeWidgetBuilder
 
 class AppBarBuilder extends PreferredSizeWidgetBuilder {
   AppBarBuilder(Application application) : super(application);
-
   @override
   material.AppBar build(Json json, material.BuildContext? context) {
     return material.AppBar(
@@ -39,7 +38,7 @@ class AppBarBuilder extends PreferredSizeWidgetBuilder {
           ? null
           : List<material.Widget>.from(json.data["actions"].map((x) =>
               application
-                  .make<WidgetBuilder>(json.type)
+                  .make<WidgetBuilder>(x["type"])
                   .build(Json.fromJson(x), context))),
       elevation: json.data["elevation"]?.toDouble(),
       backgroundColor: json.data["backgroundColor"] == null

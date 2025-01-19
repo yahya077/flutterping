@@ -7,7 +7,9 @@ class Client {
   final Container container;
   final http.Client _client = http.Client();
   Uri? _baseUrl;
-  Map<String, String> _headers = {};
+  Map<String, String> _headers = {
+    'Content-Type': 'application/json; charset=UTF-8'
+  };
 
   Client(this.container);
 
@@ -21,6 +23,10 @@ class Client {
 
   void addHeader(String key, String value) {
     _headers[key] = value;
+  }
+
+  void putHeaders(Map<String, String> headers) {
+    _headers.addAll(headers);
   }
 
   Uri get baseUrl => _baseUrl!;
@@ -89,10 +95,10 @@ class Client {
       Future<http.Response> Function() request) async {
     try {
       return await request();
-    } catch (e) {
+    } catch (e, stackTrace) {
       container
           .make<AppExceptionHandler>(ContainerDefinition.appExceptionHandler)
-          .report(e);
+          .report(e, stackTrace);
 
       return http.Response('Failed to execute request', 500);
     }

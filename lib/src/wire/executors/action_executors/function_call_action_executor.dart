@@ -27,5 +27,9 @@ class FunctionCallActionExecutor extends ActionExecutor {
         .disposeScope(json.data["scopeId"]);
 
     callableRegistry.call(json.data["method"], arguments);
+
+    if (json.data["thenAction"] != null) {
+      await application.make<ActionExecutor>(json.data["thenAction"]["type"]).execute(context, Json.fromJson(json.data["thenAction"]));
+    }
   }
 }

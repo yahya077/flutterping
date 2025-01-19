@@ -10,11 +10,9 @@ void main() async {
 
   final application = flutter_ping.Application.getInstance();
 
-  final wireBootstrap = flutter_ping.WireBootstrap(application, registarables: {
+  final wireBootstrap = await flutter_ping.WireBootstrap(application, registarables: {
     "go_router": () => GoRouteRouterProvider(),
   }).boot();
-
-  await wireBootstrap.initAsync();
 
   await Navigation.lazyInstance();
 

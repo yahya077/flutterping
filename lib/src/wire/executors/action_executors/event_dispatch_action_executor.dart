@@ -8,5 +8,9 @@ class EventDispatchActionExecutor extends ActionExecutor {
     application
         .make<EventDispatcher>(WireDefinition.eventDispatcher)
         .dispatch(event);
+
+    if (json.data["thenAction"] != null) {
+      await application.make<ActionExecutor>(json.data["thenAction"]["type"]).execute(context, Json.fromJson(json.data["thenAction"]));
+    }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/wire/resources/widgets/form.dart';
 
-class PingTextField extends material.StatelessWidget {
+class PingTextField extends material.StatefulWidget {
   final String name;
   final String? Function(dynamic)? validator;
   final material.TextEditingController? controller;
@@ -15,6 +15,7 @@ class PingTextField extends material.StatelessWidget {
   final int? maxLines;
   final int? minLines;
   final material.VoidCallback? onEditingComplete;
+  final material.FocusNode? focusNode;
 
   const PingTextField({
     material.Key? key,
@@ -31,29 +32,66 @@ class PingTextField extends material.StatelessWidget {
     this.maxLines,
     this.minLines,
     this.onEditingComplete,
-  }) : super(key: key);
+    this.focusNode,
+  })  : assert(controller == null || initialValue == null,
+  'Cannot provide both a controller and an initialValue.'),
+        super(key: key);
+
+  @override
+  _PingTextFieldState createState() => _PingTextFieldState();
+}
+
+class _PingTextFieldState extends material.State<PingTextField> {
+  late final material.TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? material.TextEditingController(text: widget.initialValue);
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   material.Widget build(material.BuildContext context) {
     return PingFormField(
-      name: name,
-      validator: validator,
+      name: widget.name,
+      validator: widget.validator,
       builder: (field) {
+        // Update the controller's text if the field value changes
+        if (_controller.text != field.value) {
+          _controller.text = field.value ?? '';
+          _controller.selection = material.TextSelection.fromPosition(
+            material.TextPosition(offset: _controller.text.length),
+          );
+        }
+
         return material.TextFormField(
-          controller: controller,
-          decoration: decoration,
-          keyboardType: keyboardType,
-          obscureText: obscureText,
+          controller: _controller,
+          decoration: widget.decoration.copyWith(
+            errorText: field.errorText,
+          ),
+          keyboardType: widget.keyboardType,
+          obscureText: widget.obscureText,
           onChanged: (value) {
-            field.didChange(value);
-            onChanged?.call(value);
+            field.didChange(value); // Update form field state
+            widget.onChanged?.call(value);
           },
-          onSaved: onSaved,
-          maxLength: maxLength,
-          maxLines: maxLines,
-          initialValue: initialValue,
-          minLines: minLines,
-          onEditingComplete: onEditingComplete,
+          onSaved: (value) {
+            field.didChange(value); // Update form field state
+            widget.onSaved?.call(value);
+          },
+          maxLength: widget.maxLength,
+          maxLines: widget.maxLines,
+          minLines: widget.minLines,
+          onEditingComplete: widget.onEditingComplete,
+          focusNode: widget.focusNode,
         );
       },
     );

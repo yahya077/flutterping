@@ -1,3 +1,13 @@
+## 0.1.0
+
+* Form state reconstruction
+* Form field validation
+* Form field error message
+* Form submit action refactored
+* showModalBottomSheet added
+* Action flow added
+* webview_flutter adapter added
+
 ## 0.0.8
 
 * IconData updated

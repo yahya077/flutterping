@@ -3,6 +3,7 @@ import 'package:flutter_ping_wire/src/framework/provider.dart';
 import 'package:flutter_ping_wire/src/wire/builders/api_path_builder.dart';
 import 'package:flutter_ping_wire/src/wire/builders/change_notifier_builder.dart';
 import 'package:flutter_ping_wire/src/wire/builders/navigation_path_builder.dart';
+import 'package:flutter_ping_wire/src/wire/builders/validator_builder.dart';
 
 import '../builders/input_decoration_builder.dart';
 import '../builders/page_builder.dart';
@@ -32,6 +33,8 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.iconData, () => IconDataBuilder(app));
     app.singleton(JsonDefinition.icon, () => IconBuilder(app));
     app.singleton(JsonDefinition.sizedBox, () => SizedBoxBuilder(app));
+    app.singleton(JsonDefinition.fractionallySizedBox,
+        () => FractionallySizedBoxBuilder(app));
     app.singleton(
         JsonDefinition.gestureDetector, () => GestureDetectorBuilder(app));
     app.singleton(JsonDefinition.listView, () => ListViewBuilder(app));
@@ -64,6 +67,7 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.padding, () => PaddingBuilder(app));
     app.singleton(
         JsonDefinition.radioListTile, () => RadioListTileBuilder(app));
+    app.singleton(JsonDefinition.listTile, () => ListTileBuilder(app));
     app.singleton(
         JsonDefinition.pingFormField, () => PingFormFieldBuilder(app));
     //paintings builders
@@ -93,10 +97,9 @@ class JsonBuilderProvider extends Provider {
         JsonDefinition.notifierValueBuilder, () => NotifierValueBuilder(app));
     app.singleton(
         JsonDefinition.dynamicValueBuilder, () => DynamicValueBuilder(app));
-    app.singleton(
-        JsonDefinition.evalValueBuilder, () => EvalValueBuilder(app));
-    app.singleton(
-        JsonDefinition.valueListenableBuilder, () => ValueListenableBuilder(app));
+    app.singleton(JsonDefinition.evalValueBuilder, () => EvalValueBuilder(app));
+    app.singleton(JsonDefinition.valueListenableBuilder,
+        () => ValueListenableBuilder(app));
 
     app.singleton(
         JsonDefinition.navigationAction, () => NavigationActionExecutor(app));
@@ -116,10 +119,29 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.functionCallAction,
         () => FunctionCallActionExecutor(app));
 
+    app.singleton(JsonDefinition.modalBottomSheetAction,
+        () => ModalBottomSheetActionExecutor(app));
+
     app.singleton(
         JsonDefinition.updateStateAction, () => UpdateStateActionExecutor(app));
 
     app.singleton(JsonDefinition.updateNotifierAction,
         () => UpdateNotifierActionExecutor(app));
+
+    // form field validators
+    app.singleton(
+        JsonDefinition.composeValidator, () => ComposerValidatorBuilder(app));
+    app.singleton(
+        JsonDefinition.requiredValidator, () => RequiredValidatorBuilder(app));
+    app.singleton(
+        JsonDefinition.emailValidator, () => EmailValidatorBuilder(app));
+    app.singleton(JsonDefinition.minLengthValidator,
+        () => MinLengthValidatorBuilder(app));
+    app.singleton(JsonDefinition.maxLengthValidator,
+        () => MaxLengthValidatorBuilder(app));
+    app.singleton(
+        JsonDefinition.lengthValidator, () => LengthValidatorBuilder(app));
+    app.singleton(
+        JsonDefinition.rangeValidator, () => RangeValidatorBuilder(app));
   }
 }

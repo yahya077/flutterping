@@ -13,6 +13,7 @@ class JsonDefinition {
   static const iconData = 'IconData';
   static const icon = 'Icon';
   static const sizedBox = 'SizedBox';
+  static const fractionallySizedBox = 'FractionallySizedBox';
   static const gestureDetector = 'GestureDetector';
   static const listView = 'ListView';
   static const gridView = 'GridView';
@@ -36,6 +37,7 @@ class JsonDefinition {
   static const updateReactiveWidgetAction = 'UpdateReactiveWidgetAction';
   static const validateAndSubmitAction = 'ValidateAndSubmitAction';
   static const functionCallAction = 'FunctionCallAction';
+  static const modalBottomSheetAction = 'ModalBottomSheetAction';
   static const updateStateAction = 'UpdateStateAction';
   static const updateNotifierAction = 'UpdateNotifierAction';
   static const scrollController = 'ScrollController';
@@ -53,6 +55,14 @@ class JsonDefinition {
   static const clipRRect = 'ClipRRect';
   static const padding = 'Padding';
   static const radioListTile = 'RadioListTile';
+  static const listTile = 'ListTile';
   static const pingFormField = 'PingFormField';
   static const inputDecorationBuilder = 'InputDecoration';
+  static const composeValidator = 'ComposeValidator';
+  static const requiredValidator = 'RequiredValidator';
+  static const emailValidator = 'EmailValidator';
+  static const minLengthValidator = 'MinLengthValidator';
+  static const maxLengthValidator = 'MaxLengthValidator';
+  static const lengthValidator = 'LengthValidator';
+  static const rangeValidator = 'RangeValidator';
 }

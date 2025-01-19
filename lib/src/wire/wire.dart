@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/wire/change_notifier_state.dart';
 import 'package:flutter_ping_wire/src/wire/local_state.dart';
-import 'package:flutter_ping_wire/src/wire/models/config.dart' as config_model;
 import 'package:flutter_ping_wire/src/wire/provider/json_builder_provider.dart';
 
 import 'package:flutter_ping_wire/src/wire/value_provider.dart';
@@ -46,50 +45,33 @@ class WireBootstrap {
   Application app;
   Map<String, dynamic> registarables;
 
-  WireBootstrap(this.app, {this.registarables = const {}}) {
-    register();
-  }
+  WireBootstrap(this.app, {this.registarables = const {}});
 
-  void register() {
-    //
-  }
-
-  WireBootstrap boot() {
+  Future<WireBootstrap> boot() async {
     app.register(() => WireProvider());
     app.register(() => JsonBuilderProvider());
+    app.make<StateManager>(WireDefinition.stateManager)
+        .addState(CallableRegistryState.initial());
+    app.make<StateManager>(WireDefinition.stateManager)
+        .addState(LocalState.initial());
+
     registarables.forEach((key, value) {
       app.register(value);
     });
 
-    return this;
-  }
+    final config = await app.make<WireConfig>(WireDefinition.config).ensureAllAs();
 
-  Future<void> initAsync() async {
-    app
-        .make<StateManager>(WireDefinition.stateManager)
-        .addState(CallableRegistryState.initial());
-    app
-        .make<StateManager>(WireDefinition.stateManager)
-        .addState(LocalState.initial());
-
-    final config =
-        await app.make<WireConfig>(WireDefinition.config).ensureAllAs();
-
-    initClients(config);
-  }
-
-  void initClients(config_model.WireConfig config) {
     config.clients.forEach((key, value) {
       app.singleton(key, () => Client(app));
 
       app.make<Client>(key).setBaseUrl(Uri.parse(value.url));
     });
+
+    return this;
   }
 
   Future<void> runApp(String loader) async {
-    boot();
-
-    await initAsync();
+    await boot();
 
     material.runApp(wrap(await app
         .make<PreLoader>(WireDefinition.loaderPreLoader)

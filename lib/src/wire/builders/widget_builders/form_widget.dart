@@ -9,9 +9,11 @@ class FormBuilder extends WidgetBuilder {
     final state = application
         .make<StateManager>(WireDefinition.stateManager)
         .addNestedState(formStateKey, FormState.initial(formStateKey));
-
     return PingForm(
       key: state.get<material.GlobalKey<PingFormState>>('formStateKey'),
+      autovalidateMode: json.data["autovalidateMode"] == null
+          ? material.AutovalidateMode.disabled
+          : AutovalidateMode.fromJson(json.data["autovalidateMode"]).build(),
       child: json.data["child"] != null
           ? application
               .make<Builder>(json.data["child"]["type"])

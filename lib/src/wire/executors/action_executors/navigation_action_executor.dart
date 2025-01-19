@@ -32,5 +32,11 @@ class NavigationActionExecutor extends ActionExecutor {
               queryParameters: path.queryParameters,
               pathParameters: path.pathParameters);
     }
+
+    if (json.data["thenAction"] != null) {
+      await application
+          .make<ActionExecutor>(json.data["thenAction"]["type"])
+          .execute(context, Json.fromJson(json.data["thenAction"]));
+    }
   }
 }

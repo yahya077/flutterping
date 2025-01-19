@@ -9,5 +9,11 @@ class UpdateStateActionExecutor extends ActionExecutor {
     application
         .make<StateManager>(WireDefinition.stateManager)
         .setByKey(data["key"], data["value"]);
+
+    if (json.data["thenAction"] != null) {
+      await application
+          .make<ActionExecutor>(json.data["thenAction"]["type"])
+          .execute(context, Json.fromJson(json.data["thenAction"]));
+    }
   }
 }
