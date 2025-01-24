@@ -26,11 +26,11 @@ class ValidateAndSubmitActionExecutor extends ActionExecutor {
     final response = await application
         .make<Client>(submitAction.data["client"])
         .request(path.path,
-        body: jsonEncode(formState.values),
-        method: submitAction.data["method"] ?? "GET",
-        headers: submitAction.data["headers"] != null
-            ? Map<String, String>.from(submitAction.data["headers"])
-            : {});
+            body: jsonEncode(formState.values),
+            method: submitAction.data["method"] ?? "GET",
+            headers: submitAction.data["headers"] != null
+                ? Map<String, String>.from(submitAction.data["headers"])
+                : {});
 
     final onStatusCodeActions = submitAction.data["onStatusCodeActions"] ?? {};
 
@@ -40,9 +40,15 @@ class ValidateAndSubmitActionExecutor extends ActionExecutor {
       result.data.forEach((key, value) {
         formState.setFieldError(key, value.join(", "));
       });
-
-    } else if (onStatusCodeActions.containsKey(response.statusCode.toString())) {
-      final action = Json.fromJson(onStatusCodeActions[response.statusCode.toString()]);
+    } else if (onStatusCodeActions
+        .containsKey(response.statusCode.toString())) {
+      final action =
+          Json.fromJson(onStatusCodeActions[response.statusCode.toString()]);
+      await application
+          .make<ActionExecutor>(action.data["type"])
+          .execute(context, action);
+    } else if (submitAction.data["thenAction"] != null) {
+      final action = Json.fromJson(submitAction.data["thenAction"]);
       await application
           .make<ActionExecutor>(action.data["type"])
           .execute(context, action);

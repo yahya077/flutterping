@@ -47,9 +47,10 @@ class RequiredValidatorBuilder extends PredefinedValidatorBuilder {
   @override
   FormFieldValidator build(Json json, material.BuildContext? context) {
     return (dynamic value) {
-      print((value == null || value.isEmpty)
-          ? json.data["errorMessage"]
-          : null);
+      if (value is bool) {
+        return value ? null : json.data["errorMessage"];
+      }
+
       return (value == null || value.isEmpty)
           ? json.data["errorMessage"]
           : null;
@@ -93,9 +94,6 @@ class MinLengthValidatorBuilder extends PredefinedValidatorBuilder {
   @override
   FormFieldValidator build(Json json, material.BuildContext? context) {
     return (dynamic value) {
-      print((value.length < json.data["min"])
-          ? json.data["errorMessage"]
-          : null);
       return (value.length < json.data["min"])
           ? json.data["errorMessage"]
           : null;

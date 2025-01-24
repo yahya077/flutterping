@@ -48,6 +48,8 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.form, () => FormBuilder(app));
     app.singleton(
         JsonDefinition.textFormField, () => TextFormFieldBuilder(app));
+    app.singleton(
+        JsonDefinition.checkboxFormField, () => CheckboxFormFieldBuilder(app));
     app.singleton(JsonDefinition.circularProgressIndicator,
         () => CircularProgressIndicatorBuilder(app));
     app.singleton(

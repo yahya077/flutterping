@@ -1,3 +1,11 @@
+## 0.1.1
+
+* Validator for boolean added
+* SizedBox width and height type changed
+* CheckboxFormField added
+* OutlinedBorderFactory added
+* Then action added for Submit Action
+
 ## 0.1.0
 
 * Form state reconstruction

@@ -6,12 +6,8 @@ class SizedBoxBuilder extends WidgetBuilder {
   @override
   material.Widget build(Json json, material.BuildContext? context) {
     return material.SizedBox(
-      width: json.data["width"] == null
-          ? null
-          : double.parse(json.data["width"].toString()),
-      height: json.data["height"] == null
-          ? null
-          : double.parse(json.data["height"].toString()),
+      width: DoubleFactory.fromDynamic(json.data["width"]),
+      height: DoubleFactory.fromDynamic(json.data["height"]),
       child: json.data["child"] == null
           ? null
           : application

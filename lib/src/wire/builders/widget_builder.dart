@@ -5,9 +5,12 @@ import 'package:flutter_ping_wire/src/wire/builders/value_builder.dart';
 import 'package:flutter_ping_wire/src/wire/definitions/definition.dart';
 import 'package:flutter_ping_wire/src/wire/form_state.dart';
 import 'package:flutter_ping_wire/src/wire/resources/paintings/border_radius.dart';
+import 'package:flutter_ping_wire/src/wire/resources/paintings/border_side.dart';
+import 'package:flutter_ping_wire/src/wire/resources/paintings/outlined_border.dart';
 import 'package:flutter_ping_wire/src/wire/resources/paintings/shape_border.dart';
 import 'package:flutter_ping_wire/src/wire/resources/rendering/sliver_grid_delegate.dart';
 import 'package:flutter_ping_wire/src/wire/resources/widgets/form.dart';
+import 'package:flutter_ping_wire/src/wire/resources/widgets/form_fields/checkbox_form_field.dart';
 import 'package:flutter_ping_wire/src/wire/value_provider.dart';
 
 import '../callable_registry.dart';
@@ -116,3 +119,5 @@ part 'widget_builders/value_listenable_builder.dart';
 part 'widget_builders/list_tile_builder.dart';
 
 part 'widget_builders/fractionally_sized_box_builder.dart';
+
+part 'widget_builders/checkbox_form_field_builder.dart';

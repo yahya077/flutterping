@@ -23,6 +23,7 @@ class JsonDefinition {
   static const reactiveWidget = 'ReactiveWidget';
   static const form = 'Form';
   static const textFormField = 'TextFormField';
+  static const checkboxFormField = 'CheckboxFormField';
   static const circularProgressIndicator = 'CircularProgressIndicator';
   static const statelessWidget = 'StatelessWidget';
   static const materialApp = 'MaterialApp';

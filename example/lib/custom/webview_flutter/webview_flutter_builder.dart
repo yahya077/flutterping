@@ -17,7 +17,6 @@ class WebviewFlutterBuilder extends WidgetBuilder {
       ..setNavigationDelegate(
         pkg.NavigationDelegate(
             onProgress: (int progress) {
-              print("onProgress: $progress");
               json.data["onProgress"] == null
                   ? null
                   : application
@@ -25,7 +24,6 @@ class WebviewFlutterBuilder extends WidgetBuilder {
                   .dispatch(Event.fromJson(json.data["onProgress"]["data"]));
             },
             onPageStarted: (String url) {
-              print("onPageStarted: $url");
               application.make<StateManager>(WireDefinition.stateManager).set("scoped_state_WebViewController", "onPageStarted_url", url);
               json.data["onPageStarted"] == null
                   ? null
@@ -34,7 +32,6 @@ class WebviewFlutterBuilder extends WidgetBuilder {
                   .dispatch(Event.fromJson(json.data["onPageStarted"]["data"]));
             },
             onPageFinished: (String url) {
-              print("onPageFinished: $url");
               visitedUrls.add(url);
               application.make<StateManager>(WireDefinition.stateManager).set("scoped_state_WebViewController", "onPageFinished_url",
                   {
@@ -48,7 +45,6 @@ class WebviewFlutterBuilder extends WidgetBuilder {
                   .dispatch(Event.fromJson(json.data["onPageFinished"]["data"]));
             },
             onWebResourceError: (pkg.WebResourceError error) {
-              print("onWebResourceError: ${error.description}");
               json.data["onWebResourceError"] == null
                   ? null
                   : application
@@ -57,11 +53,9 @@ class WebviewFlutterBuilder extends WidgetBuilder {
             },
             onNavigationRequest: (pkg.NavigationRequest request) {
               //TODO implement this
-              print("onNavigationRequest: ${request.url}");
               return pkg.NavigationDecision.navigate;
             },
             onUrlChange: (pkg.UrlChange urlChange) {
-              print("onUrlChange: ${urlChange.url}");
               json.data["onUrlChange"] == null
                   ? null
                   : application
