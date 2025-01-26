@@ -11,6 +11,7 @@ class NetworkRequestActionExecutor extends ActionExecutor {
 
     Object? body;
 
+    //TODO refactor api handling
     if (json.data["body"] != null) {
       body = application
           .make<Builder>(json.data["body"]["type"])
@@ -42,7 +43,7 @@ class NetworkRequestActionExecutor extends ActionExecutor {
     final response = await application
         .make<Client>(json.data["client"])
         .request(path.path,
-            body: body ?? {},
+            body: body ?? "",
             method: json.data["method"] ?? "GET",
             headers: json.data["headers"] != null
                 ? Map<String, String>.from(json.data["headers"])

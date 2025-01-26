@@ -1,3 +1,7 @@
+## 0.1.2
+
+* Bug fixed for network action body
+
 ## 0.1.1
 
 * Validator for boolean added
