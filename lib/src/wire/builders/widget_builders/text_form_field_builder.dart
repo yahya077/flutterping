@@ -7,7 +7,11 @@ class TextFormFieldBuilder extends WidgetBuilder {
   material.Widget build(Json json, material.BuildContext? context) {
     return PingTextField(
       name: json.data["name"],
-      initialValue: json.data["initialValue"],
+      initialValue: json.data["initialValue"] != null
+          ? application
+              .make<ValueBuilder>(json.data["initialValue"]["type"])
+              .build(Json.fromJson(json.data["initialValue"]), context)
+          : null,
       onChanged: json.data["onChanged"] != null
           ? (value) {
               application

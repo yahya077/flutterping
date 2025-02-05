@@ -11,11 +11,11 @@ class ValueListenableBuilder extends WidgetBuilder {
         valueListenable: application
             .make<NotifierValueBuilder>(json.data["valueListenable"]["type"])
             .build(Json.fromJson(json.data["valueListenable"]), context),
-        builder: (context, visibleValue, _) {
+        builder: (context, value, _) {
           application
               .make<StateManager>(WireDefinition.stateManager)
               .bindScope(json.data["scopeId"], {
-            "value": visibleValue ?? 0,
+            "value": value ?? 0,
           });
           return application
               .make<WidgetBuilder>(childJson.type)

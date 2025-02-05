@@ -11,6 +11,13 @@ class VisibilityBuilder extends WidgetBuilder {
         .make<ValueBuilder>(json.data["visible"]["type"])
         .build(Json.fromJson(json.data["visible"]), context);
 
+    if((value == false || value == null) && json.data["elseChild"] != null) {
+      final Json elseChildJson = Json.fromJson(json.data["elseChild"]);
+      return application
+          .make<WidgetBuilder>(elseChildJson.type)
+          .build(elseChildJson, context);
+    }
+
     return material.Visibility(
       visible: value ?? false,
       child: application

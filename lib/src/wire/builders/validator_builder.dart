@@ -93,7 +93,12 @@ class MinLengthValidatorBuilder extends PredefinedValidatorBuilder {
 
   @override
   FormFieldValidator build(Json json, material.BuildContext? context) {
+    final withoutSpaces = json.data["withoutSpaces"] ?? false;
+
     return (dynamic value) {
+      if (withoutSpaces) {
+        value = value.replaceAll(" ", "");
+      }
       return (value.length < json.data["min"])
           ? json.data["errorMessage"]
           : null;
@@ -106,7 +111,12 @@ class MaxLengthValidatorBuilder extends PredefinedValidatorBuilder {
 
   @override
   FormFieldValidator build(Json json, material.BuildContext? context) {
+    final withoutSpaces = json.data["withoutSpaces"] ?? false;
+
     return (dynamic value) {
+      if (withoutSpaces) {
+        value = value.replaceAll(" ", "");
+      }
       return (value.length > json.data["max"])
           ? json.data["errorMessage"]
           : null;
@@ -128,6 +138,22 @@ class RangeValidatorBuilder extends PredefinedValidatorBuilder {
         return json.data["errorMessage"];
       }
       return null;
+    };
+  }
+}
+
+class RegexValidatorBuilder extends PredefinedValidatorBuilder {
+  RegexValidatorBuilder(Application application) : super(application);
+
+  @override
+  FormFieldValidator build(Json json, material.BuildContext? context) {
+    final pattern = json.data["pattern"];
+    final caseSensitive = json.data["caseSensitive"] ?? true;
+
+    return (dynamic value) {
+      return hasMatch(pattern, value, caseSensitive: caseSensitive)
+          ? null
+          : json.data["errorMessage"];
     };
   }
 }

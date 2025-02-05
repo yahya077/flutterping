@@ -24,6 +24,7 @@ class JsonDefinition {
   static const form = 'Form';
   static const textFormField = 'TextFormField';
   static const checkboxFormField = 'CheckboxFormField';
+  static const radioGroupFormField = 'RadioGroupFormField';
   static const circularProgressIndicator = 'CircularProgressIndicator';
   static const statelessWidget = 'StatelessWidget';
   static const materialApp = 'MaterialApp';
@@ -66,4 +67,5 @@ class JsonDefinition {
   static const maxLengthValidator = 'MaxLengthValidator';
   static const lengthValidator = 'LengthValidator';
   static const rangeValidator = 'RangeValidator';
+  static const regexValidator = 'RegexValidator';
 }

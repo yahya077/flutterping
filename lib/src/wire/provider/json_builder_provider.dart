@@ -50,6 +50,8 @@ class JsonBuilderProvider extends Provider {
         JsonDefinition.textFormField, () => TextFormFieldBuilder(app));
     app.singleton(
         JsonDefinition.checkboxFormField, () => CheckboxFormFieldBuilder(app));
+    app.singleton(
+        JsonDefinition.radioGroupFormField, () => RadioGroupFormFieldBuilder(app));
     app.singleton(JsonDefinition.circularProgressIndicator,
         () => CircularProgressIndicatorBuilder(app));
     app.singleton(
@@ -145,5 +147,7 @@ class JsonBuilderProvider extends Provider {
         JsonDefinition.lengthValidator, () => LengthValidatorBuilder(app));
     app.singleton(
         JsonDefinition.rangeValidator, () => RangeValidatorBuilder(app));
+    app.singleton(
+        JsonDefinition.regexValidator, () => RegexValidatorBuilder(app));
   }
 }
