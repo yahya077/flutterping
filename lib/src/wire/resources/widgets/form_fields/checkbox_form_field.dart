@@ -94,6 +94,7 @@ class _PingCheckboxFieldState extends material.State<PingCheckboxField> {
     return PingFormField(
       name: widget.name,
       validator: widget.validator,
+      initialValue: _value,
       builder: (field) {
         return material.InputDecorator(
           decoration: getDefaultDecoration(widget.decoration).copyWith(

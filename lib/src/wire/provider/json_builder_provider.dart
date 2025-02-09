@@ -74,6 +74,8 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.listTile, () => ListTileBuilder(app));
     app.singleton(
         JsonDefinition.pingFormField, () => PingFormFieldBuilder(app));
+    app.singleton(
+        JsonDefinition.overlay, () => OverlayBuilder(app));
     //paintings builders
     app.singleton(JsonDefinition.inputDecorationBuilder,
         () => InputDecorationBuilder(app));
@@ -90,6 +92,7 @@ class JsonBuilderProvider extends Provider {
 
     //TODO make element_executor_provider
     app.singleton(JsonDefinition.alertAction, () => AlertActionExecutor(app));
+    app.singleton(JsonDefinition.loadingAction, () => LoadingActionExecutor(app));
 
     // dynamic value builders
 
@@ -131,6 +134,12 @@ class JsonBuilderProvider extends Provider {
 
     app.singleton(JsonDefinition.updateNotifierAction,
         () => UpdateNotifierActionExecutor(app));
+
+    app.singleton(JsonDefinition.submitAction,
+        () => SubmitActionExecutor(app));
+
+    app.singleton(JsonDefinition.validateAndSaveFormAction,
+        () => ValidateAndSaveFormActionExecutor(app));
 
     // form field validators
     app.singleton(

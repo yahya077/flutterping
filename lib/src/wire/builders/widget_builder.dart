@@ -12,6 +12,7 @@ import 'package:flutter_ping_wire/src/wire/resources/rendering/sliver_grid_deleg
 import 'package:flutter_ping_wire/src/wire/resources/widgets/form.dart';
 import 'package:flutter_ping_wire/src/wire/resources/widgets/form_fields/checkbox_form_field.dart';
 import 'package:flutter_ping_wire/src/wire/resources/widgets/form_fields/radio_group_form_field.dart';
+import 'package:flutter_ping_wire/src/wire/resources/widgets/overlay.dart';
 import 'package:flutter_ping_wire/src/wire/value_provider.dart';
 
 import '../callable_registry.dart';
@@ -124,3 +125,5 @@ part 'widget_builders/fractionally_sized_box_builder.dart';
 part 'widget_builders/checkbox_form_field_builder.dart';
 
 part 'widget_builders/radio_group_form_field_builder.dart';
+
+part 'widget_builders/overlay_builder.dart';

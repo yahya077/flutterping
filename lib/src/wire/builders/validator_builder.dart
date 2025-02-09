@@ -51,9 +51,11 @@ class RequiredValidatorBuilder extends PredefinedValidatorBuilder {
         return value ? null : json.data["errorMessage"];
       }
 
-      return (value == null || value.isEmpty)
-          ? json.data["errorMessage"]
-          : null;
+      if (value == null || (value is String && value.isEmpty)) {
+        return json.data["errorMessage"];
+      }
+
+      return null;
     };
   }
 }

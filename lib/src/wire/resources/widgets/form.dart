@@ -66,6 +66,7 @@ class PingFormField extends material.FormField<dynamic> {
     material.Key? key,
     required this.name,
     required super.builder,
+    super.initialValue,
     this.validator,
   }) : super(
     key: key,
@@ -89,7 +90,7 @@ class PingFormFieldState extends material.FormFieldState<dynamic> {
     super.initState();
     _formState = context.findAncestorStateOfType<PingFormState>();
     _formState?.registerField(this);
-    _formState?.updateValue(widget.name, value);
+    _formState?.updateValue(widget.name, widget.initialValue);
   }
 
   @override
@@ -145,7 +146,6 @@ class PingFormFieldState extends material.FormFieldState<dynamic> {
     super.save();
     _formState?.updateValue(widget.name, value);
   }
-
 }
 
 class AutovalidateMode {
