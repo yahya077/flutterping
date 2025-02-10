@@ -1,3 +1,15 @@
+## 0.2.0
+
+* Form field validation refactored
+* Form submit action refactored
+* showModalBottomSheet refactored
+* Action flow refactored
+* New form fields added
+* New form actions added
+* BorderSide bug fixed
+* GlobalOverlayManager added
+* KeyboardTypes added
+
 ## 0.1.2
 
 * Bug fixed for network action body

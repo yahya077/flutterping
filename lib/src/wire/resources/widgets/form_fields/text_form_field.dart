@@ -34,7 +34,7 @@ class PingTextField extends material.StatefulWidget {
     this.onEditingComplete,
     this.focusNode,
   })  : assert(controller == null || initialValue == null,
-  'Cannot provide both a controller and an initialValue.'),
+            'Cannot provide both a controller and an initialValue.'),
         super(key: key);
 
   @override
@@ -47,7 +47,8 @@ class _PingTextFieldState extends material.State<PingTextField> {
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? material.TextEditingController(text: widget.initialValue);
+    _controller = widget.controller ??
+        material.TextEditingController(text: widget.initialValue);
   }
 
   @override
@@ -77,6 +78,14 @@ class _PingTextFieldState extends material.State<PingTextField> {
           decoration: widget.decoration.copyWith(
             errorText: field.errorText,
           ),
+          buildCounter: (
+            material.BuildContext context, {
+            required int currentLength,
+            required int? maxLength,
+            required bool isFocused,
+          }) {
+            return null;
+          },
           keyboardType: widget.keyboardType,
           obscureText: widget.obscureText,
           onChanged: (value) {

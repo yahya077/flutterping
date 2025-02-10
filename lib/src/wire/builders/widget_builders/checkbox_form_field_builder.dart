@@ -17,7 +17,11 @@ class CheckboxFormFieldBuilder extends WidgetBuilder {
           : application
               .make<Builder>(json.data["subTitle"]["type"])
               .build(Json.fromJson(json.data["subTitle"]), context),
-      initialValue: json.data["initialValue"] ?? false,
+      initialValue: json.data["initialValue"] != null
+        ? application
+            .make<ValueBuilder>(json.data["initialValue"]["type"])
+        .build(Json.fromJson(json.data["initialValue"]), context)
+        : false,
       decoration: json.data["decoration"] == null
         ? null
             : application
@@ -59,12 +63,18 @@ class CheckboxFormFieldBuilder extends WidgetBuilder {
       //visualDensity: ,TODO: implement
       //focusNode: ,TODO: implement
       autofocus: json.data["autofocus"] ?? false,
+      contentPadding: json.data["contentPadding"] == null
+          ? null
+          : EdgeInsets.findJson(json.data["contentPadding"]).build(),
       shape: json.data["shape"] == null
           ? null
           : OutlinedBorderFactory.findJson(json.data["shape"]).build(),
+      checkboxShape: json.data["checkboxShape"] == null
+          ? null
+          : OutlinedBorderFactory.findJson(json.data["checkboxShape"]).build(),
       side: json.data["side"] == null
           ? null
-          : BorderSide.fromJson(json.data["side"]).build(),
+          : BorderSide.findJson(json.data["side"]).build(),
       isError: json.data["isError"] ?? false,
       semanticLabel: json.data["semanticLabel"],
     );

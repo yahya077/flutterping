@@ -23,6 +23,7 @@ class PingCheckboxField extends material.StatefulWidget {
   final material.FocusNode? focusNode;
   final bool autofocus;
   final material.OutlinedBorder? shape;
+  final material.OutlinedBorder? checkboxShape;
   final material.BorderSide? side;
   final bool isError;
   final String? semanticLabel;
@@ -53,7 +54,7 @@ class PingCheckboxField extends material.StatefulWidget {
     this.isError = false,
     this.semanticLabel,
     this.title,
-    this.subTitle, this.contentPadding,
+    this.subTitle, this.contentPadding, this.checkboxShape,
   }) : super(key: key);
 
   @override
@@ -93,6 +94,7 @@ class _PingCheckboxFieldState extends material.State<PingCheckboxField> {
     return PingFormField(
       name: widget.name,
       validator: widget.validator,
+      initialValue: _value,
       builder: (field) {
         return material.InputDecorator(
           decoration: getDefaultDecoration(widget.decoration).copyWith(
@@ -117,16 +119,18 @@ class _PingCheckboxFieldState extends material.State<PingCheckboxField> {
               contentPadding: widget.contentPadding ?? material.EdgeInsets.zero,
               mouseCursor: widget.mouseCursor,
               activeColor: widget.activeColor,
-              fillColor: widget.fillColor,
-              checkColor: widget.checkColor,
+              fillColor: widget.fillColor ?? material.WidgetStateProperty.all(material.Colors.white),
+              checkColor: widget.checkColor ?? material.Colors.white,
               hoverColor: widget.hoverColor,
-              overlayColor: widget.overlayColor,
+              overlayColor: widget.overlayColor ?? material.WidgetStateProperty.all(material.Colors.white),
               splashRadius: widget.splashRadius,
               materialTapTargetSize: widget.materialTapTargetSize,
+              selectedTileColor: material.Colors.grey,
               visualDensity: widget.visualDensity,
               focusNode: widget.focusNode,
               autofocus: widget.autofocus,
               shape: widget.shape,
+              checkboxShape: widget.checkboxShape,
               side: widget.side,
               isError: widget.isError,
               controlAffinity: material.ListTileControlAffinity.leading,

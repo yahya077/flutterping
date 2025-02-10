@@ -1,7 +1,7 @@
 part of '../action_executor.dart';
 
-class ValidateAndSubmitActionExecutor extends ActionExecutor {
-  ValidateAndSubmitActionExecutor(Application application) : super(application);
+class SubmitActionExecutor extends ActionExecutor {
+  SubmitActionExecutor(Application application) : super(application);
 
   @override
   Future<void> execute(material.BuildContext context, Json json) async {
@@ -10,12 +10,6 @@ class ValidateAndSubmitActionExecutor extends ActionExecutor {
         .dynamicGet<material.GlobalKey<PingFormState>>(
             json.data["formStateId"] + ".formStateKey")
         .currentState!;
-
-    formState.save();
-
-    if (!formState.validate()) {
-      return;
-    }
 
     final submitAction = Json.fromJson(json.data["submitAction"]);
 

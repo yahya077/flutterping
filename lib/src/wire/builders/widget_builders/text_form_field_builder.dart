@@ -5,9 +5,14 @@ class TextFormFieldBuilder extends WidgetBuilder {
 
   @override
   material.Widget build(Json json, material.BuildContext? context) {
+    //TODO add keyboard type
     return PingTextField(
       name: json.data["name"],
-      initialValue: json.data["initialValue"],
+      initialValue: json.data["initialValue"] != null
+          ? application
+              .make<ValueBuilder>(json.data["initialValue"]["type"])
+              .build(Json.fromJson(json.data["initialValue"]), context)
+          : null,
       onChanged: json.data["onChanged"] != null
           ? (value) {
               application
@@ -50,6 +55,9 @@ class TextFormFieldBuilder extends WidgetBuilder {
                       Event.fromJson(json.data["onEditingComplete"]["data"]));
             }
           : null,
+      keyboardType: json.data["keyboardType"] == null
+          ? material.TextInputType.text
+          : TextInputType.fromJson(json.data["keyboardType"]).build(),
     );
   }
 }
