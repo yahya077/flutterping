@@ -57,7 +57,7 @@ class TextFormFieldBuilder extends WidgetBuilder {
           : null,
       keyboardType: json.data["keyboardType"] == null
           ? material.TextInputType.text
-          : KeyboardType.fromJson(json.data["keyboardType"]).build(),
+          : TextInputType.fromJson(json.data["keyboardType"]).build(),
     );
   }
 }

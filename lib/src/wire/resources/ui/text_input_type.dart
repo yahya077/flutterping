@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' as material;
 
-class KeyboardType {
+class TextInputType {
   String value;
 
   static const text = "text";
@@ -16,10 +16,10 @@ class KeyboardType {
   static const streetAddress = "streetAddress";
   static const none = "none";
 
-  KeyboardType(this.value);
+  TextInputType(this.value);
 
-  factory KeyboardType.fromJson(Map<String, dynamic> json) {
-    return KeyboardType(json["value"]);
+  factory TextInputType.fromJson(Map<String, dynamic> json) {
+    return TextInputType(json["value"]);
   }
 
   material.TextInputType build() {
