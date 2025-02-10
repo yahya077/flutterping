@@ -16,6 +16,7 @@ class PingTextField extends material.StatefulWidget {
   final int? minLines;
   final material.VoidCallback? onEditingComplete;
   final material.FocusNode? focusNode;
+  final material.TextInputAction? textInputAction;
 
   const PingTextField({
     material.Key? key,
@@ -33,8 +34,9 @@ class PingTextField extends material.StatefulWidget {
     this.minLines,
     this.onEditingComplete,
     this.focusNode,
+    this.textInputAction,
   })  : assert(controller == null || initialValue == null,
-            'Cannot provide both a controller and an initialValue.'),
+  'Cannot provide both a controller and an initialValue.'),
         super(key: key);
 
   @override
@@ -79,11 +81,11 @@ class _PingTextFieldState extends material.State<PingTextField> {
             errorText: field.errorText,
           ),
           buildCounter: (
-            material.BuildContext context, {
-            required int currentLength,
-            required int? maxLength,
-            required bool isFocused,
-          }) {
+              material.BuildContext context, {
+                required int currentLength,
+                required int? maxLength,
+                required bool isFocused,
+              }) {
             return null;
           },
           keyboardType: widget.keyboardType,
@@ -101,6 +103,7 @@ class _PingTextFieldState extends material.State<PingTextField> {
           minLines: widget.minLines,
           onEditingComplete: widget.onEditingComplete,
           focusNode: widget.focusNode,
+          textInputAction: widget.textInputAction,
         );
       },
     );
