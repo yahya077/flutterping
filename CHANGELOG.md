@@ -1,3 +1,7 @@
+## 0.2.1
+
+* TextInputAction added
+
 ## 0.2.0
 
 * Form field validation refactored
