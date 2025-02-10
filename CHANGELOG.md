@@ -8,6 +8,7 @@
 * New form actions added
 * BorderSide bug fixed
 * GlobalOverlayManager added
+* KeyboardTypes added
 
 ## 0.1.2
 

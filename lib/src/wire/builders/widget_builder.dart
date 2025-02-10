@@ -37,6 +37,7 @@ import '../resources/ui/color.dart';
 import '../resources/ui/clip.dart';
 import '../resources/ui/text_align.dart';
 import '../resources/ui/text_direction.dart';
+import '../resources/ui/keyboard_type.dart';
 import '../resources/paintings/decoration.dart';
 import '../resources/paintings/text_painter.dart';
 import '../resources/paintings/box_fit.dart';
