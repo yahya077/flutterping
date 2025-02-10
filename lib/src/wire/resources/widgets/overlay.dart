@@ -291,15 +291,12 @@ class _GlobalOverlayWidgetState extends State<GlobalOverlayWidget> {
       bool isDismissible, Widget Function(BuildContext, VoidCallback) builder,
       {Duration? autoHide}) {
     OverlayEntry? overlay;
-    print("animationDuration $animationDuration");
-    print("identifier $identifier");
     overlay = OverlayEntry(
       builder: (context) => AnimatedOverlayEntry(
         animationDuration: animationDuration,
         isClosing: false,
         onComplete: () {
           if (autoHide != null) {
-            print("autoHideautoHideautoHideautoHide");
             Future.delayed(autoHide, () {
               _hideOverlay(identifier, animationDuration);
             });

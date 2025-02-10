@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
-import 'package:flutter_ping_wire/src/wire/resources/widgets/overlay.dart';
 
 class ChangeNotifierBuilder extends JsonBuilder<material.ChangeNotifier> {
   ChangeNotifierBuilder(Application application) : super(application);
