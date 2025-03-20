@@ -70,9 +70,7 @@ class WireBootstrap {
     return this;
   }
 
-  Future<void> runApp(String loader) async {
-    await boot();
-
+  Future<void> runApp({String loader = "app"}) async {
     material.runApp(wrap(await app
         .make<PreLoader>(WireDefinition.loaderPreLoader)
         .load<material.Widget>(loader)));
