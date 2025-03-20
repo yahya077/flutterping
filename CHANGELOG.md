@@ -1,3 +1,7 @@
+## 0.3.0
+
+* MaterialAppRouter extended
+
 ## 0.2.1
 
 * TextInputAction added

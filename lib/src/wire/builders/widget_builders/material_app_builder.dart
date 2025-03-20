@@ -1,16 +1,14 @@
 part of '../widget_builder.dart';
 
-class MaterialAppRouterBuilder extends WidgetBuilder {
-  MaterialAppRouterBuilder(Application application) : super(application);
+class MaterialAppBuilder extends WidgetBuilder {
+  MaterialAppBuilder(Application application) : super(application);
 
   @override
   material.Widget build(Json json, material.BuildContext? context) {
-    final routerConfigEl = Json.fromJson(json.data["routerConfig"]);
-    return material.MaterialApp.router(
+    final homeEl = Json.fromJson(json.data["home"]);
+    return material.MaterialApp(
       debugShowCheckedModeBanner: json.data["debugShowCheckedModeBanner"],
-      routerConfig: application
-          .make<RouterConfigBuilder>(routerConfigEl.type)
-          .build(routerConfigEl, context),
+      home: application.make<WidgetBuilder>(homeEl.type).build(homeEl, context),
     );
   }
 }
