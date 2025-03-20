@@ -9,7 +9,7 @@ class Json {
   factory Json.fromJson(Map<String, dynamic> json) {
     return Json(
       json["type"],
-      json["data"],
+      json["data"] ?? {},
     );
   }
 

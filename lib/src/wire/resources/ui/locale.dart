@@ -7,7 +7,7 @@ class Locale {
   Locale(this.languageCode, {this.countryCode});
 
   factory Locale.fromJson(Map<String, dynamic> json) {
-    return Locale(json["value"], countryCode: json["countryCode"]);
+    return Locale(json["languageCode"], countryCode: json["countryCode"]);
   }
 
   ui.Locale build() {
