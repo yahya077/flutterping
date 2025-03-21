@@ -33,6 +33,22 @@ class StateManager {
     _appState.getState(stateId).set(key, value);
   }
 
+  void merge<T>(String stateId, String key, T value) {
+    if (value is Map<String, dynamic>) {
+      Map<String, dynamic>? oldMap = get<Map<String, dynamic>?>(stateId, key);
+
+      if (oldMap != null) {
+        oldMap.addAll(value as Map<String, dynamic>);
+        set(stateId, key, oldMap);
+      } else {
+        set(stateId, key, value);
+      }
+    } else {
+      throw Exception("Invalid value type ${value.runtimeType}");
+    }
+  }
+
+  //TODO optimize this
   void setByKey<T>(String stateKey, T value) {
     final List<String> keys = stateKey.split(".");
 

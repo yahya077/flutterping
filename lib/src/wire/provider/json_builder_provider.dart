@@ -33,6 +33,7 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.iconData, () => IconDataBuilder(app));
     app.singleton(JsonDefinition.icon, () => IconBuilder(app));
     app.singleton(JsonDefinition.sizedBox, () => SizedBoxBuilder(app));
+    app.singleton(JsonDefinition.placeholder, () => PlaceholderBuilder(app));
     app.singleton(JsonDefinition.fractionallySizedBox,
         () => FractionallySizedBoxBuilder(app));
     app.singleton(
@@ -50,8 +51,8 @@ class JsonBuilderProvider extends Provider {
         JsonDefinition.textFormField, () => TextFormFieldBuilder(app));
     app.singleton(
         JsonDefinition.checkboxFormField, () => CheckboxFormFieldBuilder(app));
-    app.singleton(
-        JsonDefinition.radioGroupFormField, () => RadioGroupFormFieldBuilder(app));
+    app.singleton(JsonDefinition.radioGroupFormField,
+        () => RadioGroupFormFieldBuilder(app));
     app.singleton(JsonDefinition.circularProgressIndicator,
         () => CircularProgressIndicatorBuilder(app));
     app.singleton(
@@ -74,8 +75,7 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.listTile, () => ListTileBuilder(app));
     app.singleton(
         JsonDefinition.pingFormField, () => PingFormFieldBuilder(app));
-    app.singleton(
-        JsonDefinition.overlay, () => OverlayBuilder(app));
+    app.singleton(JsonDefinition.overlay, () => OverlayBuilder(app));
     //paintings builders
     app.singleton(JsonDefinition.inputDecorationBuilder,
         () => InputDecorationBuilder(app));
@@ -92,7 +92,8 @@ class JsonBuilderProvider extends Provider {
 
     //TODO make element_executor_provider
     app.singleton(JsonDefinition.alertAction, () => AlertActionExecutor(app));
-    app.singleton(JsonDefinition.loadingAction, () => LoadingActionExecutor(app));
+    app.singleton(
+        JsonDefinition.loadingAction, () => LoadingActionExecutor(app));
 
     // dynamic value builders
 
@@ -135,8 +136,7 @@ class JsonBuilderProvider extends Provider {
     app.singleton(JsonDefinition.updateNotifierAction,
         () => UpdateNotifierActionExecutor(app));
 
-    app.singleton(JsonDefinition.submitAction,
-        () => SubmitActionExecutor(app));
+    app.singleton(JsonDefinition.submitAction, () => SubmitActionExecutor(app));
 
     app.singleton(JsonDefinition.validateAndSaveFormAction,
         () => ValidateAndSaveFormActionExecutor(app));

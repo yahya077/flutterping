@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/src/wire/change_notifier_state.dart';
+import 'package:flutter_ping_wire/src/wire/client_state.dart';
 import 'package:flutter_ping_wire/src/wire/local_state.dart';
 import 'package:flutter_ping_wire/src/wire/provider/json_builder_provider.dart';
 
@@ -63,9 +64,12 @@ class WireBootstrap {
     final config = await app.make<WireConfig>(WireDefinition.config).ensureAllAs();
 
     config.clients.forEach((key, value) {
+      app.make<StateManager>(WireDefinition.stateManager)
+          .addState(ClientState.initial(value));
+
       app.singleton(key, () => Client(app));
 
-      app.make<Client>(key).setBaseUrl(Uri.parse(value.url));
+      app.make<Client>(key).setStateId("${WireDefinition.stateClientState}_${value.name}");
     });
 
     return this;

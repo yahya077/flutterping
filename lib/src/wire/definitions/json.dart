@@ -13,6 +13,7 @@ class JsonDefinition {
   static const iconData = 'IconData';
   static const icon = 'Icon';
   static const sizedBox = 'SizedBox';
+  static const placeholder = 'Placeholder';
   static const fractionallySizedBox = 'FractionallySizedBox';
   static const gestureDetector = 'GestureDetector';
   static const listView = 'ListView';

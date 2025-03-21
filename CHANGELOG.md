@@ -1,6 +1,10 @@
 ## 0.3.0
 
 * MaterialAppRouter extended
+* Client managing by its state
+* InitialWidgetBuilder callback added for ReactiveWidget
+* Placeholder widget added
+* 
 
 ## 0.2.1
 

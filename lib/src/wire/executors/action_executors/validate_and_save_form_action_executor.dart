@@ -1,7 +1,8 @@
 part of '../action_executor.dart';
 
 class ValidateAndSaveFormActionExecutor extends ActionExecutor {
-  ValidateAndSaveFormActionExecutor(Application application) : super(application);
+  ValidateAndSaveFormActionExecutor(Application application)
+      : super(application);
 
   @override
   Future<void> execute(material.BuildContext context, Json json) async {
@@ -9,7 +10,12 @@ class ValidateAndSaveFormActionExecutor extends ActionExecutor {
         .make<StateManager>(WireDefinition.stateManager)
         .dynamicGet<material.GlobalKey<PingFormState>>(
             json.data["formStateId"] + ".formStateKey")
-        .currentState!;
+        .currentState;
+
+    if (formState == null) {
+      throw Exception(
+          "Form state not found with id ${json.data["formStateId"]}");
+    }
 
     formState.save();
 

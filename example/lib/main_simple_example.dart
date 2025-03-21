@@ -7,5 +7,5 @@ void main() async{
   final application = Application.getInstance();
 
 
-  await WireBootstrap(application).runApp("simple");
+  await WireBootstrap(application).runApp(loader: "simple");
 }

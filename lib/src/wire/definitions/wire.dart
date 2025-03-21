@@ -12,5 +12,6 @@ class WireDefinition {
   static const String stateCallableRegistryState = 'CallableRegistryState';
   static const String stateScopeState = 'ScopeState';
   static const String stateLocalState = 'LocalState';
+  static const String stateClientState = 'ClientState';
   static const String loaderPreLoader = 'PreLoader';
 }

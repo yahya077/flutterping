@@ -85,7 +85,15 @@ class State implements AbstractState {
 
   @override
   Map<String, dynamic> dehydrate() {
-    return _state;
+    final Map<String, dynamic> result = {};
+    _state.forEach((key, value) {
+      if (value is AbstractState) {
+        result[key] = value.dehydrate();
+      } else {
+        result[key] = value;
+      }
+    });
+    return result;
   }
 
   @override

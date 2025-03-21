@@ -64,8 +64,7 @@ class WebviewFlutterBuilder extends WidgetBuilder {
             }),
       )
       ..loadRequest(Uri.parse(json.data["url"]),
-          //TODO make app_client as a constant
-          headers: application.make<Client>(json.data["clientName"] ?? "app_client").headers ?? {});
+          headers: application.make<Client>(json.data["clientName"] ?? "app_client").getState().mergeHeaders(null));
 
     return pkg.WebViewWidget(
       controller: controller,

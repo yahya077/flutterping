@@ -13,5 +13,5 @@ void main() async{
     "go_router": () => GoRouteRouterProvider(),
   };
 
-  await WireBootstrap(application, registarables: providers).runApp("router");
+  await WireBootstrap(application, registarables: providers).runApp(loader: "router");
 }

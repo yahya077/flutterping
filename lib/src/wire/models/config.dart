@@ -19,11 +19,13 @@ class WireConfigLoader {
 }
 
 class WireConfigClient {
+  final String name;
   final String description;
   final String url;
   final Map<String, String> headers;
 
   WireConfigClient({
+    required this.name,
     required this.description,
     required this.url,
     required this.headers,
@@ -31,6 +33,7 @@ class WireConfigClient {
 
   factory WireConfigClient.fromMap(Map<String, dynamic> map) {
     return WireConfigClient(
+      name: map['name'],
       description: map['description'],
       url: map['url'],
       headers: Map<String, String>.from(map['headers']),

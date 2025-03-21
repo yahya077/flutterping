@@ -56,6 +56,11 @@ class ReactiveWidgetBuilder extends WidgetBuilder {
                 .execute(context, action);
           }
         },
+        initialWidgetBuilder: json.data["initialWidget"]["type"] != "Placeholder" ? (context) {
+          return application
+              .make<WidgetBuilder>(json.data["initialWidget"]["type"])
+              .build(Json.fromJson(json.data["initialWidget"]), context);
+        } : null,
       );
     });
   }

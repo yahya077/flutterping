@@ -85,6 +85,8 @@ class ReactiveMaterialWidget extends material.StatefulWidget {
   final EventListener stateEventListener;
   final DisposeListener disposeListeners;
   final Function(material.BuildContext context) emitInitialState;
+  final material.Widget Function(material.BuildContext context)?
+      initialWidgetBuilder;
 
   const ReactiveMaterialWidget({
     super.key,
@@ -94,6 +96,7 @@ class ReactiveMaterialWidget extends material.StatefulWidget {
     required this.disposeListeners,
     required this.emitInitialState,
     required this.pageNotifiers,
+    required this.initialWidgetBuilder,
   });
 
   @override
@@ -125,7 +128,9 @@ class ReactiveWidgetState extends material.State<ReactiveMaterialWidget>
       value.addListener(_updateState);
     });
 
-    widget.emitInitialState(context);
+    if (widget.initialWidgetBuilder == null) {
+      widget.emitInitialState(context);
+    }
   }
 
   void _updateState() {
@@ -135,7 +140,12 @@ class ReactiveWidgetState extends material.State<ReactiveMaterialWidget>
   @override
   material.Widget build(material.BuildContext context) {
     super.build(context);
-    return widget.widgetNotifier.value;
+    if (widget.initialWidgetBuilder != null) {
+      return widget.initialWidgetBuilder!(context);
+    } else {
+      //TODO - value should material.Widget Function(material.BuildContext context) this will be fix the contextual issue
+      return widget.widgetNotifier.value;
+    }
   }
 
   @override

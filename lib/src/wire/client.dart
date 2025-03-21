@@ -1,37 +1,23 @@
+import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:flutter_ping_wire/src/framework/app_exception_handler.dart';
 import 'package:flutter_ping_wire/src/framework/container.dart';
-import 'package:flutter_ping_wire/src/framework/definitions/containers.dart';
+import 'package:flutter_ping_wire/src/wire/client_state.dart';
 import 'package:http/http.dart' as http;
 
 class Client {
   final Container container;
   final http.Client _client = http.Client();
-  Uri? _baseUrl;
-  Map<String, String> _headers = {
-    'Content-Type': 'application/json; charset=UTF-8'
-  };
+  late String _stateId;
 
   Client(this.container);
 
-  void setBaseUrl(Uri baseUrl) {
-    _baseUrl = baseUrl;
+  void setStateId(String stateId) {
+    _stateId = stateId;
   }
-
-  void setHeaders(Map<String, String> headers) {
-    _headers = headers;
+  
+  ClientState getState() {
+    return container.make<StateManager>(WireDefinition.stateManager).getState(_stateId);
   }
-
-  void addHeader(String key, String value) {
-    _headers[key] = value;
-  }
-
-  void putHeaders(Map<String, String> headers) {
-    _headers.addAll(headers);
-  }
-
-  Uri get baseUrl => _baseUrl!;
-
-  Map<String, String>? get headers => _headers;
 
   void register() {}
 
@@ -39,17 +25,16 @@ class Client {
       {String method = "GET",
       Map<String, String>? headers,
       dynamic body}) async {
-    _headers.addAll(headers ?? {});
     return _handleRequest(() async {
       switch (method) {
         case "GET":
-          return await get(url, headers: _headers);
+          return await get(url, headers: getState().mergeHeaders(headers));
         case "POST":
-          return await post(url, headers: _headers, body: body);
+          return await post(url, headers: getState().mergeHeaders(headers), body: body);
         case "PUT":
-          return await put(url, headers: _headers, body: body);
+          return await put(url, headers: getState().mergeHeaders(headers), body: body);
         case "DELETE":
-          return await delete(url, headers: _headers);
+          return await delete(url, headers: getState().mergeHeaders(headers));
         default:
           throw Exception("Invalid method $method");
       }
@@ -59,7 +44,7 @@ class Client {
   Future<http.Response> get(String url, {Map<String, String>? headers}) async {
     return _handleRequest(() async {
       final response =
-          await _client.get(_resolveUrl(url), headers: _mergeHeaders(headers));
+          await _client.get(_resolveUrl(url), headers: getState().mergeHeaders(headers));
       return response;
     });
   }
@@ -68,7 +53,7 @@ class Client {
       {Map<String, String>? headers, dynamic body}) async {
     return _handleRequest(() async {
       final response = await _client.post(_resolveUrl(url),
-          headers: _mergeHeaders(headers), body: body);
+          headers: getState().mergeHeaders(headers), body: body);
       return response;
     });
   }
@@ -77,7 +62,7 @@ class Client {
       {Map<String, String>? headers, dynamic body}) async {
     return _handleRequest(() async {
       final response = await _client.put(_resolveUrl(url),
-          headers: _mergeHeaders(headers), body: body);
+          headers: getState().mergeHeaders(headers), body: body);
       return response;
     });
   }
@@ -86,7 +71,7 @@ class Client {
       {Map<String, String>? headers}) async {
     return _handleRequest(() async {
       final response = await _client.delete(_resolveUrl(url),
-          headers: _mergeHeaders(headers));
+          headers: getState().mergeHeaders(headers));
       return response;
     });
   }
@@ -105,23 +90,6 @@ class Client {
   }
 
   Uri _resolveUrl(String url) {
-    if (_baseUrl == null) {
-      throw Exception('Base URL is not set');
-    }
-
-    return _baseUrl!.resolve(url);
-  }
-
-  //merge headers
-  Map<String, String> _mergeHeaders(Map<String, String>? headers) {
-    if (_headers.isEmpty) {
-      return headers ?? {};
-    }
-
-    if (headers == null) {
-      return _headers;
-    }
-
-    return {..._headers, ...headers};
+    return getState().getBaseUrl().resolve(url);
   }
 }
