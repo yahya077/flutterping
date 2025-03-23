@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' as material;
 
 import '../../framework/framework.dart';
+import '../definitions/json.dart';
 import '../definitions/wire.dart';
 import '../models/json.dart';
 import '../state_manager.dart';
@@ -49,6 +50,17 @@ class NotifierValueBuilder<T> extends ValueBuilder<T> {
   @override
   T build(Json json, material.BuildContext? context) {
     return ValueProvider.of(context!).getValueNotifier(json.data["key"]) as T;
+  }
+}
+
+class DynamicStringValueBuilder extends ValueBuilder {
+  DynamicStringValueBuilder(Application application) : super(application);
+
+  @override
+  String build(Json json, material.BuildContext? context) {
+    return application
+          .make<StringValueBuilder>(JsonDefinition.stringValueBuilder)
+          .build(json.data["key"], context: context);
   }
 }
 

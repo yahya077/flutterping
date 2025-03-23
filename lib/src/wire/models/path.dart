@@ -5,8 +5,9 @@ class NavigationPath {
   int? index;
   Map<String, dynamic>? queryParameters;
   Map<String, String>? pathParameters;
+  String? navigationType;
 
-  NavigationPath({this.navigatorKey, this.path, this.stackKey, this.index, this.queryParameters, this.pathParameters});
+  NavigationPath({this.navigatorKey, this.path, this.stackKey, this.index, this.queryParameters, this.pathParameters, this.navigationType});
 
   factory NavigationPath.fromJson(Map<String, dynamic> json) {
     return NavigationPath(
@@ -15,6 +16,7 @@ class NavigationPath {
       stackKey: json['stackKey'],
       index: json['index'],
       queryParameters: json['queryParameters'],
+      navigationType: json['navigationType'],
       pathParameters: json['pathParameters']?.map((key, value) => MapEntry(key, value.toString()))
           .cast<String, String>(),
     );

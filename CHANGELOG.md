@@ -4,7 +4,8 @@
 * Client managing by its state
 * InitialWidgetBuilder callback added for ReactiveWidget
 * Placeholder widget added
-* 
+* DynamicStringValue added
+* pop Navigation types are added 
 
 ## 0.2.1
 

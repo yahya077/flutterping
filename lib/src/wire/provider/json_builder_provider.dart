@@ -104,6 +104,8 @@ class JsonBuilderProvider extends Provider {
     app.singleton(
         JsonDefinition.notifierValueBuilder, () => NotifierValueBuilder(app));
     app.singleton(
+        JsonDefinition.dynamicStringValueBuilder, () => DynamicStringValueBuilder(app));
+    app.singleton(
         JsonDefinition.dynamicValueBuilder, () => DynamicValueBuilder(app));
     app.singleton(JsonDefinition.evalValueBuilder, () => EvalValueBuilder(app));
     app.singleton(JsonDefinition.valueListenableBuilder,

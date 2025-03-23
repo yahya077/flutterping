@@ -6,9 +6,11 @@ class UpdateStateActionExecutor extends ActionExecutor {
   @override
   Future<void> execute(material.BuildContext context, Json json) async {
     var data = json.data;
-    application
-        .make<StateManager>(WireDefinition.stateManager)
-        .setByKey(data["key"], data["value"]);
+    application.make<StateManager>(WireDefinition.stateManager).setByKey(
+        data["key"],
+        application
+            .make<ValueBuilder>(data["value"]["type"])
+            .build(Json.fromJson(data["value"]), context));
 
     if (json.data["thenAction"] != null) {
       await application

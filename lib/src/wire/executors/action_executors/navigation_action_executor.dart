@@ -25,6 +25,18 @@ class NavigationActionExecutor extends ActionExecutor {
       application
           .make<RoutingService>(WireDefinition.routingService)
           .navigateBack(path.navigatorKey!);
+    } else if (path.navigationType == 'navigateToNamedAndRemoveUntil') {
+      application
+          .make<RoutingService>(WireDefinition.routingService)
+          .navigateToNamedAndRemoveUntil(path.navigatorKey!, path.path!,
+              queryParameters: path.queryParameters,
+              pathParameters: path.pathParameters);
+    }  else if (path.navigationType == 'navigateAndRemoveUntil') {
+      application
+          .make<RoutingService>(WireDefinition.routingService)
+          .navigateAndRemoveUntil(path.navigatorKey!, path.path!,
+              queryParameters: path.queryParameters,
+              pathParameters: path.pathParameters);
     } else {
       application
           .make<RoutingService>(WireDefinition.routingService)

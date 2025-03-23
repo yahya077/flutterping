@@ -56,6 +56,7 @@ class JsonDefinition {
   static const evalValueBuilder = 'EvalValue';
   static const valueListenableBuilder = 'ValueListenableBuilder';
   static const notifierValueBuilder = 'NotifierValue';
+  static const dynamicStringValueBuilder = 'DynamicStringValue';
   static const expanded = 'Expanded';
   static const visibility = 'Visibility';
   static const clipRRect = 'ClipRRect';
