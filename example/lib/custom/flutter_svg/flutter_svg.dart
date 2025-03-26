@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' as material;
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:flutter_svg/flutter_svg.dart' as flutter_svg;
 

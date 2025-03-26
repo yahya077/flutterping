@@ -8,15 +8,17 @@ import 'custom/go_router/router_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final application = flutter_ping.Application.getInstance();
-
-  final wireBootstrap = await flutter_ping.WireBootstrap(application, registarables: {
-    "go_router": () => GoRouteRouterProvider(),
-  }).boot();
+  final application = await flutter_ping.Bootstrap.init(bootstrappers: [
+        (flutter_ping.Application application) {
+      return flutter_ping.WireBootstrapper(application, [
+        GoRouteRouterProvider(),
+      ]);
+    }
+  ]);
 
   await Navigation.lazyInstance();
 
-  runApp(wireBootstrap.wrap(const App()));
+  runApp(application.make<flutter_ping.Wire>(flutter_ping.WireDefinition.wireService).wrap(const App()));
 }
 
 class App extends StatelessWidget {

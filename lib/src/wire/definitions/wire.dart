@@ -7,6 +7,7 @@ class WireDefinition {
   static const String stateManager = 'StateManager';
   static const String jsonBuilder = 'JsonBuilder';
   static const String eventDispatcher = 'EventDispatcher';
+  static const String wireService = 'WireService';
   static const String routingService = 'RoutingService';
   static const String stateNavigationState = 'NavigationState';
   static const String stateCallableRegistryState = 'CallableRegistryState';
@@ -14,4 +15,5 @@ class WireDefinition {
   static const String stateLocalState = 'LocalState';
   static const String stateClientState = 'ClientState';
   static const String loaderPreLoader = 'PreLoader';
+  static const String persistentStorage = 'PersistentStorage';
 }

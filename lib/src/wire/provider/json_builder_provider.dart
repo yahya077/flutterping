@@ -13,7 +13,10 @@ import '../builders/widget_builder.dart';
 import '../definitions/json.dart';
 import '../executors/action_executor.dart';
 
-class JsonBuilderProvider extends Provider {
+class JsonBuilderProvider extends FrameworkServiceProvider {
+  @override
+  int get priority => 45; // Slightly lower than WireProvider
+  
   @override
   void register(Application app) {
     app.singleton(JsonDefinition.container, () => ContainerBuilder(app));
@@ -160,5 +163,12 @@ class JsonBuilderProvider extends Provider {
         JsonDefinition.rangeValidator, () => RangeValidatorBuilder(app));
     app.singleton(
         JsonDefinition.regexValidator, () => RegexValidatorBuilder(app));
+  }
+  
+  @override
+  Future<void> boot(Application app) async {
+    // Initialize any JsonBuilder dependencies after everything else is registered
+    // This is intentionally empty as registration is enough for this provider,
+    // but we could add boot-time initialization if needed in the future
   }
 }

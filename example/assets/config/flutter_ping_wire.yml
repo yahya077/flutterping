@@ -1,19 +1,16 @@
 clients:
-  first_client:
-    description: "This is simple client"
-    url: "https://b2de8312-cf06-40dd-81f6-116b761b66eb.mock.pstmn.io"
+  default:
+    name: default
+    description: Default API Client
+    url: https://example.com/api
     headers:
-      Authorization: "Bearer token"
+      Content-Type: application/json
+      Accept: application/json
+
 loaders:
-  simple:
-    client: "first_client"
-    endpoint: "/simple"
+  app:
+    client: "default"
+    endpoint: "/route/runApp"
     method: "GET"
-  router:
-    client: "first_client"
-    endpoint: "/router"
-    method: "GET"
-  forExistingProject:
-    client: "first_client"
-    endpoint: "/forExistingProject"
-    method: "GET"
+
+default_client: "default"

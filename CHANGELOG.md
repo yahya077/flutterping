@@ -6,6 +6,7 @@
 * Placeholder widget added
 * DynamicStringValue added
 * pop Navigation types are added 
+* application framework architecture optimized
 
 ## 0.2.1
 
