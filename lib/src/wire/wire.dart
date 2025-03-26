@@ -30,6 +30,7 @@ export 'builders/page_builder.dart';
 export 'builders/router_config_builder.dart';
 export 'builders/change_notifier_builder.dart';
 export 'builders/localization_delegate_builder.dart';
+export 'executors/action_executor.dart';
 export 'provider/wire_provider.dart';
 export 'models/json.dart';
 export 'models/event.dart';
