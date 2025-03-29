@@ -16,4 +16,5 @@ class WireDefinition {
   static const String stateClientState = 'ClientState';
   static const String loaderPreLoader = 'PreLoader';
   static const String persistentStorage = 'PersistentStorage';
+  static const String responseHandler = 'ResponseHandler';
 }

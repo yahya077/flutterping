@@ -79,6 +79,10 @@ class JsonBuilderProvider extends FrameworkServiceProvider {
     app.singleton(
         JsonDefinition.pingFormField, () => PingFormFieldBuilder(app));
     app.singleton(JsonDefinition.overlay, () => OverlayBuilder(app));
+
+    // Register PingErrorBuilder
+    app.singleton(JsonDefinition.pingErrorView, () => PingErrorBuilder(app));
+
     //paintings builders
     app.singleton(JsonDefinition.inputDecorationBuilder,
         () => InputDecorationBuilder(app));
@@ -145,6 +149,9 @@ class JsonBuilderProvider extends FrameworkServiceProvider {
 
     app.singleton(JsonDefinition.validateAndSaveFormAction,
         () => ValidateAndSaveFormActionExecutor(app));
+
+    app.singleton(JsonDefinition.dialogAction,
+        () => DialogActionExecutor(app));
 
     // form field validators
     app.singleton(

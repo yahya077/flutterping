@@ -46,6 +46,8 @@ class JsonDefinition {
   static const updateNotifierAction = 'UpdateNotifierAction';
   static const submitAction = 'SubmitAction';
   static const validateAndSaveFormAction = 'ValidateAndSaveFormAction';
+  static const dialogAction = 'DialogAction';
+  static const pingErrorView = 'PingErrorView';
   static const scrollController = 'ScrollController';
   static const intrinsicHeight = 'IntrinsicHeight';
   static const floatingActionButton = 'FloatingActionButton';

@@ -1,28 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
-import 'dart:convert';
+import 'dart:io' show Platform;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:flutter_ping_wire/src/framework/persistent_storage.dart';
 import 'package:flutter_ping_wire/src/wire/change_notifier_state.dart';
 import 'package:flutter_ping_wire/src/wire/client_state.dart';
 import 'package:flutter_ping_wire/src/wire/local_state.dart';
 import 'package:flutter_ping_wire/src/wire/provider/json_builder_provider.dart';
-import 'package:flutter_ping_wire/src/wire/services/device_info/device_info_module.dart';
-
-import 'package:flutter_ping_wire/src/wire/value_provider.dart';
-
-import '../framework/app.dart';
+import 'package:flutter_ping_wire/src/wire/resources/widgets/overlay.dart';
 import '../framework/environment.dart';
-import '../framework/maintenance/maintenance_mode.dart';
-import '../framework/provider.dart';
-import 'builders/json_builder.dart';
-import 'builders/widget_builder.dart';
-import 'client.dart';
 import 'config.dart';
-import 'definitions/definition.dart';
-import 'loader/loader.dart';
-import 'provider/wire_provider.dart';
-import 'state_manager.dart';
 
 export 'builders/widget_builder.dart';
 export 'builders/json_builder.dart';
@@ -56,7 +43,10 @@ export 'resources/paintings/border_radius.dart';
 export 'scope_state.dart';
 export 'services/device_info/device_info_module.dart';
 export 'resources/paintings/gradient.dart';
+export 'builders/api_path_builder.dart';
+export 'builders/value_builder.dart';
 export 'package:flutter_ping_wire/bootstrap.dart';
+export 'resources/widgets/ping_error_view.dart';
 
 /// Core Wire framework service provider for the JSON-to-widget converter
 class WireFrameworkProvider extends FrameworkServiceProvider {
@@ -73,11 +63,6 @@ class WireFrameworkProvider extends FrameworkServiceProvider {
     // Register Wire core providers
     app.register(WireProvider());
     app.register(JsonBuilderProvider());
-
-    // Register maintenance mode if not already registered
-    if (!app.hasBinding('maintenance.mode')) {
-      app.singleton('maintenance.mode', () => FileMaintenanceMode(app));
-    }
 
     // Register additional providers
     for (final provider in _additionalProviders.values) {
@@ -97,8 +82,9 @@ class WireFrameworkProvider extends FrameworkServiceProvider {
         .addState(LocalState.initial());
 
     final deviceInfo = await DeviceInfoHandler.gatherAllDeviceInfo();
-    app.make<StateManager>(WireDefinition.stateManager).addState(
-        DeviceInfoState.initialWithValues(deviceInfo));
+    app
+        .make<StateManager>(WireDefinition.stateManager)
+        .addState(DeviceInfoState.initialWithValues(deviceInfo));
 
     // Load and register clients from config
     final config =
@@ -107,9 +93,10 @@ class WireFrameworkProvider extends FrameworkServiceProvider {
     config.clients.forEach((key, value) {
       app
           .make<StateManager>(WireDefinition.stateManager)
-          .addState(ClientState.initial(value, deviceInfo, persistentStorage: app.make<PersistentStorageInterface>(
-        WireDefinition.persistentStorage,
-      )));
+          .addState(ClientState.initial(value, deviceInfo,
+              persistentStorage: app.make<PersistentStorageInterface>(
+                WireDefinition.persistentStorage,
+              )));
 
       // Register client
       app.singleton(key, () => Client(app));
@@ -147,18 +134,37 @@ class WireBootstrapper {
   }
 }
 
+/// Wire application class with enhanced error handling and UI capabilities
 class Wire {
   final Application application;
 
   Wire(this.application);
 
+  /// Run the app with enhanced error handling
   Future<void> runApp({String loader = "app"}) async {
-    material.runApp(wrap(await application
-        .make<PreLoader>(WireDefinition.loaderPreLoader)
-        .load<material.Widget>(loader)));
+    try {
+      if (kDebugMode) {
+        print("Wire: Starting to load app with loader: $loader");
+      }
+
+      final rootWidget = await application
+          .make<PreLoader>(WireDefinition.loaderPreLoader)
+          .load<material.Widget>(loader);
+
+      material.runApp(wrap(rootWidget));
+      if (kDebugMode) {
+        print("Wire: App initialized successfully");
+      }
+    } catch (e, stackTrace) {
+      if (kDebugMode) {
+        print("Wire: Error loading app: $e");
+        print("Wire: Stack trace: $stackTrace");
+      }
+    }
   }
 
-  wrap(material.Widget widget) {
+  /// Wrap widget with necessary providers and global overlay
+  material.Widget wrap(material.Widget widget) {
     return ValueProvider(
       manager: ValueNotifierManager(),
       child: widget,

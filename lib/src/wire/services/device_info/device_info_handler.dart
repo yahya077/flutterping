@@ -18,6 +18,14 @@ class DeviceInfoHandler {
     return 'unknown';
   }
 
+  /// Get the current build mode (debug, profile, or release)
+  static String getBuildMode() {
+    if (kDebugMode) return 'debug';
+    if (kProfileMode) return 'profile';
+    if (kReleaseMode) return 'release';
+    return 'unknown';
+  }
+
   /// Get the OS version using platform channels
   static Future<String> getOsVersion() async {
     try {
@@ -251,6 +259,7 @@ class DeviceInfoHandler {
       'build_number': await getBuildNumber(),
       'package_name': await getPackageName(),
       'version': await getFullVersion(),
+      'build_mode': getBuildMode(),
     };
   }
 } 

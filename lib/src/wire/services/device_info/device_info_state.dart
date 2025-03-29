@@ -24,6 +24,7 @@ class DeviceInfoState extends State {
       ..set('connection_type', '')
       ..set('deep_link', '')
       ..set('app_instance_id', '')
+      ..set('build_mode', '')
       ..set('device_token', ''); // For push notifications
   }
 
@@ -46,6 +47,7 @@ class DeviceInfoState extends State {
       ..set('connection_type', values['connection_type'] ?? '')
       ..set('deep_link', values['deep_link'] ?? '')
       ..set('app_instance_id', values['app_instance_id'] ?? '')
+      ..set('build_mode', values['build_mode'] ?? '')
       ..set('device_token', values['device_token'] ?? ''); // For push notifications
   }
 
@@ -99,6 +101,9 @@ class DeviceInfoState extends State {
 
   /// Retrieve app instance ID
   String get appInstanceId => get<String>('app_instance_id', defaultValue: '');
+
+  /// Retrieve build mode (debug, profile, or release)
+  String get buildMode => get<String>('build_mode', defaultValue: '');
 
   /// Retrieve device token (for push notifications)
   String get deviceToken => get<String>('device_token', defaultValue: '');

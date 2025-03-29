@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
-import 'package:flutter_ping_wire/bootstrap.dart';
 
 import 'custom/go_router/router_provider.dart';
 import 'custom/flutter_credit_card/flutter_credit_card_provider.dart';

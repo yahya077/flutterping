@@ -45,6 +45,18 @@ class ShowToastEvent extends OverlayEvent {
   });
 }
 
+class ShowDialogEvent extends OverlayEvent {
+  final Widget Function(BuildContext)? builder;
+  final Duration animationDuration;
+
+  ShowDialogEvent({
+    super.identifier,
+    super.isDismissible = true,
+    this.builder,
+    this.animationDuration = const Duration(milliseconds: 200),
+  });
+}
+
 class ShowAlertEvent extends OverlayEvent {
   final String title;
   final String message;
@@ -168,9 +180,6 @@ class _AnimatedOverlayEntryState extends State<AnimatedOverlayEntry> {
   @override
   void initState() {
     super.initState();
-    print("isClosing ${widget.isClosing}");
-    print("animationDuration ${widget.animationDuration}");
-    print("_isVisible ${_isVisible}");
     if (!widget.isClosing) {
       Future.microtask(() {
         if (mounted) setState(() => _isVisible = true);
@@ -223,6 +232,8 @@ class _GlobalOverlayWidgetState extends State<GlobalOverlayWidget> {
         _showLoading(event);
       } else if (event is ShowAlertEvent) {
         _showAlert(event);
+      } else if (event is ShowDialogEvent) {
+        _showDialog(event);
       } else if (event is HideOverlayEvent) {
         _hideOverlay(event.identifier, event.animationDuration);
       }
@@ -282,6 +293,30 @@ class _GlobalOverlayWidgetState extends State<GlobalOverlayWidget> {
                 event.identifier,
                 event.animationDuration,
               ),
+        ],
+      ),
+    );
+  }
+
+  void _showDialog(ShowDialogEvent event) {
+    _showAnimatedOverlay(
+      event.identifier,
+      event.animationDuration,
+      event.isDismissible,
+      (context, onComplete) => Stack(
+        children: [
+          GestureDetector(
+            onTap: event.isDismissible
+                ? () => _hideOverlay(event.identifier, event.animationDuration)
+                : null,
+            child: Container(color: Colors.black.withOpacity(0.5)),
+          ),
+          Center(
+            child: Material(
+              type: MaterialType.transparency,
+              child: event.builder?.call(context) ?? const SizedBox(),
+            ),
+          ),
         ],
       ),
     );
@@ -355,38 +390,101 @@ class _GlobalOverlayWidgetState extends State<GlobalOverlayWidget> {
     Duration animationDuration,
   ) {
     return Center(
-      child: Container(
-        margin: const EdgeInsets.all(32),
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(message),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: actions ??
-                  [
-                    TextButton(
-                      onPressed: () =>
-                          _hideOverlay(identifier, animationDuration),
-                      child: const Text('Tamam'),
+      child: Material(
+        borderRadius: BorderRadius.circular(16),
+        elevation: 5,
+        child: Container(
+          width: 320,
+          margin: const EdgeInsets.all(0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Alert header with icon
+              Container(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                child: Column(
+                  children: [
+                    // Warning icon
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.warning_rounded,
+                        color: Colors.red.shade600,
+                        size: 32,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Title
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: -0.5,
+                      ),
                     ),
                   ],
-            ),
-          ],
+                ),
+              ),
+              // Message
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+                child: Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.shade800,
+                    height: 1.4,
+                  ),
+                ),
+              ),
+              // Action buttons
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.grey.shade200,
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: actions != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: actions.map((widget) {
+                          return Expanded(child: widget);
+                        }).toList(),
+                      )
+                    : InkWell(
+                        onTap: () => _hideOverlay(identifier, animationDuration),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'OK',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue.shade700,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter_ping_wire/src/framework/persistent_storage.dart';
+import 'package:flutter_ping_wire/src/wire/services/exception/ResponseHandler.dart';
 
 import '../../framework/app.dart';
 import '../../framework/provider.dart';
@@ -31,6 +32,7 @@ class WireProvider extends FrameworkServiceProvider {
     app.singleton(WireDefinition.stateManager, () => StateManager(app));
     app.singleton(WireDefinition.loaderPreLoader, () => PreLoader(app));
     app.singleton(WireDefinition.wireService, () => Wire(app));
+    app.singleton(WireDefinition.responseHandler, () => ResponseHandler(app));
   }
   
   @override

@@ -14,6 +14,7 @@ import 'package:flutter_ping_wire/src/wire/resources/widgets/form.dart';
 import 'package:flutter_ping_wire/src/wire/resources/widgets/form_fields/checkbox_form_field.dart';
 import 'package:flutter_ping_wire/src/wire/resources/widgets/form_fields/radio_group_form_field.dart';
 import 'package:flutter_ping_wire/src/wire/resources/widgets/overlay.dart';
+import 'package:flutter_ping_wire/src/wire/resources/widgets/ping_error_view.dart';
 import 'package:flutter_ping_wire/src/wire/value_provider.dart';
 
 import '../callable_registry.dart';
@@ -134,3 +135,5 @@ part 'widget_builders/radio_group_form_field_builder.dart';
 part 'widget_builders/overlay_builder.dart';
 
 part 'widget_builders/placeholder_builder.dart';
+
+part 'widget_builders/ping_error_builder.dart';
