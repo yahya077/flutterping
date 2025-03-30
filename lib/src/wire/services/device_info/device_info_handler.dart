@@ -3,9 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-/// A class that gathers device information without requiring any third-party packages
+/// A class that gathers device information using device_info_plus and package_info_plus
 class DeviceInfoHandler {
+  static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
+  
   /// Get the current platform (iOS, Android, web, etc.)
   static String getPlatform() {
     if (kIsWeb) return 'web';
@@ -26,22 +30,40 @@ class DeviceInfoHandler {
     return 'unknown';
   }
 
-  /// Get the OS version using platform channels
+  /// Get the OS version using device_info_plus
   static Future<String> getOsVersion() async {
     try {
-      if (kIsWeb) return 'web';
-      
-      final String os = Platform.operatingSystem;
-      final String version = Platform.operatingSystemVersion;
-      
-      // Extract just the version number for cleaner output
-      final RegExp versionRegex = RegExp(r'[0-9]+(\.[0-9]+)*');
-      final match = versionRegex.firstMatch(version);
-      if (match != null) {
-        return match.group(0) ?? version;
+      if (kIsWeb) {
+        final webInfo = await _deviceInfoPlugin.webBrowserInfo;
+        return webInfo.browserName.toString();
       }
       
-      return version;
+      if (Platform.isAndroid) {
+        final androidInfo = await _deviceInfoPlugin.androidInfo;
+        return androidInfo.version.release;
+      }
+      
+      if (Platform.isIOS) {
+        final iosInfo = await _deviceInfoPlugin.iosInfo;
+        return iosInfo.systemVersion;
+      }
+      
+      if (Platform.isMacOS) {
+        final macOsInfo = await _deviceInfoPlugin.macOsInfo;
+        return macOsInfo.osRelease;
+      }
+      
+      if (Platform.isWindows) {
+        final windowsInfo = await _deviceInfoPlugin.windowsInfo;
+        return windowsInfo.buildNumber.toString();
+      }
+      
+      if (Platform.isLinux) {
+        final linuxInfo = await _deviceInfoPlugin.linuxInfo;
+        return linuxInfo.version ?? 'unknown';
+      }
+      
+      return Platform.operatingSystemVersion;
     } catch (e) {
       return 'unknown';
     }
@@ -85,25 +107,78 @@ class DeviceInfoHandler {
     }
   }
   
-  /// Generate a pseudo device name (best effort without third-party packages)
-  static String getDeviceName() {
+  /// Get device name using device_info_plus
+  static Future<String> getDeviceName() async {
     try {
-      if (kIsWeb) return 'Web Browser';
+      if (kIsWeb) {
+        final webInfo = await _deviceInfoPlugin.webBrowserInfo;
+        return '${webInfo.browserName} ${webInfo.platform}';
+      }
       
-      final String os = Platform.operatingSystem;
-      final String arch = Platform.operatingSystemVersion;
-      return '$os ($arch)';
+      if (Platform.isAndroid) {
+        final androidInfo = await _deviceInfoPlugin.androidInfo;
+        return androidInfo.model;
+      }
+      
+      if (Platform.isIOS) {
+        final iosInfo = await _deviceInfoPlugin.iosInfo;
+        return iosInfo.name;
+      }
+      
+      if (Platform.isMacOS) {
+        final macOsInfo = await _deviceInfoPlugin.macOsInfo;
+        return macOsInfo.computerName;
+      }
+      
+      if (Platform.isWindows) {
+        final windowsInfo = await _deviceInfoPlugin.windowsInfo;
+        return windowsInfo.computerName;
+      }
+      
+      if (Platform.isLinux) {
+        final linuxInfo = await _deviceInfoPlugin.linuxInfo;
+        return linuxInfo.name ?? 'Linux Device';
+      }
+      
+      return Platform.operatingSystem;
     } catch (e) {
       return 'Unknown Device';
     }
   }
   
-  /// Get basic device model information (limited without device_info_plus)
-  static String getDeviceModel() {
+  /// Get device model using device_info_plus
+  static Future<String> getDeviceModel() async {
     try {
-      if (kIsWeb) return 'Web Browser';
-      if (Platform.isIOS) return 'iOS Device';
-      if (Platform.isAndroid) return 'Android Device';
+      if (kIsWeb) {
+        final webInfo = await _deviceInfoPlugin.webBrowserInfo;
+        return webInfo.userAgent ?? 'Web Browser';
+      }
+      
+      if (Platform.isAndroid) {
+        final androidInfo = await _deviceInfoPlugin.androidInfo;
+        return '${androidInfo.manufacturer} ${androidInfo.model}';
+      }
+      
+      if (Platform.isIOS) {
+        final iosInfo = await _deviceInfoPlugin.iosInfo;
+        return iosInfo.model;
+      }
+      
+      if (Platform.isMacOS) {
+        final macOsInfo = await _deviceInfoPlugin.macOsInfo;
+        return macOsInfo.model;
+      }
+      
+      if (Platform.isWindows) {
+        final windowsInfo = await _deviceInfoPlugin.windowsInfo;
+        return windowsInfo.productName;
+      }
+      
+      if (Platform.isLinux) {
+        final linuxInfo = await _deviceInfoPlugin.linuxInfo;
+        return linuxInfo.prettyName ?? 'Linux Device';
+      }
+      
       return Platform.operatingSystem;
     } catch (e) {
       return 'Unknown Model';
@@ -141,85 +216,41 @@ class DeviceInfoHandler {
     }
   }
   
-  /// Get the application version from pubspec.yaml
+  /// Get the application version using package_info_plus
   static Future<String> getAppVersion() async {
     try {
-      if (kIsWeb) return 'web';
-      
-      // Use MethodChannel to access platform-specific code
-      const platform = MethodChannel('flutterping/app_info');
-      final String version = await platform.invokeMethod('getAppVersion');
-      return version;
+      final packageInfo = await PackageInfo.fromPlatform();
+      return packageInfo.version;
     } catch (e) {
-      // Fallback to reading the pubspec.yaml file as a string
-      try {
-        final String data = await rootBundle.loadString('pubspec.yaml');
-        final RegExp versionRegex = RegExp(r'version:\s+(\d+\.\d+\.\d+)');
-        final Match? match = versionRegex.firstMatch(data);
-        if (match != null && match.groupCount >= 1) {
-          return match.group(1) ?? '';
-        }
-      } catch (_) {}
       return '';
     }
   }
   
-  /// Get the application build number
+  /// Get the application build number using package_info_plus
   static Future<String> getBuildNumber() async {
     try {
-      if (kIsWeb) return '';
-      
-      const platform = MethodChannel('flutterping/app_info');
-      final String buildNumber = await platform.invokeMethod('getBuildNumber');
-      return buildNumber;
+      final packageInfo = await PackageInfo.fromPlatform();
+      return packageInfo.buildNumber;
     } catch (e) {
-      try {
-        final String data = await rootBundle.loadString('pubspec.yaml');
-        final RegExp versionRegex = RegExp(r'version:.*\+(\d+)');
-        final Match? match = versionRegex.firstMatch(data);
-        if (match != null && match.groupCount >= 1) {
-          return match.group(1) ?? '';
-        }
-      } catch (_) {}
       return '';
     }
   }
   
-  /// Get the application package name/bundle identifier
+  /// Get the application package name using package_info_plus
   static Future<String> getPackageName() async {
     try {
-      if (kIsWeb) return 'web-app';
-      
-      // Use MethodChannel to access platform-specific code
-      const platform = MethodChannel('flutterping/app_info');
-      try {
-        final String packageName = await platform.invokeMethod('getPackageName');
-        return packageName;
-      } catch (e) {
-        // Fallback method based on platform
-        if (Platform.isAndroid) {
-          // Try to use the Android context to get package name
-          try {
-            final result = await const MethodChannel('plugins.flutter.io/package_info').invokeMethod<Map<dynamic, dynamic>>('getAll');
-            return result?['packageName'] as String? ?? '';
-          } catch (_) {}
-        } else if (Platform.isIOS) {
-          // Try to use the iOS bundle to get bundle identifier
-          try {
-            final result = await const MethodChannel('plugins.flutter.io/package_info').invokeMethod<Map<dynamic, dynamic>>('getAll');
-            return result?['packageName'] as String? ?? '';
-          } catch (_) {}
-        } else if (Platform.isMacOS) {
-          // For macOS applications
-          return Platform.resolvedExecutable.split('/').lastWhere((element) => element.contains('.app'), orElse: () => '').replaceAll('.app', '');
-        }
-        
-        // For other platforms, try to extract from the executable path
-        try {
-          return Platform.resolvedExecutable.split(Platform.pathSeparator).last;
-        } catch (_) {}
-      }
+      final packageInfo = await PackageInfo.fromPlatform();
+      return packageInfo.packageName;
+    } catch (e) {
       return '';
+    }
+  }
+  
+  /// Get app name using package_info_plus
+  static Future<String> getAppName() async {
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      return packageInfo.appName;
     } catch (e) {
       return '';
     }
@@ -227,15 +258,12 @@ class DeviceInfoHandler {
   
   /// Get full version string (version+build number)
   static Future<String> getFullVersion() async {
-    final appVersion = await getAppVersion();
-    final buildNumber = await getBuildNumber();
-    
-    if (appVersion.isNotEmpty && buildNumber.isNotEmpty) {
-      return '$appVersion+$buildNumber';
-    } else if (appVersion.isNotEmpty) {
-      return appVersion;
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      return '${packageInfo.version}+${packageInfo.buildNumber}';
+    } catch (e) {
+      return '';
     }
-    return '';
   }
   
   /// Gather all device information in one call
@@ -245,8 +273,8 @@ class DeviceInfoHandler {
     return {
       'platform': getPlatform(),
       'os_version': await getOsVersion(),
-      'device_name': getDeviceName(),
-      'device_model': getDeviceModel(),
+      'device_name': await getDeviceName(),
+      'device_model': await getDeviceModel(),
       'locale': localeInfo['locale'] ?? 'en_US',
       'language_code': localeInfo['languageCode'] ?? 'en',
       'country_code': localeInfo['countryCode'] ?? 'US',
@@ -258,6 +286,7 @@ class DeviceInfoHandler {
       'app_version': await getAppVersion(),
       'build_number': await getBuildNumber(),
       'package_name': await getPackageName(),
+      'app_name': await getAppName(),
       'version': await getFullVersion(),
       'build_mode': getBuildMode(),
     };

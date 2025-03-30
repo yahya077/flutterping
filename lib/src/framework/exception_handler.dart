@@ -14,6 +14,7 @@ class ExceptionHandler {
   void register() {}
 
   void report(e, stackTrace) {
+    print("ExceptionHandler exception: $e, stackTrace: $stackTrace");
     throw e;
   }
 }

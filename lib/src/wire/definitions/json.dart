@@ -76,4 +76,5 @@ class JsonDefinition {
   static const lengthValidator = 'LengthValidator';
   static const rangeValidator = 'RangeValidator';
   static const regexValidator = 'RegexValidator';
+  static const center = 'Center';
 }

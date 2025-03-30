@@ -5,6 +5,8 @@ import 'models/config.dart';
 import 'state.dart';
 
 class ClientState extends State {
+  static final Set<String> _persistentFields = {'headers.Authorization'};
+  
   ClientState.initial(
     WireConfigClient client, Map<String, String> deviceInfo, {
     PersistentStorageInterface? persistentStorage,
@@ -13,26 +15,28 @@ class ClientState extends State {
       'id': "${WireDefinition.stateClientState}_${client.name}",
       'headers': {
         ...client.headers,
-        'x-flutterping-appversion': deviceInfo['app_version'].toString(),
-        'x-flutterping-appname': deviceInfo['app_name'].toString(),
-        'x-flutterping-packagename': deviceInfo['package_name'].toString(),
-        'x-flutterping-version': deviceInfo['version'].toString(),
-        'x-flutterping-buildnumber': deviceInfo['build_number'].toString(),
-        'x-flutterping-devicename': deviceInfo['device_name'].toString(),
-        'x-flutterping-devicemodel': deviceInfo['device_model'].toString(),
-        'x-flutterping-osversion': deviceInfo['os_version'].toString(),
-        'x-flutterping-platform': deviceInfo['platform'].toString(),
-        'x-flutterping-locale': deviceInfo['locale'].toString(),
-        'x-flutterping-languagecode': deviceInfo['language_code'].toString(),
-        'x-flutterping-countrycode': deviceInfo['country_code'].toString(),
-        'x-flutterping-timezone': deviceInfo['timezone'].toString(),
-        'x-flutterping-systemtheme': deviceInfo['system_theme'].toString(),
-        'x-flutterping-connectiontype': deviceInfo['connection_type'].toString(),
-        'x-flutterping-deeplink': deviceInfo['deep_link'].toString(),
-        'x-flutterping-appinstanceid': deviceInfo['app_instance_id'].toString(),
+        'x-flutterping-appversion': deviceInfo['app_version'] ?? '',
+        'x-flutterping-appname': deviceInfo['app_name'] ?? '',
+        'x-flutterping-packagename': deviceInfo['package_name'] ?? '',
+        'x-flutterping-version': deviceInfo['version'] ?? '',
+        'x-flutterping-buildnumber': deviceInfo['build_number'] ?? '',
+        'x-flutterping-devicename': deviceInfo['device_name'] ?? '',
+        'x-flutterping-devicemodel': deviceInfo['device_model'] ?? '',
+        'x-flutterping-osversion': deviceInfo['os_version'] ?? '',
+        'x-flutterping-platform': deviceInfo['platform'] ?? '',
+        'x-flutterping-locale': deviceInfo['locale'] ?? '',
+        'x-flutterping-languagecode': deviceInfo['language_code'] ?? '',
+        'x-flutterping-countrycode': deviceInfo['country_code'] ?? '',
+        'x-flutterping-timezone': deviceInfo['timezone'] ?? '',
+        'x-flutterping-systemtheme': deviceInfo['system_theme'] ?? '',
+        'x-flutterping-connectiontype': deviceInfo['connection_type'] ?? '',
+        'x-flutterping-deeplink': deviceInfo['deep_link'] ?? '',
+        'x-flutterping-appinstanceid': deviceInfo['app_instance_id'] ?? '',
       },
       'baseUrl': client.url,
-    }, persistentStorage: persistentStorage
+    }, 
+    persistentStorage: persistentStorage,
+    persistentFields: _persistentFields,
   );
 
   @override
@@ -62,7 +66,7 @@ class ClientState extends State {
   }
 
   Map<String, String> mergeHeaders(Map<String, String>? headers) {
-    final Map<String, String> currentHeaders = Map<String, String>.from(get('headers'));
+    final Map<String, String> currentHeaders = Map<String, dynamic>.from(get('headers')).map<String, String>((key, value) => MapEntry(key, value ?? ''));
     if (headers != null) {
       currentHeaders.addAll(headers);
     }

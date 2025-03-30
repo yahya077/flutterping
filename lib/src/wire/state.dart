@@ -27,24 +27,27 @@ abstract class StateInterface {
   /// Load state from external data
   void hydrate(Map<String, dynamic> state);
 
+  /// Load and merge state from external data
+  void hydrateAndMerge(Map<String, dynamic> state);
+
   /// Convert state to serializable format
   Map<String, dynamic> dehydrate();
 
   /// Convert state to JSON format
   Object? dehydrateAsJson();
-  
+
   /// Event triggered when state is set
   void onSet(String key, dynamic value);
-  
+
   /// Event triggered when all state is modified
   void onSetAll(Map<String, dynamic> values);
-  
+
   /// Event triggered when state is hydrated
   void onHydrate(Map<String, dynamic> state);
-  
+
   /// Event triggered when state is removed
   void onRemove(String key);
-  
+
   /// Event triggered before state is disposed
   void onDispose();
 }
@@ -54,22 +57,27 @@ class State implements StateInterface {
   final Map<String, dynamic> _data = {};
   bool isPersistent = false;
   PersistentStorageInterface? persistentStorage;
+  // Define which fields should be persisted using dot notation for nested fields ({'headers.Authorization','baseUrl'})
+  Set<String> _persistentFields = {};
 
   /// Create state with initial values
   State({
-    required Map<String, dynamic> state, 
+    required Map<String, dynamic> state,
     this.persistentStorage,
+    Set<String>? persistentFields,
   }) {
+    if (persistentFields != null) {
+      _persistentFields = persistentFields;
+    }
+
     hydrate(state);
-    
+
     // Load from persistent storage if available
     if (persistentStorage != null && persistentStorage!.exists(getId())) {
-      print("persistentStorage exists");
       try {
         final persistedData = persistentStorage!.load(getId());
         if (persistedData != null) {
-          print("hydrated from persistent storage");
-          hydrate(persistedData);
+          hydrateAndMerge(persistedData);
         }
       } catch (e) {
         // Silently handle loading errors
@@ -78,15 +86,23 @@ class State implements StateInterface {
   }
 
   /// Create state with only an ID
-  State.withId(String id, {this.persistentStorage, this.isPersistent = false}) {
+  State.withId(
+    String id, {
+    this.persistentStorage,
+    this.isPersistent = false,
+    Set<String>? persistentFields,
+  }) {
+    if (persistentFields != null) {
+      _persistentFields = persistentFields;
+    }
     hydrate({'id': id});
-    
+
     // Load from persistent storage if available
     if (persistentStorage != null && persistentStorage!.exists(getId())) {
       try {
         final persistedData = persistentStorage!.load(getId());
         if (persistedData != null) {
-          hydrate(persistedData);
+          hydrateAndMerge(persistedData);
         }
       } catch (e) {
         // Silently handle loading errors
@@ -106,11 +122,53 @@ class State implements StateInterface {
   void _persistState() {
     if (persistentStorage != null) {
       try {
-        persistentStorage!.save(getId(), dehydrate());
+        if (_persistentFields.isEmpty) {
+          // If no specific fields are marked for persistence, persist entire state
+          persistentStorage!.save(getId(), dehydrate());
+        } else {
+          // Otherwise, only persist the specified fields
+          persistentStorage!.save(getId(), _dehydrateSelectedFields());
+        }
       } catch (e) {
         // Silently handle persistence errors
       }
     }
+  }
+
+  /// Dehydrate only the selected fields for persistence
+  Map<String, dynamic> _dehydrateSelectedFields() {
+    try {
+      final Map<String, dynamic> result = {};
+      for (String persistentField in _persistentFields) {
+        final List<String> segments = persistentField.split('.');
+        if (segments.length == 1) {
+          result[segments[0]] = _data[segments[0]];
+        } else if (segments.length == 2) {
+          final String key = segments[0];
+          final String field = segments[1];
+          if (!result.containsKey(key)) {
+            result[key] = {};
+          }
+
+          result[key][field] = _data[key][field];
+        }
+      }
+      return result;
+    } catch (e, stackTrace) {
+      print('"Error in _dehydrateSelectedFields: $e adn: $stackTrace"');
+      throw StateException(
+          'Failed to dehydrate selected fields: ${e.toString()}');
+    }
+  }
+
+  /// Set the fields that should be persisted
+  void setPersistentFields(Set<String> fields) {
+    _persistentFields = fields;
+  }
+
+  /// Get the currently configured persistent fields
+  Set<String> getPersistentFields() {
+    return Set.from(_persistentFields);
   }
 
   void setPersistentStorage(PersistentStorageInterface storage) {
@@ -160,7 +218,8 @@ class State implements StateInterface {
     if (value is T) {
       return value;
     } else {
-      throw StateException('Type mismatch for key "$key": expected ${T.toString()} but got ${value.runtimeType}');
+      throw StateException(
+          'Type mismatch for key "$key": expected ${T.toString()} but got ${value.runtimeType}');
     }
   }
 
@@ -172,16 +231,18 @@ class State implements StateInterface {
       set(path, state);
     } else {
       final String firstSegment = segments.removeAt(0);
-      
+
       try {
         final StateInterface parent = get(firstSegment);
         if (parent is State) {
           parent.addNestedState(segments.join("."), state);
         } else {
-          throw StateException("Cannot add nested state: parent at '$firstSegment' is not a State object");
+          throw StateException(
+              "Cannot add nested state: parent at '$firstSegment' is not a State object");
         }
       } catch (e) {
-        throw StateException("Failed to add nested state at path '$path': ${e.toString()}");
+        throw StateException(
+            "Failed to add nested state at path '$path': ${e.toString()}");
       }
     }
     _persistState();
@@ -192,10 +253,33 @@ class State implements StateInterface {
     _data.addAll(state);
     onHydrate(state);
     _persistState();
+  }
 
-    if(persistentStorage != null) {
-      print("persistentStorage: ${persistentStorage!.load(state['id'])}");
-    }
+  @override
+  void hydrateAndMerge(Map<String, dynamic> state) {
+    state.forEach((key, value) {
+      if (value is Map<String, dynamic> && has(key)) {
+        final existingValue = _data[key];
+        
+        if (existingValue is Map<String, dynamic>) {
+          // If existing value is a Map, merge the maps
+          final Map<String, dynamic> merged = Map.from(existingValue);
+          merged.addAll(value);
+          _data[key] = merged;
+        } else if (existingValue is StateInterface) {
+          // If existing value is a State, hydrate it with the map
+          existingValue.hydrateAndMerge(value);
+        } else {
+          // Otherwise just set the new value
+          _data[key] = value;
+        }
+      } else {
+        // For non-map values or non-existing keys, just set the value
+        _data[key] = value;
+      }
+    });
+    onHydrate(state);
+    _persistState();
   }
 
   @override
@@ -244,7 +328,8 @@ class State implements StateInterface {
     try {
       return _data[key] as T;
     } catch (e) {
-      throw StateException('Failed to cast value for key "$key" to ${T.toString()}: ${e.toString()}');
+      throw StateException(
+          'Failed to cast value for key "$key" to ${T.toString()}: ${e.toString()}');
     }
   }
 
@@ -254,38 +339,42 @@ class State implements StateInterface {
   }
 
   /// Create a state object from JSON data
-  factory State.fromJson(Map<String, dynamic> json, {
+  factory State.fromJson(
+    Map<String, dynamic> json, {
     PersistentStorageInterface? persistentStorage,
-  }) => State(
-    state: json,
-    persistentStorage: persistentStorage,
-  );
+    Set<String>? persistentFields,
+  }) =>
+      State(
+        state: json,
+        persistentStorage: persistentStorage,
+        persistentFields: persistentFields,
+      );
 
   @override
   String getId() {
     return get('id');
   }
-  
+
   @override
   void onSet(String key, dynamic value) {
     // Base implementation does nothing - override in subclasses
   }
-  
+
   @override
   void onSetAll(Map<String, dynamic> values) {
     // Base implementation does nothing - override in subclasses
   }
-  
+
   @override
   void onHydrate(Map<String, dynamic> state) {
     // Base implementation does nothing - override in subclasses
   }
-  
+
   @override
   void onRemove(String key) {
     // Base implementation does nothing - override in subclasses
   }
-  
+
   @override
   void onDispose() {
     // Base implementation does nothing - override in subclasses
@@ -295,9 +384,9 @@ class State implements StateInterface {
 /// Custom exception for state operations
 class StateException implements Exception {
   final String message;
-  
+
   StateException(this.message);
-  
+
   @override
   String toString() => 'StateException: $message';
 }
