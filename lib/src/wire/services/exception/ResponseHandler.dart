@@ -13,6 +13,10 @@ class ResponseHandler {
 
   Future<dynamic> handle(Response response, Object? requestBody,
       {material.BuildContext? context}) async {
+    final deviceInfo = application
+        .make<StateManager>(WireDefinition.stateManager)
+        .getState<DeviceInfoState>('device_info_state')
+        .dehydrate();
     final responseData = jsonDecode(response.body);
 
     if (context != null) {
@@ -53,10 +57,7 @@ class ResponseHandler {
               child: PingErrorView(
                 error: responseData,
                 stackTrace: null,
-                appInfo: application
-                    .make<StateManager>(WireDefinition.stateManager)
-                    .getState<DeviceInfoState>('device_info_state')
-                    .dehydrate(),
+                appInfo: deviceInfo,
                 requestInfo: {
                   'url': response.request?.url.toString(),
                   'method': response.request?.method,
@@ -64,8 +65,8 @@ class ResponseHandler {
                   'body': requestBody,
                   'statusCode': response.statusCode,
                 },
-                showFullDetails: true,
-                debugMode: true,
+                showFullDetails: deviceInfo["build_mode"] == 'debug',
+                debugMode: deviceInfo["build_mode"] == 'debug',
               ),
             ),
           ),
@@ -77,26 +78,33 @@ class ResponseHandler {
   }
 
   void _alertOverlay(Response response, Object? requestBody) {
-    final responseData = jsonDecode(response.body);
+    GlobalOverlay().hide(identifier: "global_loading");
 
+    final responseData = jsonDecode(response.body);
     final errorMessage = responseData["message"] ?? "Something went wrong";
+    final deviceInfo = application
+        .make<StateManager>(WireDefinition.stateManager)
+        .getState<DeviceInfoState>('device_info_state')
+        .dehydrate();
+
+    // Actions for the error view
+    final actions = [
+      material.TextButton(
+        onPressed: () => GlobalOverlay().hide(identifier: 'ping_error'),
+        child: const material.Text('Close', style: material.TextStyle(color: material.Colors.red)),
+      ),
+    ];
+
     GlobalOverlay().show(
       event: ShowAlertEvent(
         title: 'Error',
         message: errorMessage,
-        actions: [
-          material.TextButton(
-            onPressed: () => GlobalOverlay().hide(identifier: 'ping_error'),
-            child: const material.Text('Close'),
-          ),
-        ],
-        builder: (title, message, actions) => PingErrorView(
+        identifier: 'ping_error',
+        isDismissible: true,
+        builder: (title, message, _) => PingErrorView(
           error: responseData,
           stackTrace: null,
-          appInfo: application
-              .make<StateManager>(WireDefinition.stateManager)
-              .getState<DeviceInfoState>('device_info_state')
-              .dehydrate(),
+          appInfo: deviceInfo,
           requestInfo: {
             'url': response.request?.url.toString(),
             'method': response.request?.method,
@@ -104,10 +112,10 @@ class ResponseHandler {
             'body': requestBody,
             'statusCode': response.statusCode,
           },
-          showFullDetails: true,
-          debugMode: true,
+          showFullDetails: deviceInfo["build_mode"] == 'debug',
+          debugMode: deviceInfo["build_mode"] == 'debug',
+          actions: actions, // Pass actions directly to PingErrorView
         ),
-        identifier: 'ping_error',
       ),
     );
   }

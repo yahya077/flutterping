@@ -26,6 +26,9 @@ class PingErrorView extends StatefulWidget {
   final bool showFullDetails;
 
   final bool debugMode;
+  
+  /// Optional custom actions to display in the footer
+  final List<Widget>? actions;
 
   const PingErrorView({
     Key? key,
@@ -37,6 +40,7 @@ class PingErrorView extends StatefulWidget {
     this.onReport,
     this.showFullDetails = true,
     this.debugMode = false,
+    this.actions,
   }) : super(key: key);
 
   @override
@@ -963,6 +967,26 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
     final environmentTag = !widget.debugMode
         ? 'Production' 
         : (widget.appInfo?['debug_mode'] ?? 'Debug');
+    
+    // If we have custom actions, display them in a dedicated footer
+    if (widget.actions != null && widget.actions!.isNotEmpty) {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(
+              color: Colors.grey.shade200,
+              width: 1,
+            ),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: widget.actions!,
+        ),
+      );
+    }
     
     // Show simplified footer for production/user-facing mode
     if (!_effectiveShowFullDetails && !widget.debugMode) {
