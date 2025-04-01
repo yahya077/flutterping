@@ -325,24 +325,25 @@ class _GlobalOverlayWidgetState extends State<GlobalOverlayWidget> {
   void _showAnimatedOverlay(String? identifier, Duration animationDuration,
       bool isDismissible, Widget Function(BuildContext, VoidCallback) builder,
       {Duration? autoHide}) {
-    OverlayEntry? overlay;
-    overlay = OverlayEntry(
-      builder: (context) => AnimatedOverlayEntry(
-        animationDuration: animationDuration,
-        isClosing: false,
-        onComplete: () {
-          if (autoHide != null) {
-            Future.delayed(autoHide, () {
-              _hideOverlay(identifier, animationDuration);
-            });
-          }
-        },
-        child: builder(context, () => overlay?.remove()),
-      ),
-    );
-
-    _overlays[identifier] = overlay;
-    Overlay.of(context).insert(overlay);
+    if (mounted) {
+      OverlayEntry? overlay;
+      overlay = OverlayEntry(
+        builder: (context) => AnimatedOverlayEntry(
+          animationDuration: animationDuration,
+          isClosing: false,
+          onComplete: () {
+            if (autoHide != null) {
+              Future.delayed(autoHide, () {
+                _hideOverlay(identifier, animationDuration);
+              });
+            }
+          },
+          child: builder(context, () => overlay?.remove()),
+        ),
+      );
+      _overlays[identifier] = overlay;
+      Overlay.of(context).insert(overlay);
+    }
   }
 
   void _hideOverlay(String? identifier, Duration animationDuration) {
@@ -468,7 +469,8 @@ class _GlobalOverlayWidgetState extends State<GlobalOverlayWidget> {
                         }).toList(),
                       )
                     : InkWell(
-                        onTap: () => _hideOverlay(identifier, animationDuration),
+                        onTap: () =>
+                            _hideOverlay(identifier, animationDuration),
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           child: Text(
