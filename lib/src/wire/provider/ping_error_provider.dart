@@ -17,4 +17,4 @@ class PingErrorProvider extends ServiceProvider {
     // The builder will be accessible via:
     // application.make<JsonBuilder>(JsonDefinition.pingErrorView)
   }
-} 
+}

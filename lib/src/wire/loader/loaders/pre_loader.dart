@@ -25,7 +25,7 @@ class PreLoader extends Loader {
       }
 
       return load;
-    } catch (e, stackTrace) {
+    } catch (e) {
       //TODO handle exception
       rethrow;
     }

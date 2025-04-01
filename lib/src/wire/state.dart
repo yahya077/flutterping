@@ -57,6 +57,7 @@ class State implements StateInterface {
   final Map<String, dynamic> _data = {};
   bool isPersistent = false;
   PersistentStorageInterface? persistentStorage;
+
   // Define which fields should be persisted using dot notation for nested fields ({'headers.Authorization','baseUrl'})
   Set<String> _persistentFields = {};
 
@@ -155,9 +156,8 @@ class State implements StateInterface {
       }
       return result;
     } catch (e, stackTrace) {
-      print('"Error in _dehydrateSelectedFields: $e adn: $stackTrace"');
       throw StateException(
-          'Failed to dehydrate selected fields: ${e.toString()}');
+          'Failed to dehydrate selected fields: ${e.toString()}, with: ${stackTrace.toString()}');
     }
   }
 
@@ -171,10 +171,12 @@ class State implements StateInterface {
     return Set.from(_persistentFields);
   }
 
+  @override
   void setPersistentStorage(PersistentStorageInterface storage) {
     persistentStorage = storage;
   }
 
+  @override
   PersistentStorageInterface? getPersistentStorage() {
     return persistentStorage;
   }
@@ -260,7 +262,7 @@ class State implements StateInterface {
     state.forEach((key, value) {
       if (value is Map<String, dynamic> && has(key)) {
         final existingValue = _data[key];
-        
+
         if (existingValue is Map<String, dynamic>) {
           // If existing value is a Map, merge the maps
           final Map<String, dynamic> merged = Map.from(existingValue);

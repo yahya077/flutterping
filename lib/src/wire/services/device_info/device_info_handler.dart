@@ -1,15 +1,13 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 /// A class that gathers device information using device_info_plus and package_info_plus
 class DeviceInfoHandler {
   static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
-  
+
   /// Get the current platform (iOS, Android, web, etc.)
   static String getPlatform() {
     if (kIsWeb) return 'web';
@@ -37,43 +35,43 @@ class DeviceInfoHandler {
         final webInfo = await _deviceInfoPlugin.webBrowserInfo;
         return webInfo.browserName.toString();
       }
-      
+
       if (Platform.isAndroid) {
         final androidInfo = await _deviceInfoPlugin.androidInfo;
         return androidInfo.version.release;
       }
-      
+
       if (Platform.isIOS) {
         final iosInfo = await _deviceInfoPlugin.iosInfo;
         return iosInfo.systemVersion;
       }
-      
+
       if (Platform.isMacOS) {
         final macOsInfo = await _deviceInfoPlugin.macOsInfo;
         return macOsInfo.osRelease;
       }
-      
+
       if (Platform.isWindows) {
         final windowsInfo = await _deviceInfoPlugin.windowsInfo;
         return windowsInfo.buildNumber.toString();
       }
-      
+
       if (Platform.isLinux) {
         final linuxInfo = await _deviceInfoPlugin.linuxInfo;
         return linuxInfo.version ?? 'unknown';
       }
-      
+
       return Platform.operatingSystemVersion;
     } catch (e) {
       return 'unknown';
     }
   }
-  
+
   /// Get the current locale information
   static Map<String, String> getLocaleInfo() {
     try {
       final locale = PlatformDispatcher.instance.locale;
-      
+
       return {
         'locale': locale.toString(),
         'languageCode': locale.languageCode,
@@ -87,7 +85,7 @@ class DeviceInfoHandler {
       };
     }
   }
-  
+
   /// Get the current timezone
   static String getTimezone() {
     try {
@@ -96,7 +94,7 @@ class DeviceInfoHandler {
       return 'UTC';
     }
   }
-  
+
   /// Get the current system theme (light/dark)
   static String getSystemTheme() {
     try {
@@ -106,7 +104,7 @@ class DeviceInfoHandler {
       return 'light';
     }
   }
-  
+
   /// Get device name using device_info_plus
   static Future<String> getDeviceName() async {
     try {
@@ -114,38 +112,38 @@ class DeviceInfoHandler {
         final webInfo = await _deviceInfoPlugin.webBrowserInfo;
         return '${webInfo.browserName} ${webInfo.platform}';
       }
-      
+
       if (Platform.isAndroid) {
         final androidInfo = await _deviceInfoPlugin.androidInfo;
         return androidInfo.model;
       }
-      
+
       if (Platform.isIOS) {
         final iosInfo = await _deviceInfoPlugin.iosInfo;
         return iosInfo.name;
       }
-      
+
       if (Platform.isMacOS) {
         final macOsInfo = await _deviceInfoPlugin.macOsInfo;
         return macOsInfo.computerName;
       }
-      
+
       if (Platform.isWindows) {
         final windowsInfo = await _deviceInfoPlugin.windowsInfo;
         return windowsInfo.computerName;
       }
-      
+
       if (Platform.isLinux) {
         final linuxInfo = await _deviceInfoPlugin.linuxInfo;
-        return linuxInfo.name ?? 'Linux Device';
+        return linuxInfo.name;
       }
-      
+
       return Platform.operatingSystem;
     } catch (e) {
       return 'Unknown Device';
     }
   }
-  
+
   /// Get device model using device_info_plus
   static Future<String> getDeviceModel() async {
     try {
@@ -153,38 +151,38 @@ class DeviceInfoHandler {
         final webInfo = await _deviceInfoPlugin.webBrowserInfo;
         return webInfo.userAgent ?? 'Web Browser';
       }
-      
+
       if (Platform.isAndroid) {
         final androidInfo = await _deviceInfoPlugin.androidInfo;
         return '${androidInfo.manufacturer} ${androidInfo.model}';
       }
-      
+
       if (Platform.isIOS) {
         final iosInfo = await _deviceInfoPlugin.iosInfo;
         return iosInfo.model;
       }
-      
+
       if (Platform.isMacOS) {
         final macOsInfo = await _deviceInfoPlugin.macOsInfo;
         return macOsInfo.model;
       }
-      
+
       if (Platform.isWindows) {
         final windowsInfo = await _deviceInfoPlugin.windowsInfo;
         return windowsInfo.productName;
       }
-      
+
       if (Platform.isLinux) {
         final linuxInfo = await _deviceInfoPlugin.linuxInfo;
-        return linuxInfo.prettyName ?? 'Linux Device';
+        return linuxInfo.prettyName;
       }
-      
+
       return Platform.operatingSystem;
     } catch (e) {
       return 'Unknown Model';
     }
   }
-  
+
   /// Generate a unique app instance ID (persists until app uninstall)
   static String generateAppInstanceId() {
     // Create a timestamp-based ID with a random component
@@ -192,14 +190,14 @@ class DeviceInfoHandler {
     final random = timestamp % 10000;
     return 'instance_$timestamp$random';
   }
-  
+
   /// Best-effort detection of network connectivity type without plugins
   static Future<String> getConnectionType() async {
     try {
       if (kIsWeb) {
         return 'online'; // Limited info on web
       }
-      
+
       // Basic connectivity check
       try {
         final result = await InternetAddress.lookup('example.com');
@@ -209,13 +207,13 @@ class DeviceInfoHandler {
       } catch (_) {
         return 'offline';
       }
-      
+
       return 'unknown';
     } catch (e) {
       return 'unknown';
     }
   }
-  
+
   /// Get the application version using package_info_plus
   static Future<String> getAppVersion() async {
     try {
@@ -225,7 +223,7 @@ class DeviceInfoHandler {
       return '';
     }
   }
-  
+
   /// Get the application build number using package_info_plus
   static Future<String> getBuildNumber() async {
     try {
@@ -235,7 +233,7 @@ class DeviceInfoHandler {
       return '';
     }
   }
-  
+
   /// Get the application package name using package_info_plus
   static Future<String> getPackageName() async {
     try {
@@ -245,7 +243,7 @@ class DeviceInfoHandler {
       return '';
     }
   }
-  
+
   /// Get app name using package_info_plus
   static Future<String> getAppName() async {
     try {
@@ -255,7 +253,7 @@ class DeviceInfoHandler {
       return '';
     }
   }
-  
+
   /// Get full version string (version+build number)
   static Future<String> getFullVersion() async {
     try {
@@ -265,11 +263,11 @@ class DeviceInfoHandler {
       return '';
     }
   }
-  
+
   /// Gather all device information in one call
   static Future<Map<String, String>> gatherAllDeviceInfo() async {
     final localeInfo = getLocaleInfo();
-    
+
     return {
       'platform': getPlatform(),
       'os_version': await getOsVersion(),
@@ -291,4 +289,4 @@ class DeviceInfoHandler {
       'build_mode': getBuildMode(),
     };
   }
-} 
+}

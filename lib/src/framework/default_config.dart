@@ -41,10 +41,6 @@ class DefaultConfig<T> extends Config<T> {
   
   /// Helper method to mark config as loaded
   void _setLoaded(bool loaded) {
-    // Access the _loaded field through a protected method since it's private
-    // Hack: Use reflection or a different approach in a real implementation
-    final field = this;
-    
     // For now, we'll just re-implement the loading behavior
     if (loaded && !isLoaded()) {
       super.merge(_defaultValues);

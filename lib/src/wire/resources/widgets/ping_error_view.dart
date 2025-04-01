@@ -5,28 +5,28 @@ import 'dart:convert';
 class PingErrorView extends StatefulWidget {
   /// The error object that was thrown
   final dynamic error;
-  
+
   /// The stack trace associated with the error
   final StackTrace? stackTrace;
-  
+
   /// Optional request information (URL, method, etc.)
   final Map<String, dynamic>? requestInfo;
-  
+
   /// Optional context data relevant to the error
   final Map<String, dynamic>? context;
-  
+
   /// Optional application information (version, environment, etc.)
   final Map<String, dynamic>? appInfo;
-  
+
   /// Callback when the user taps the "Report" button
   final VoidCallback? onReport;
-  
+
   /// Whether to show the full detailed view (default: true)
   /// Note: This will be overridden to false in production environment
   final bool showFullDetails;
 
   final bool debugMode;
-  
+
   /// Optional custom actions to display in the footer
   final List<Widget>? actions;
 
@@ -47,67 +47,71 @@ class PingErrorView extends StatefulWidget {
   PingErrorViewState createState() => PingErrorViewState();
 }
 
-class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderStateMixin {
+class PingErrorViewState extends State<PingErrorView>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int _selectedTab = 0;
+  int selectedTab = 0;
   bool _expanded = true;
-  
+
   // Extracted Laravel exception data
   Map<String, dynamic> _laravelExceptionData = {};
-  
+
   // Computed showFullDetails
   late bool _effectiveShowFullDetails;
-  
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(() {
-      setState(() => _selectedTab = _tabController.index);
+      setState(() => selectedTab = _tabController.index);
     });
-    
+
     // Determine environment
     _detectEnvironment();
-    
+
     // Try to extract Laravel exception data
     _extractLaravelExceptionData();
   }
-  
+
   void _detectEnvironment() {
     // Override showFullDetails in production to ensure sensitive information isn't exposed
-    _effectiveShowFullDetails = !widget.debugMode ? false : widget.showFullDetails;
+    _effectiveShowFullDetails =
+        !widget.debugMode ? false : widget.showFullDetails;
   }
-  
+
   void _extractLaravelExceptionData() {
     if (widget.error["exception"] != null) {
       _laravelExceptionData = widget.error as Map<String, dynamic>;
     }
   }
-  
+
   void _tryExtractLaravelExceptionManually(String errorStr) {
     try {
       // Manual extraction for common patterns
       final messageMatch = RegExp(r'"message":\s*"(.*?)"').firstMatch(errorStr);
-      final exceptionMatch = RegExp(r'"exception":\s*"(.*?)"').firstMatch(errorStr);
+      final exceptionMatch =
+          RegExp(r'"exception":\s*"(.*?)"').firstMatch(errorStr);
       final fileMatch = RegExp(r'"file":\s*"(.*?)"').firstMatch(errorStr);
       final lineMatch = RegExp(r'"line":\s*(\d+)').firstMatch(errorStr);
-      
+
       if (messageMatch != null) {
         _laravelExceptionData['message'] = messageMatch.group(1);
       }
-      
+
       if (exceptionMatch != null) {
         _laravelExceptionData['exception'] = exceptionMatch.group(1);
       }
-      
+
       if (fileMatch != null) {
         _laravelExceptionData['file'] = fileMatch.group(1);
       }
-      
+
       if (lineMatch != null) {
-        _laravelExceptionData['line'] = int.tryParse(lineMatch.group(1) ?? '0') ?? 0;
+        _laravelExceptionData['line'] =
+            int.tryParse(lineMatch.group(1) ?? '0') ?? 0;
       }
-      
+
       // Try to extract trace - more complex
     } catch (e) {
       // Silently fail
@@ -141,30 +145,29 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
           clipBehavior: Clip.antiAlias,
           constraints: BoxConstraints(
             maxWidth: 480.0, // Limit max width for larger screens
-            maxHeight: MediaQuery.of(context).size.height * 0.9, // Limit max height
+            maxHeight:
+                MediaQuery.of(context).size.height * 0.9, // Limit max height
           ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: constraints.minWidth,
-                    maxWidth: constraints.maxWidth,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildHeader(),
-                      if (_effectiveShowFullDetails) _buildTabBar(),
-                      _buildContent(),
-                      _buildFooter(),
-                    ],
-                  ),
+          child: LayoutBuilder(builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: constraints.minWidth,
+                  maxWidth: constraints.maxWidth,
                 ),
-              );
-            }
-          ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildHeader(),
+                    if (_effectiveShowFullDetails) _buildTabBar(),
+                    _buildContent(),
+                    _buildFooter(),
+                  ],
+                ),
+              ),
+            );
+          }),
         ),
       ),
     );
@@ -173,7 +176,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
   Widget _buildHeader() {
     String errorType = widget.error.runtimeType.toString();
     String errorMessage = widget.error.toString();
-    
+
     // If we have Laravel exception data, use that for a cleaner display
     if (_laravelExceptionData.isNotEmpty) {
       if (_laravelExceptionData.containsKey('exception')) {
@@ -182,7 +185,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         final parts = fullExceptionName.split('\\');
         errorType = parts.last;
       }
-      
+
       if (_laravelExceptionData.containsKey('message')) {
         errorMessage = _laravelExceptionData['message'].toString();
       }
@@ -190,7 +193,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
       // Regular error handling
       errorMessage = errorMessage.replaceAll('$errorType: ', '');
     }
-    
+
     // In production, we might want to sanitize error messages
     if (!widget.debugMode) {
       // Only show generic error types in production
@@ -199,16 +202,16 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
       } else {
         errorType = 'Error';
       }
-      
+
       // Prevent potentially sensitive information in error messages
-      if (errorMessage.contains('password') || 
-          errorMessage.contains('token') || 
-          errorMessage.contains('key') || 
+      if (errorMessage.contains('password') ||
+          errorMessage.contains('token') ||
+          errorMessage.contains('key') ||
           errorMessage.contains('secret')) {
         errorMessage = 'An error occurred. Please try again later.';
       }
     }
-    
+
     // Simple user-friendly header when in production mode
     if (!_effectiveShowFullDetails && !widget.debugMode) {
       return Container(
@@ -235,7 +238,8 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
                   backgroundColor: Colors.white,
                   foregroundColor: const Color(0xFFFF291B),
                   textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 ),
                 child: const Text('Report'),
               ),
@@ -243,7 +247,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         ),
       );
     }
-    
+
     // Original detailed header for debug mode
     return Container(
       color: const Color(0xFFFF291B),
@@ -270,9 +274,10 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
               if (_effectiveShowFullDetails)
                 IconButton(
                   icon: Icon(
-                    _expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                    color: Colors.white
-                  ),
+                      _expanded
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
+                      color: Colors.white),
                   onPressed: () => setState(() => _expanded = !_expanded),
                   tooltip: _expanded ? 'Collapse' : 'Expand',
                   constraints: const BoxConstraints(
@@ -294,7 +299,8 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
                       backgroundColor: Colors.white,
                       foregroundColor: const Color(0xFFFF291B),
                       textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       minimumSize: const Size(0, 32),
                     ),
                     onPressed: widget.onReport,
@@ -323,7 +329,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
             Row(
               children: [
                 _buildTagPill(
-                  widget.requestInfo!['method'] ?? 'GET', 
+                  widget.requestInfo!['method'] ?? 'GET',
                   backgroundColor: const Color(0xFFFF5943),
                 ),
                 const SizedBox(width: 8),
@@ -342,8 +348,8 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
             ),
           ],
           // Show file and line info if available from Laravel exception and not in production
-          if (_laravelExceptionData.containsKey('file') && 
-              _laravelExceptionData.containsKey('line') && 
+          if (_laravelExceptionData.containsKey('file') &&
+              _laravelExceptionData.containsKey('line') &&
               _effectiveShowFullDetails &&
               widget.debugMode) ...[
             const SizedBox(height: 8),
@@ -407,8 +413,8 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
             const SizedBox(height: 12),
             Text(
               !widget.debugMode
-                ? 'We\'re sorry, but we encountered an error. Our team has been notified and is working to fix the issue.'
-                : 'Additional error details have been logged.',
+                  ? 'We\'re sorry, but we encountered an error. Our team has been notified and is working to fix the issue.'
+                  : 'Additional error details have been logged.',
               style: const TextStyle(
                 color: Color(0xFF6B7280),
                 fontSize: 14,
@@ -427,7 +433,8 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF291B),
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                   ),
                 ),
               ),
@@ -436,11 +443,11 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         ),
       );
     }
-    
+
     if (!_expanded) {
       return const SizedBox();
     }
-    
+
     return SizedBox(
       height: 300,
       child: TabBarView(
@@ -458,12 +465,14 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
 
   Widget _buildStackTraceTab() {
     // If we have Laravel exception data with a trace, use that
-    if (_laravelExceptionData.containsKey('trace') && _laravelExceptionData['trace'] is List) {
+    if (_laravelExceptionData.containsKey('trace') &&
+        _laravelExceptionData['trace'] is List) {
       return _buildLaravelStackTrace();
     }
-    
-    final stackTrace = widget.stackTrace?.toString() ?? 'No stack trace available';
-    
+
+    final stackTrace =
+        widget.stackTrace?.toString() ?? 'No stack trace available';
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -556,13 +565,16 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
               itemBuilder: (context, index) {
                 final frame = trace[index] as Map<String, dynamic>;
                 String frameText = '';
-                
+
                 // Format frame based on available information
                 if (frame.containsKey('file') && frame.containsKey('line')) {
-                  final function = frame.containsKey('function') ? frame['function'] : 'unknown';
-                  final className = frame.containsKey('class') ? frame['class'] : '';
+                  final function = frame.containsKey('function')
+                      ? frame['function']
+                      : 'unknown';
+                  final className =
+                      frame.containsKey('class') ? frame['class'] : '';
                   final type = frame.containsKey('type') ? frame['type'] : '';
-                  
+
                   // Format: #index File: path/to/file.php:line
                   frameText = '#$index ${className}$type$function()';
                   frameText += '\n    ${frame['file']}:${frame['line']}';
@@ -570,7 +582,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
                   // Some frames just have function
                   frameText = '#$index ${frame['function']}()';
                 }
-                
+
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
@@ -593,7 +605,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
 
   Widget _buildContextTab() {
     final context = widget.context ?? {};
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -625,7 +637,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
 
   Widget _buildRequestTab() {
     final request = widget.requestInfo ?? {};
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -657,7 +669,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
 
   Widget _buildAppInfoTab() {
     final appInfo = widget.appInfo ?? {};
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -736,10 +748,10 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         ),
       );
     }
-    
+
     // Default debug view for non-Laravel errors
     final errorString = widget.error.toString();
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -790,11 +802,11 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
   Widget _buildErrorObjectInfo() {
     // Extract properties from the error object if possible
     Map<String, dynamic> errorProps = {};
-    
+
     try {
       // Try to extract properties from the error object
       final error = widget.error;
-      
+
       // Get list of properties and methods using reflection (where available)
       // This is a simplified approach - in a real app you might use more
       // sophisticated reflection to extract properties
@@ -803,7 +815,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         'toString()': error.toString(),
         'hashCode': error.hashCode.toString(),
       };
-      
+
       // Try to get additional properties if they exist
       if (error is Exception) {
         errorProps['isException'] = 'true';
@@ -816,7 +828,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         'extraction_error': 'Failed to extract error properties: $e',
       };
     }
-    
+
     return _buildJsonTree(errorProps);
   }
 
@@ -903,7 +915,9 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         return SelectableText(
           value,
           style: TextStyle(
-            color: value.isEmpty ? const Color(0xFF6B7280) : const Color(0xFF1F2937),
+            color: value.isEmpty
+                ? const Color(0xFF6B7280)
+                : const Color(0xFF1F2937),
             fontStyle: value.isEmpty ? FontStyle.italic : FontStyle.normal,
           ),
         );
@@ -924,7 +938,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
           ),
         );
       }
-      
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -965,9 +979,9 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
 
   Widget _buildFooter() {
     final environmentTag = !widget.debugMode
-        ? 'Production' 
+        ? 'Production'
         : (widget.appInfo?['debug_mode'] ?? 'Debug');
-    
+
     // If we have custom actions, display them in a dedicated footer
     if (widget.actions != null && widget.actions!.isNotEmpty) {
       return Container(
@@ -987,7 +1001,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         ),
       );
     }
-    
+
     // Show simplified footer for production/user-facing mode
     if (!_effectiveShowFullDetails && !widget.debugMode) {
       return Container(
@@ -1018,7 +1032,7 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
         ),
       );
     }
-        
+
     // Original technical footer for debug mode
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -1037,10 +1051,10 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Flexible(
+                const Flexible(
                   child: Text(
                     'PingErrorView',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Color(0xFF6B7280),
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
@@ -1050,7 +1064,8 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: !widget.debugMode ? Colors.orange : Colors.green,
                     borderRadius: BorderRadius.circular(4),
@@ -1067,10 +1082,10 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
               ],
             ),
           ),
-          
+
           // Add spacing between left and right content
           const SizedBox(width: 8),
-          
+
           // Right side with action button
           if (_effectiveShowFullDetails)
             TextButton(
@@ -1089,8 +1104,9 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
       ),
     );
   }
-  
-  Widget _buildTagPill(String text, {Color backgroundColor = const Color(0xFFFF5943)}) {
+
+  Widget _buildTagPill(String text,
+      {Color backgroundColor = const Color(0xFFFF5943)}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
@@ -1107,4 +1123,4 @@ class PingErrorViewState extends State<PingErrorView> with SingleTickerProviderS
       ),
     );
   }
-} 
+}

@@ -1,11 +1,8 @@
-import 'package:flutter_ping_wire/src/framework/persistent_storage.dart';
-import 'package:flutter_ping_wire/src/wire/services/exception/ResponseHandler.dart';
+import 'package:flutter_ping_wire/src/wire/services/exception/response_handler.dart';
 
 import '../../framework/app.dart';
 import '../../framework/provider.dart';
-import '../../framework/providers/storage_provider.dart';
 import '../client.dart';
-import '../config.dart';
 import '../definitions/wire.dart';
 import '../event_listeners/action_event_listener.dart';
 import '../event_listeners/state_event_listener.dart';

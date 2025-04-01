@@ -16,7 +16,7 @@ import '../executors/action_executor.dart';
 class JsonBuilderProvider extends FrameworkServiceProvider {
   @override
   int get priority => 45; // Slightly lower than WireProvider
-  
+
   @override
   void register(Application app) {
     app.singleton(JsonDefinition.container, () => ContainerBuilder(app));
@@ -111,8 +111,8 @@ class JsonBuilderProvider extends FrameworkServiceProvider {
         JsonDefinition.stateValueBuilder, () => StateValueBuilder(app));
     app.singleton(
         JsonDefinition.notifierValueBuilder, () => NotifierValueBuilder(app));
-    app.singleton(
-        JsonDefinition.dynamicStringValueBuilder, () => DynamicStringValueBuilder(app));
+    app.singleton(JsonDefinition.dynamicStringValueBuilder,
+        () => DynamicStringValueBuilder(app));
     app.singleton(
         JsonDefinition.dynamicValueBuilder, () => DynamicValueBuilder(app));
     app.singleton(JsonDefinition.evalValueBuilder, () => EvalValueBuilder(app));
@@ -151,8 +151,7 @@ class JsonBuilderProvider extends FrameworkServiceProvider {
     app.singleton(JsonDefinition.validateAndSaveFormAction,
         () => ValidateAndSaveFormActionExecutor(app));
 
-    app.singleton(JsonDefinition.dialogAction,
-        () => DialogActionExecutor(app));
+    app.singleton(JsonDefinition.dialogAction, () => DialogActionExecutor(app));
 
     // form field validators
     app.singleton(
@@ -172,7 +171,7 @@ class JsonBuilderProvider extends FrameworkServiceProvider {
     app.singleton(
         JsonDefinition.regexValidator, () => RegexValidatorBuilder(app));
   }
-  
+
   @override
   Future<void> boot(Application app) async {
     // Initialize any JsonBuilder dependencies after everything else is registered

@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'app_exception_handler.dart';
-import 'config.dart';
 import 'container.dart';
-import 'definitions/config.dart';
 import 'definitions/containers.dart';
 import 'definitions/logger.dart';
 import 'dispatcher.dart';

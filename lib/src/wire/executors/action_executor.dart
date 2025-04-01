@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:flutter_ping_wire/src/framework/exception_handler.dart';
 import 'package:flutter_ping_wire/src/wire/resources/widgets/overlay.dart';
-import 'package:flutter_ping_wire/src/wire/services/exception/ResponseHandler.dart';
+import 'package:flutter_ping_wire/src/wire/services/exception/response_handler.dart';
 import '../models/path.dart';
 import '../resources/widgets/form.dart';
 import 'json_executor.dart';

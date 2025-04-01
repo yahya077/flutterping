@@ -24,12 +24,13 @@ abstract class FormFieldState {
 class FormState extends State {
   FormState({required Map<String, dynamic> state}) : super(state: state);
 
-  FormState.initial(
-      String id, {material.GlobalKey<PingFormState>? formStateKey})
+  FormState.initial(String id,
+      {material.GlobalKey<PingFormState>? formStateKey})
       : super(state: {}) {
     hydrate({
       'id': id,
-      'formStateKey': formStateKey ?? material.GlobalKey<PingFormState>(debugLabel: id),
+      'formStateKey':
+          formStateKey ?? material.GlobalKey<PingFormState>(debugLabel: id),
     });
   }
 
