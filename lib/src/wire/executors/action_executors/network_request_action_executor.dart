@@ -44,6 +44,8 @@ class NetworkRequestActionExecutor extends ActionExecutor {
             .make<ActionExecutor>(json.data["thenAction"]["type"])
             .execute(context, Json.fromJson(json.data["thenAction"]));
         return;
+      } else if (response.statusCode == 204){
+        return;
       } else {
         application
             .make<ResponseHandler>(WireDefinition.responseHandler)

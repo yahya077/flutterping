@@ -8,6 +8,8 @@ class PingTextField extends material.StatefulWidget {
   final material.InputDecoration decoration;
   final material.TextInputType keyboardType;
   final bool obscureText;
+  final bool enableSuggestions;
+  final bool autocorrect;
   final String? initialValue;
   final material.ValueChanged<String>? onChanged;
   final material.ValueChanged<String?>? onSaved;
@@ -26,6 +28,8 @@ class PingTextField extends material.StatefulWidget {
     this.decoration = const material.InputDecoration(),
     this.keyboardType = material.TextInputType.text,
     this.obscureText = false,
+    this.enableSuggestions = true,
+    this.autocorrect = true,
     this.initialValue,
     this.onChanged,
     this.onSaved,
@@ -98,6 +102,8 @@ class _PingTextFieldState extends material.State<PingTextField> {
             field.didChange(value); // Update form field state
             widget.onSaved?.call(value);
           },
+          enableSuggestions: widget.enableSuggestions,
+          autocorrect: widget.autocorrect,
           maxLength: widget.maxLength,
           maxLines: widget.maxLines,
           minLines: widget.minLines,
