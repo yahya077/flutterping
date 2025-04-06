@@ -17,7 +17,8 @@ class NavigationPathBuilder extends JsonBuilder<NavigationPath> {
       stackKey: json.data['stackKey'],
       index: json.data['index'],
       queryParameters: json.data['queryParameters'],
-      pathParameters: json.data['pathParameters']?.map((key, value) => MapEntry(key, value.toString()))
+      pathParameters: json.data['pathParameters']
+          ?.map((key, value) => MapEntry(key, value.toString()))
           .cast<String, String>(),
     );
   }

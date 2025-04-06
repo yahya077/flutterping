@@ -3,7 +3,7 @@ import 'state.dart';
 class AppState extends State {
   AppState({required Map<String, State> state}) : super(state: state);
 
-  void addState(AbstractState state) {
+  void addState(StateInterface state) {
     if (has(state.getId())) {
       remove(state.getId());
     }
@@ -23,14 +23,14 @@ class AppState extends State {
 
   @override
   void dispose() {
-    each((key, value) => value.dispose());
+    forEach((key, value) => value.dispose());
   }
 
   @override
   Map<String, dynamic> dehydrate() {
     final Map<String, dynamic> dehydrated = {};
 
-    each((key, value) {
+    forEach((key, value) {
       dehydrated[key] = value.dehydrate();
     });
 

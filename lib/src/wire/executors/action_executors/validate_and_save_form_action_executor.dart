@@ -20,6 +20,13 @@ class ValidateAndSaveFormActionExecutor extends ActionExecutor {
     formState.save();
 
     if (!formState.validate()) {
+      if (json.data["onFailAction"] != null) {
+        final action = Json.fromJson(json.data["onFailAction"]);
+        await application
+            .make<ActionExecutor>(action.data["type"])
+            .execute(context, action);
+      }
+
       return;
     }
 

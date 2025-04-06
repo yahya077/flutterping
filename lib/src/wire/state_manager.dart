@@ -48,7 +48,6 @@ class StateManager {
     }
   }
 
-  //TODO optimize this
   void setByKey<T>(String stateKey, T value) {
     final List<String> keys = stateKey.split(".");
 
@@ -69,7 +68,10 @@ class StateManager {
       }
 
       if (current is Map<String, dynamic>) {
-        current[keys.last] = value;
+        State parentState = _appState.getState(keys[0]);
+        Map<String, dynamic> updatedMap = Map.from(current);
+        updatedMap[keys.last] = value;
+        parentState.set(keys[1], updatedMap);
       } else if (current is State) {
         current.set(keys.last, value);
       } else {
@@ -126,13 +128,13 @@ class StateManager {
     }
   }
 
-  AbstractState addState(AbstractState state) {
+  StateInterface addState(StateInterface state) {
     _appState.addState(state);
 
     return state;
   }
 
-  AbstractState addNestedState(String key, AbstractState state) {
+  StateInterface addNestedState(String key, StateInterface state) {
     _appState.addNestedState(key, state);
 
     return state;

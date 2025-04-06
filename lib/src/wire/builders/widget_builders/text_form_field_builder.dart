@@ -46,6 +46,8 @@ class TextFormFieldBuilder extends WidgetBuilder {
       maxLength: json.data["maxLength"],
       maxLines: json.data["maxLines"],
       obscureText: json.data["obscureText"] ?? false,
+      enableSuggestions: json.data["enableSuggestions"] ?? true,
+      autocorrect: json.data["autocorrect"] ?? true,
       minLines: json.data["minLines"],
       onEditingComplete: json.data["onEditingComplete"] != null
           ? () {

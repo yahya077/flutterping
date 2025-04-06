@@ -46,4 +46,20 @@ class Container {
   singleton<T>(String abstract, T Function() concrete) {
     return bind(abstract, concrete, true);
   }
+  
+  /// Get a list of all registered bindings
+  List<String> getRegisteredBindings() {
+    return _bindings.keys.toList();
+  }
+  
+  /// Check if a binding exists
+  bool hasBinding(String abstract) {
+    return _bindings.containsKey(abstract);
+  }
+  
+  /// Remove a binding from the container
+  void remove(String abstract) {
+    _bindings.remove(abstract);
+    _singletons.remove(abstract);
+  }
 }

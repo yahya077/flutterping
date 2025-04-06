@@ -44,10 +44,12 @@ class WireConfigClient {
 class WireConfig {
   final Map<String, WireConfigClient> clients;
   final Map<String, WireConfigLoader> loaders;
+  final String defaultClient;
 
   WireConfig({
     required this.clients,
     required this.loaders,
+    required this.defaultClient,
   });
 
   factory WireConfig.fromMap(Map<String, dynamic> map) {
@@ -56,7 +58,6 @@ class WireConfig {
       clients[key] = WireConfigClient.fromMap(value);
     });
     final Map<String, WireConfigLoader> loaders = {};
-
     map['loaders'].forEach((key, value) {
       loaders[key] = WireConfigLoader.fromMap(value);
     });
@@ -64,6 +65,7 @@ class WireConfig {
     return WireConfig(
       clients: clients,
       loaders: loaders,
+      defaultClient: map['default_client'],
     );
   }
 }

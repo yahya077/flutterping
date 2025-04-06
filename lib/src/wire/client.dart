@@ -1,30 +1,43 @@
+import 'dart:convert';
+
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:flutter_ping_wire/src/framework/app_exception_handler.dart';
-import 'package:flutter_ping_wire/src/framework/container.dart';
 import 'package:flutter_ping_wire/src/wire/client_state.dart';
 import 'package:http/http.dart' as http;
+import 'dart:async';
 
+/// Enhanced HTTP client with built-in error handling, retries, and UI feedback
 class Client {
-  final Container container;
+  final Application application;
   final http.Client _client = http.Client();
   late String _stateId;
 
-  Client(this.container);
+  Client(this.application);
 
   void setStateId(String stateId) {
     _stateId = stateId;
   }
   
   ClientState getState() {
-    return container.make<StateManager>(WireDefinition.stateManager).getState(_stateId);
+    return application.make<StateManager>(WireDefinition.stateManager).getState(_stateId);
   }
 
   void register() {}
 
+  /// Get client identifier from stateId
+  String get clientIdentifier => _stateId.replaceAll("${WireDefinition.stateClientState}_", "");
+
+  /// Basic request method used internally
   Future<http.Response> request(String url,
-      {String method = "GET",
+      {String? method = "GET",
       Map<String, String>? headers,
       dynamic body}) async {
+    method = method?.toUpperCase() ?? "GET";
+
+    if (body is Map<String, String>) {
+      body = jsonEncode(body);
+    }
+
     return _handleRequest(() async {
       switch (method) {
         case "GET":
@@ -81,7 +94,7 @@ class Client {
     try {
       return await request();
     } catch (e, stackTrace) {
-      container
+      application
           .make<AppExceptionHandler>(ContainerDefinition.appExceptionHandler)
           .report(e, stackTrace);
 

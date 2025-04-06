@@ -5,7 +5,6 @@ class MaterialAppRouterBuilder extends WidgetBuilder {
 
   @override
   material.Widget build(Json json, material.BuildContext? context) {
-    print(json.data["locale"]);
     return material.MaterialApp.router(
       debugShowCheckedModeBanner: json.data["debugShowCheckedModeBanner"],
       routerConfig: application
