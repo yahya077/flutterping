@@ -7,12 +7,11 @@ import '../definitions/wire.dart';
 import '../event_listeners/action_event_listener.dart';
 import '../event_listeners/state_event_listener.dart';
 import '../loader/loader.dart';
+import '../state_manager.dart';
+import '../stream.dart';
 import '../wire.dart';
 
-class WireProvider extends FrameworkServiceProvider {
-  @override
-  int get priority => 50; // Framework level service
-
+class WireProvider extends Provider {
   WireProvider();
 
   @override

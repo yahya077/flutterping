@@ -3,7 +3,7 @@ part of '../loader.dart';
 class PreLoader extends Loader {
   PreLoader(Application application) : super(application);
 
-  Future<T> load<T>(String loaderKey) async {
+  Future<T> load<T>(String loaderKey, {Map<String, dynamic>? data}) async {
     try {
       final config_model.WireConfig config =
           application.make<WireConfig>(WireDefinition.config).allAs();
@@ -16,7 +16,7 @@ class PreLoader extends Loader {
 
       final response = await application
           .make<Client>(loader.client)
-          .request(loader.endpoint, method: loader.method);
+          .request(loader.endpoint, method: loader.method, body: data);
 
       final load = await application.make<ResponseHandler>(WireDefinition.responseHandler).handle(response, null);
 

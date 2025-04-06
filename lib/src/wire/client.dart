@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter_ping_wire/flutter_ping_wire.dart';
 import 'package:flutter_ping_wire/src/framework/app_exception_handler.dart';
-import 'package:flutter_ping_wire/src/wire/client_state.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
@@ -35,6 +34,8 @@ class Client {
     method = method?.toUpperCase() ?? "GET";
 
     if (body is Map<String, String>) {
+      body = jsonEncode(body);
+    } else if (body is List) {
       body = jsonEncode(body);
     }
 

@@ -1,3 +1,12 @@
+## 0.3.2
+
+* preload with data
+* runApp with data
+
+## 0.3.1
+
+* imports reconfigured
+
 ## 0.3.0
 
 * MaterialAppRouter extended
