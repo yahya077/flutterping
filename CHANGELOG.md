@@ -1,3 +1,7 @@
+## 0.3.3
+
+* body encoding fixed
+
 ## 0.3.2
 
 * preload with data

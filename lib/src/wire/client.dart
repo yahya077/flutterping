@@ -33,9 +33,9 @@ class Client {
       dynamic body}) async {
     method = method?.toUpperCase() ?? "GET";
 
-    if (body is Map<String, String>) {
-      body = jsonEncode(body);
-    } else if (body is List) {
+    if (body is Map<String, String> ||
+        body is Map<String, dynamic> ||
+        body is List) {
       body = jsonEncode(body);
     }
 
