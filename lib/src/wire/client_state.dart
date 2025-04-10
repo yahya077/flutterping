@@ -3,6 +3,7 @@ import 'package:flutter_ping_wire/src/framework/persistent_storage.dart';
 import 'definitions/definition.dart';
 import 'models/config.dart';
 import 'state.dart';
+import 'utils/file_logger.dart';
 
 class ClientState extends State {
   static final Set<String> _persistentFields = {'headers.Authorization'};
@@ -40,7 +41,11 @@ class ClientState extends State {
           },
           persistentStorage: persistentStorage,
           persistentFields: _persistentFields,
-        );
+        ) {
+    // Log creation of client state
+    FileLogger.log('ClientState initialized for ${client.name}');
+    FileLogger.log('Persistent fields configured: $_persistentFields');
+  }
 
   @override
   void hydrate(Map<String, dynamic> state) {
@@ -59,14 +64,8 @@ class ClientState extends State {
   }
 
   void setHeaders(Map<String, String> headers) {
+    FileLogger.log('Setting all headers: ${headers.keys.join(', ')}');
     set('headers', Map<String, String>.from(headers));
-  }
-
-  void addHeader(String key, String value) {
-    final Map<String, String> headers =
-        Map<String, String>.from(get('headers'));
-    headers[key] = value;
-    set('headers', headers);
   }
 
   Map<String, String> mergeHeaders(Map<String, String>? headers) {
@@ -74,12 +73,16 @@ class ClientState extends State {
         Map<String, dynamic>.from(get('headers'))
             .map<String, String>((key, value) => MapEntry(key, value ?? ''));
     if (headers != null) {
+      FileLogger.log('Merging headers: ${headers.keys.join(', ')}');
       currentHeaders.addAll(headers);
     }
     return currentHeaders;
   }
 
   Map<String, String> getHeaders() {
-    return Map<String, String>.from(get('headers'));
+    final headers = Map<String, String>.from(get('headers'));
+    FileLogger.log(
+        'Retrieved headers: ${headers.containsKey('Authorization') ? 'Has Auth Token' : 'No Auth Token'}');
+    return headers;
   }
 }

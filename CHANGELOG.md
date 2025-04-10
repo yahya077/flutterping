@@ -1,3 +1,12 @@
+## 0.3.4
+
+* Enhanced file logger with daily rotation and improved debug mode handling
+* Robust persistent storage implementation with memory-file cache
+* Prioritized critical data writes for app termination scenarios
+* Improved client state persistence
+* Optimized app lifecycle management for storage operations
+* Background operation queues for non-blocking storage operations
+
 ## 0.3.3
 
 * body encoding fixed

@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import '../wire/utils/file_logger.dart';
 
 import 'app_exception_handler.dart';
 import 'container.dart';
@@ -220,7 +222,9 @@ class Application extends Container {
         final bootstrapperInstance = bootstrapper(this);
         bootstrapperInstance.bootstrap();
       } catch (e) {
-        print('Error bootstrapping with ${bootstrapper.toString()}: $e');
+        if (kDebugMode) {
+          FileLogger.log('Error bootstrapping with ${bootstrapper.toString()}: $e');
+        }
       }
 
       // Fire after bootstrapping callbacks

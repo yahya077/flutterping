@@ -1,6 +1,10 @@
 import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:yaml/yaml.dart';
+
+import '../wire/utils/file_logger.dart';
 
 /// Convert a YamlMap to a regular Map<String, dynamic>
 Map<String, dynamic> yamlToMap(YamlMap yamlMap) {
@@ -82,7 +86,9 @@ class Config<T> implements AbstractConfig<T> {
   @override
   dynamic get(String key) {
     if (!_loaded) {
-      print('Warning: Accessing config key "$key" before config is loaded');
+      if (kDebugMode) {
+        FileLogger.log('Warning: Accessing config key "$key" before config is loaded');
+      }
     }
     
     final parts = key.split('.');
@@ -129,7 +135,9 @@ class Config<T> implements AbstractConfig<T> {
   @override
   Map<String, dynamic> all() {
     if (!_loaded) {
-      print('Warning: Accessing all config values before config is loaded');
+      if (kDebugMode) {
+        FileLogger.log('Warning: Accessing all config values before config is loaded');
+      }
     }
     return _config;
   }
@@ -209,7 +217,9 @@ class Config<T> implements AbstractConfig<T> {
       final Map<String, dynamic> configMap = yamlToMap(yamlMap);
       _config.addAll(configMap);
     } catch (e) {
-      print('Error loading config from YAML: $e');
+      if (kDebugMode) {
+        FileLogger.log('Error loading config from YAML: $e');
+      }
       // Don't rethrow - we want to continue initialization even if config is missing
     }
   }
