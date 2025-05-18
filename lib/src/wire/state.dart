@@ -209,19 +209,37 @@ class State implements StateInterface {
 
   @override
   T get<T>(String key, {T? defaultValue}) {
-    if (!has(key)) {
-      if (defaultValue != null) {
-        return defaultValue;
+    final List<String> segments = key.split('.');
+
+    dynamic current = _data;
+    for (int i = 0; i < segments.length; i++) {
+      final segment = segments[i];
+      if (current is! Map && current is! StateInterface) {
+        if (defaultValue != null) {
+          return defaultValue;
+        }
+        throw StateException(
+            'Cannot access "$segment" on non-map/non-state value at path "${segments.sublist(0, i).join('.')}"');
       }
-      throw StateException('Key "$key" not found in state');
+
+      if (current is StateInterface) {
+        current = current.get(segment);
+      } else if (current is Map) {
+        if (!current.containsKey(segment)) {
+          if (defaultValue != null) {
+            return defaultValue;
+          }
+          throw StateException('Key "$key" not found in state');
+        }
+        current = current[segment];
+      }
     }
 
-    final value = _data[key];
-    if (value is T) {
-      return value;
+    if (current is T) {
+      return current;
     } else {
       throw StateException(
-          'Type mismatch for key "$key": expected ${T.toString()} but got ${value.runtimeType}');
+          'Type mismatch for key "$key": expected ${T.toString()} but got ${current.runtimeType}');
     }
   }
 

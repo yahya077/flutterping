@@ -80,6 +80,7 @@ class JsonBuilderProvider extends FrameworkServiceProvider {
         JsonDefinition.pingFormField, () => PingFormFieldBuilder(app));
     app.singleton(JsonDefinition.overlay, () => OverlayBuilder(app));
     app.singleton(JsonDefinition.center, () => CenterBuilder(app));
+    app.singleton(JsonDefinition.choiceChip, () => ChoiceChipBuilder(app));
 
     // Register PingErrorBuilder
     app.singleton(JsonDefinition.pingErrorView, () => PingErrorBuilder(app));

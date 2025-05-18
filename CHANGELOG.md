@@ -1,3 +1,9 @@
+## 0.4.0
+* New basic types added
+* choice_chip widget added
+* Custom json encoder added
+*
+
 ## 0.3.4
 
 * Enhanced file logger with daily rotation and improved debug mode handling

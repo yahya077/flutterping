@@ -13,6 +13,25 @@ class Json {
     );
   }
 
+  copyWith({
+    String? type,
+    Map<String, dynamic>? data,
+  }) {
+    return Json(
+      type ?? this.type,
+      data ?? this.data,
+    );
+  }
+
+  copyWithMergedData({
+    Map<String, dynamic>? data,
+  }) {
+    return Json(
+      type,
+      {...this.data, if (data != null) ...data},
+    );
+  }
+
   factory Json.fromRawJson(String rawJson) {
     return Json.fromJson(json.decode(rawJson));
   }

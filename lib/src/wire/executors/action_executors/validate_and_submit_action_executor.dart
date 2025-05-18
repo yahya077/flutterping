@@ -26,7 +26,7 @@ class ValidateAndSubmitActionExecutor extends ActionExecutor {
     final response = await application
         .make<Client>(submitAction.data["client"])
         .request(path.path,
-            body: jsonEncode(formState.values),
+            body: PingJsonEncoder.encode(formState.values),
             method: submitAction.data["method"] ?? "GET",
             headers: submitAction.data["headers"] != null
                 ? Map<String, String>.from(submitAction.data["headers"])
@@ -34,8 +34,7 @@ class ValidateAndSubmitActionExecutor extends ActionExecutor {
 
     final onStatusCodeActions = submitAction.data["onStatusCodeActions"] ?? {};
 
-    if (onStatusCodeActions
-        .containsKey(response.statusCode.toString())) {
+    if (onStatusCodeActions.containsKey(response.statusCode.toString())) {
       final action =
           Json.fromJson(onStatusCodeActions[response.statusCode.toString()]);
       await application
@@ -64,9 +63,13 @@ class ValidateAndSubmitActionExecutor extends ActionExecutor {
       final errors = action.data["scope"]["context"]["errors"] ?? {};
       final castedErrors = errors.map((key, value) {
         if (value is List) {
-          return MapEntry(key, List<String>.from(value.map((item) => item.toString())));
+          return MapEntry(
+              key, List<String>.from(value.map((item) => item.toString())));
         } else if (value is Map) {
-          return MapEntry(key, List<String>.from(value.entries.map((entry) => '${entry.key}: ${entry.value}')));
+          return MapEntry(
+              key,
+              List<String>.from(value.entries
+                  .map((entry) => '${entry.key}: ${entry.value}')));
         } else {
           return MapEntry(key, [value.toString()]);
         }

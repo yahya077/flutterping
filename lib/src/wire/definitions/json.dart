@@ -77,4 +77,5 @@ class JsonDefinition {
   static const rangeValidator = 'RangeValidator';
   static const regexValidator = 'RegexValidator';
   static const center = 'Center';
+  static const choiceChip = 'ChoiceChip';
 }

@@ -33,3 +33,26 @@ class Axis {
     }
   }
 }
+
+class VerticalDirection {
+  String value;
+  static const up = 'up';
+  static const down = 'down';
+
+  VerticalDirection(this.value);
+
+  factory VerticalDirection.fromJson(Map<String, dynamic> json) {
+    return VerticalDirection(json["value"]);
+  }
+
+  material.VerticalDirection build() {
+    switch (value) {
+      case up:
+        return material.VerticalDirection.up;
+      case down:
+        return material.VerticalDirection.down;
+      default:
+        throw Exception("Invalid value $value");
+    }
+  }
+}
