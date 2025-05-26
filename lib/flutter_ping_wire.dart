@@ -37,6 +37,7 @@ export 'src/wire/resources/paintings/box_fit.dart';
 export 'src/wire/resources/paintings/text_style.dart';
 export 'src/wire/resources/paintings/border.dart';
 export 'src/wire/resources/paintings/border_radius.dart';
+export 'src/wire/resources/paintings/shape_border.dart';
 export 'src/wire/services/device_info/device_info_module.dart';
 export 'src/wire/resources/paintings/gradient.dart';
 export 'src/wire/resources/widgets/ping_error_view.dart';

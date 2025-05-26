@@ -81,6 +81,7 @@ class JsonBuilderProvider extends FrameworkServiceProvider {
     app.singleton(JsonDefinition.overlay, () => OverlayBuilder(app));
     app.singleton(JsonDefinition.center, () => CenterBuilder(app));
     app.singleton(JsonDefinition.choiceChip, () => ChoiceChipBuilder(app));
+    app.singleton(JsonDefinition.flexible, () => FlexibleBuilder(app));
 
     // Register PingErrorBuilder
     app.singleton(JsonDefinition.pingErrorView, () => PingErrorBuilder(app));

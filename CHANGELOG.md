@@ -2,7 +2,8 @@
 * New basic types added
 * choice_chip widget added
 * Custom json encoder added
-*
+* Implemented `FlexFit` for `Flexible` widget.
+* Exported `ShapeBorder`.
 
 ## 0.3.4
 

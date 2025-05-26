@@ -14,7 +14,7 @@ class RadioListTileBuilder extends WidgetBuilder {
         final secondary = json.data["secondary"] != null
             ? Json.fromJson(json.data["secondary"])
             : null;
-        return material.RadioListTile(
+        return material.RadioListTile<dynamic>(
           title:
               application.make<WidgetBuilder>(title.type).build(title, context),
           subtitle: subTitle != null
@@ -27,20 +27,35 @@ class RadioListTileBuilder extends WidgetBuilder {
                   .make<WidgetBuilder>(secondary.type)
                   .build(secondary, context)
               : null,
-          groupValue: application
-              .make<ValueBuilder>(json.data["groupValue"]["type"])
-              .build(Json.fromJson(json.data["groupValue"]), context),
-          value: json.data["value"],
-          onChanged: (value) {
-            json.data["onChanged"] == null
-                ? null
-                : application
-                    .make<EventDispatcher>(WireDefinition.eventDispatcher)
-                    .scopedEventDispatch(
-                        Event.fromJson(json.data["onChanged"]["data"]), {
-                    "value": value,
-                  });
-          },
+          groupValue: json.data["groupValue"] != null
+              ? (json.data["groupValue"] is Map
+                  ? application
+                      .make<ValueBuilder>(json.data["groupValue"]["type"])
+                      .build(Json.fromJson(json.data["groupValue"]), context)
+                  : json.data["groupValue"])
+              : null,
+          value: json.data["value"] != null
+              ? (json.data["value"] is Map
+                  ? application
+                      .make<ValueBuilder>(json.data["value"]["type"])
+                      .build(Json.fromJson(json.data["value"]), context)
+                  : json.data["value"])
+              : null,
+          onChanged: json.data["onChanged"] == null
+              ? null
+              : (value) {
+                  if (json.data["onChanged"] is Function) {
+                    final onChanged = json.data["onChanged"] as Function;
+                    onChanged(value);
+                  } else if (json.data["onChanged"] is Map) {
+                    application
+                        .make<EventDispatcher>(WireDefinition.eventDispatcher)
+                        .scopedEventDispatch(
+                            Event.fromJson(json.data["onChanged"]["data"]), {
+                      "value": value,
+                    });
+                  }
+                },
           isThreeLine: json.data["isThreeLine"] ?? false,
           dense: json.data["dense"] ?? false,
           selected: json.data["selected"] ?? false,

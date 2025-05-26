@@ -17,6 +17,10 @@ class SingleChildScrollViewBuilder extends WidgetBuilder {
           ? material.Axis.vertical
           : BasicType.find(json.data["scrollDirection"]).build(),
       reverse: json.data["reverse"] ?? false,
+      keyboardDismissBehavior: json.data["keyboardDismissBehavior"] == null
+          ? material.ScrollViewKeyboardDismissBehavior.manual
+          : ScrollViewKeyboardDismissBehavior.fromJson(
+              json.data["keyboardDismissBehavior"]["data"]).build(),
       child: childJson == null
           ? null
           : application

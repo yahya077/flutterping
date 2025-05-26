@@ -56,3 +56,27 @@ class VerticalDirection {
     }
   }
 }
+
+class ScrollViewKeyboardDismissBehavior {
+  String value;
+  static const onDrag = 'onDrag';
+  static const manual = 'manual';
+
+  ScrollViewKeyboardDismissBehavior(this.value);
+
+  factory ScrollViewKeyboardDismissBehavior.fromJson(
+      Map<String, dynamic> json) {
+    return ScrollViewKeyboardDismissBehavior(json["value"]);
+  }
+
+  material.ScrollViewKeyboardDismissBehavior build() {
+    switch (value) {
+      case onDrag:
+        return material.ScrollViewKeyboardDismissBehavior.onDrag;
+      case manual:
+        return material.ScrollViewKeyboardDismissBehavior.manual;
+      default:
+        return material.ScrollViewKeyboardDismissBehavior.manual;
+    }
+  }
+}

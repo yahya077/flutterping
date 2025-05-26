@@ -87,3 +87,26 @@ class CrossAxisAlignment {
     }
   }
 }
+
+class FlexFit {
+  String value;
+  static const tight = 'tight';
+  static const loose = 'loose';
+
+  FlexFit(this.value);
+
+  factory FlexFit.fromJson(Map<String, dynamic> json) {
+    return FlexFit(json["value"]);
+  }
+
+  material.FlexFit build() {
+    switch (value) {
+      case tight:
+        return material.FlexFit.tight;
+      case loose:
+        return material.FlexFit.loose;
+      default:
+        throw Exception("Invalid value $value");
+    }
+  }
+}

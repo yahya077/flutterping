@@ -18,9 +18,9 @@ class ReactiveWidgetBuilder extends WidgetBuilder {
         for (var page in pageNotifierList)
           page.notifierId: ValueProvider.of(context)
               .registerValueNotifier<dynamic>(page.notifierId,
-                  defaultValue: application
+                  defaultValue: page.defaultValue != null ? application
                       .make<ValueBuilder>(page.defaultValue["type"])
-                      .build(Json.fromJson(page.defaultValue), context))
+                      .build(Json.fromJson(page.defaultValue), context) : null)
       };
 
       return ReactiveMaterialWidget(
